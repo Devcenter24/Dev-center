@@ -108,21 +108,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 /* ═══════════ WIN TERMINAL (FIXED) ═══════════ */
 /* The terminal is now centered vertically with plenty of room */
 .win-term-wrap{position:absolute;right:4%;top:0;bottom:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:1;}
-.win-term{width:430px;background:#1c1c1c;border:1px solid #2e2e2e;border-radius:10px;overflow:hidden;box-shadow:0 32px 72px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.04);pointer-events:all;animation:fu .6s .4s ease both;}
-.wt-bar{background:#272727;padding:.5rem .9rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #2e2e2e;}
-.wt-bar-l{display:flex;align-items:center;gap:.5rem;}
-.wt-bar-title{font-family:'Space Mono',monospace;font-size:.65rem;color:#999;}
-.wt-ctrls{display:flex;gap:.32rem;}
-.wtc{width:12px;height:12px;border-radius:50%;}
+.win-term{width:460px;background:#141414;border:1px solid #2a2a2a;border-radius:14px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.03),0 0 60px rgba(249,115,22,.04);pointer-events:all;animation:fu .6s .4s ease both;}
+.wt-bar{background:#1e1e1e;padding:.55rem 1rem;display:flex;align-items:center;gap:.7rem;border-bottom:1px solid #252525;}
+.wt-bar-l{display:flex;align-items:center;gap:.55rem;flex:1;}
+.wt-bar-title{font-family:'Space Mono',monospace;font-size:.62rem;color:#555;letter-spacing:.3px;}
+.wt-ctrls{display:flex;gap:.35rem;}
+.wtc{width:11px;height:11px;border-radius:50%;}
 .wtc-r{background:#ff5f57;}.wtc-y{background:#febc2e;}.wtc-g{background:#28c840;}
-/* body has explicit height — no cutoff */
-.wt-body{padding:1rem 1.1rem;font-family:'Space Mono',monospace;font-size:.75rem;line-height:2;background:#1c1c1c;}
-.wp{color:#4fc3f7;display:block;word-break:break-all;}
-.ww{color:#fff;}
-.wo{color:#9e9e9e;display:block;padding-left:0;}
+.wt-body{padding:1.1rem 1.2rem;font-family:'Space Mono',monospace;font-size:.72rem;line-height:1.95;background:#141414;min-height:140px;}
+.wp{color:#4fc3f7;word-break:break-all;}
+.ww{color:#e2e8f0;font-weight:600;}
+.wo{color:#666;display:block;padding-left:0;}
 .ws{color:#81c784;}
-.wcur{display:inline-block;width:8px;height:.82rem;background:#9e9e9e;vertical-align:middle;animation:blink 1s infinite;}
-.wt-line{display:flex;align-items:baseline;gap:.4rem;margin-bottom:0;}
+.wcur{display:inline-block;width:7px;height:.75rem;background:#4fc3f7;vertical-align:middle;animation:blink 1s infinite;border-radius:1px;}
+.wt-line{display:flex;align-items:baseline;gap:.45rem;margin-bottom:0;}
+/* animated progress lines */
+.wt-footer{padding:.5rem 1.2rem;border-top:1px solid #1f1f1f;display:flex;align-items:center;justify-content:space-between;background:#181818;}
+.wt-status{display:flex;align-items:center;gap:.45rem;}
+.wt-dot{width:7px;height:7px;border-radius:50%;background:#28c840;animation:pulse-dot 2s ease-in-out infinite;flex-shrink:0;}
+.wt-status-label{font-family:'Space Mono',monospace;font-size:.6rem;color:#28c840;font-weight:700;letter-spacing:.3px;}
+.wt-badge{font-family:'Space Mono',monospace;font-size:.58rem;background:rgba(255,255,255,.05);color:#555;border:1px solid #2a2a2a;border-radius:6px;padding:.16rem .55rem;}
+.wt-bars{padding:.55rem 1.2rem .85rem;display:flex;flex-direction:column;gap:.45rem;background:#141414;}
+.wt-bar-line{height:3px;background:#1f1f1f;border-radius:3px;overflow:hidden;}
+.wt-bar-fill{height:100%;border-radius:3px;width:0%;transition:width .8s cubic-bezier(.22,.68,0,1);}
+/* line appear animation */
+@keyframes line-in{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:translateX(0)}}
+.wt-anim{animation:line-in .25s ease both;}
 
 /* ═══════════ SCROLL REVEAL ═══════════ */
 .reveal{opacity:0;transform:translateY(32px);transition:opacity .65s cubic-bezier(.22,.68,0,1),transform .65s cubic-bezier(.22,.68,0,1);}
@@ -306,11 +317,9 @@ footer{padding:2rem 5% 1.6rem;border-top:1px solid var(--border);display:flex;al
 .team-id{font-size:.65rem;color:var(--muted);font-family:'Space Mono',monospace;opacity:.6;}
 
 /* ═══════════ FOOTER REDESIGN ═══════════ */
-footer{padding:0;position:relative;z-index:2;margin-top:2rem;border-top:1px solid var(--border);}
-.foot-glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:200px;background:radial-gradient(ellipse,rgba(249,115,22,.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
-.foot-divider{display:none;}
-.foot-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;padding:3.5rem 5% 3rem;width:100%;box-sizing:border-box;align-items:start;position:relative;z-index:1;}
-.foot-brand{min-width:0;}
+footer{display:block;width:100%;position:relative;z-index:2;margin-top:2rem;border-top:1px solid var(--border);background:var(--bg);}
+.foot-glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:700px;height:220px;background:radial-gradient(ellipse,rgba(249,115,22,.05) 0%,transparent 70%);pointer-events:none;z-index:0;}
+.foot-top{display:grid !important;grid-template-columns:2fr 1fr 1fr;gap:4rem;padding:3.5rem 5% 3rem;position:relative;z-index:1;}
 .foot-brand p{color:var(--muted);font-size:.82rem;line-height:1.75;margin:.8rem 0 1rem;}
 .foot-brand-badge{display:inline-flex;align-items:center;gap:.5rem;background:rgba(74,222,128,.07);border:1px solid rgba(74,222,128,.2);color:#4ade80;font-size:.65rem;font-weight:700;padding:.25rem .7rem;border-radius:100px;letter-spacing:.5px;}
 .foot-brand-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:#4ade80;flex-shrink:0;animation:pulse-dot 2s ease-in-out infinite;}
@@ -324,13 +333,12 @@ footer{padding:0;position:relative;z-index:2;margin-top:2rem;border-top:1px soli
 .foot-col ul li a::before{content:'·';color:var(--muted);opacity:.35;font-size:1rem;line-height:1;flex-shrink:0;}
 .foot-col ul li a:hover{color:var(--text);gap:.7rem;}
 .foot-col ul li a:hover::before{color:var(--accent);opacity:1;}
-.foot-bottom{border-top:1px solid var(--border);padding:1rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;background:rgba(128,128,128,.015);}
+.foot-bottom{border-top:1px solid var(--border);padding:1rem 5%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;position:relative;z-index:1;}
 .foot-copy{color:var(--muted);font-size:.7rem;font-family:'Space Mono',monospace;opacity:.6;display:flex;align-items:center;gap:.5rem;flex-wrap:wrap;}
-.foot-bottom-links{display:flex;gap:1.4rem;align-items:center;}
+.foot-bottom-links{display:flex;gap:1.4rem;}
 .foot-bottom-links a{color:var(--muted);text-decoration:none;font-size:.72rem;font-family:'Space Mono',monospace;transition:.2s;cursor:pointer;opacity:.5;}
 .foot-bottom-links a:hover{color:var(--accent);opacity:1;}
 .foot-logo-inline{display:flex;align-items:center;gap:.5rem;font-weight:800;font-size:.92rem;color:var(--text);margin-bottom:.6rem;}
-
 /* ═══════════ MODULE CARDS ═══════════ */
 .mod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.5rem;margin-bottom:2rem;}
 .mod-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:0;display:flex;flex-direction:column;transition:all .35s cubic-bezier(.22,.68,0,1.2);position:relative;overflow:hidden;}
@@ -359,9 +367,50 @@ footer{padding:0;position:relative;z-index:2;margin-top:2rem;border-top:1px soli
 .mod-feats.mod-feats-dim li{color:var(--muted);}
 .mod-feats.mod-feats-dim li::before{background:rgba(128,128,128,.08);color:var(--muted);opacity:.45;}
 
+
+/* ═══════════ COMPTE PANEL ═══════════ */
+.acct-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.1rem;margin-bottom:1.6rem;}
+.acct-card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
+.acct-card-head{display:flex;align-items:center;gap:.55rem;font-size:.72rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);padding:.9rem 1.2rem;border-bottom:1px solid var(--border);background:rgba(128,128,128,.02);}
+.acct-rows{display:flex;flex-direction:column;}
+.acct-row{display:flex;align-items:center;justify-content:space-between;padding:.75rem 1.2rem;border-bottom:1px solid var(--border);gap:1rem;}
+.acct-row:last-child{border-bottom:none;}
+.acct-row-label{font-size:.74rem;color:var(--muted);font-weight:600;flex-shrink:0;}
+.acct-row-val{font-size:.78rem;font-weight:700;color:var(--text);font-family:'Space Mono',monospace;text-align:right;word-break:break-all;}
+.acct-row-val.mono{font-size:.7rem;opacity:.7;}
+.acct-row-val .acct-copy{background:none;border:none;cursor:pointer;color:var(--muted);padding:.15rem .3rem;border-radius:4px;transition:.2s;margin-left:.3rem;}
+.acct-row-val .acct-copy:hover{color:var(--accent);background:rgba(249,115,22,.08);}
+.acct-badge-pill{display:inline-flex;align-items:center;gap:.3rem;padding:.18rem .55rem;border-radius:100px;font-size:.65rem;font-weight:700;}
+.acct-badge-pill.green{background:rgba(74,222,128,.1);color:#4ade80;border:1px solid rgba(74,222,128,.2);}
+.acct-badge-pill.orange{background:rgba(249,115,22,.1);color:#f97316;border:1px solid rgba(249,115,22,.2);}
+.acct-badge-pill.gray{background:rgba(128,128,128,.08);color:var(--muted);border:1px solid var(--border);}
+.acct-badge-pill.blue{background:rgba(88,101,242,.1);color:#818cf8;border:1px solid rgba(88,101,242,.2);}
+.acct-avatar-preview{width:38px;height:38px;border-radius:50%;border:2px solid var(--border2);object-fit:cover;}
+.acct-danger{background:rgba(248,113,113,.03);border:1px solid rgba(248,113,113,.15);border-radius:14px;padding:1.2rem 1.4rem;}
+.acct-danger-title{display:flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:800;color:#f87171;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.8px;}
+.acct-danger-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+
 /* ═══════════ RESPONSIVE ═══════════ */
 @media(max-width:900px){.win-term-wrap,.about-cards{display:none;}.about-g{grid-template-columns:1fr;}.foot-top{grid-template-columns:1fr 1fr;}}
 @media(max-width:680px){.nav-center{display:none;}.d-sidebar{display:none;}.d-main{margin-left:0;}.prof-stats{gap:.8rem;}.foot-top{grid-template-columns:1fr;gap:1.8rem;}}
+
+/* ═══════════ PARTICLES ═══════════ */
+#particles-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.45;}
+
+/* ═══════════ GLOBAL ANIMATIONS ═══════════ */
+.fade-up{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease;}
+.fade-up.in{opacity:1;transform:translateY(0);}
+
+/* cards shimmer on hover */
+.pc,.why-card,.afc{position:relative;}
+.pc::after,.why-card::after{content:'';position:absolute;inset:0;border-radius:inherit;background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),rgba(249,115,22,.04),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none;}
+.pc:hover::after,.why-card:hover::after{opacity:1;}
+
+/* terminal typing */
+.wt-typing{overflow:hidden;white-space:nowrap;display:inline-block;max-width:0;animation:none;}
+.wt-typing.go{animation:type-line var(--dur,.6s) steps(var(--steps,20),end) forwards;}
+@keyframes type-line{to{max-width:var(--len,20ch)}}
+
 </style>
 </style>
 </head>
@@ -438,7 +487,7 @@ footer{padding:0;position:relative;z-index:2;margin-top:2rem;border-top:1px soli
 
     <!-- WINDOWS TERMINAL — wrapper keeps it fully visible -->
     <div class="win-term-wrap">
-      <div class="win-term">
+      <div class="win-term" id="hero-term">
         <div class="wt-bar">
           <div class="wt-bar-l">
             <div class="wt-ctrls">
@@ -446,20 +495,11 @@ footer{padding:0;position:relative;z-index:2;margin-top:2rem;border-top:1px soli
               <div class="wtc wtc-y"></div>
               <div class="wtc wtc-g"></div>
             </div>
-            <span class="wt-bar-title">terminal</span>
+            <span class="wt-bar-title">terminal — dev-center</span>
           </div>
         </div>
-        <div class="wt-body">
-          <div class="wt-line"><span class="wp">user@devcenter:~$</span><span class="ww"> npm install dev-center</span></div>
-          <span class="wo">Téléchargement des dépendances</span>
-          <span class="wo">Compilation des modules</span>
-          <span class="wo ws">✓ Installation réussie</span>
-          <br>
-          <div class="wt-line"><span class="wp">user@devcenter:~$</span><span class="ww"> devcenter deploy</span></div>
-          <span class="wo">Initialisation du déploiement</span>
-          <span class="wo ws">✓ Déploiement réussi</span>
-          <br>
-          <div class="wt-line"><span class="wp">user@devcenter:~$</span><span class="wcur"></span></div>
+        <div class="wt-body" id="term-body">
+          <div class="wt-line"><span class="wp">user@devcenter:~$</span><span class="wcur" id="term-cur"></span></div>
         </div>
         <div class="wt-footer">
           <div class="wt-status">
@@ -469,8 +509,8 @@ footer{padding:0;position:relative;z-index:2;margin-top:2rem;border-top:1px soli
           <div class="wt-badge">En ligne</div>
         </div>
         <div class="wt-bars">
-          <div class="wt-bar-line"><div class="wt-bar-fill" style="width:78%;background:linear-gradient(90deg,#f97316,#fb923c);"></div></div>
-          <div class="wt-bar-line"><div class="wt-bar-fill" style="width:52%;background:linear-gradient(90deg,#a855f7,#ec4899);"></div></div>
+          <div class="wt-bar-line"><div class="wt-bar-fill" style="width:0%;background:linear-gradient(90deg,#f97316,#fb923c);" id="wt-prog1"></div></div>
+          <div class="wt-bar-line"><div class="wt-bar-fill" style="width:0%;background:linear-gradient(90deg,#a855f7,#ec4899);" id="wt-prog2"></div></div>
         </div>
       </div>
     </div>
@@ -714,6 +754,10 @@ footer{padding:0;position:relative;z-index:2;margin-top:2rem;border-top:1px soli
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         Mon profil
       </a></li>
+      <li><a onclick="showPanel('compte',this)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        Compte
+      </a></li>
       <li><a onclick="showPanel('services',this)">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
         Services
@@ -802,6 +846,72 @@ footer{padding:0;position:relative;z-index:2;margin-top:2rem;border-top:1px soli
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent2)" stroke-width="2" style="margin-bottom:.5rem"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
           <div style="font-size:.87rem;font-weight:700;margin-bottom:.1rem;">Nos offres</div>
           <div style="font-size:.72rem;color:var(--muted);">Voir les fonctionnalités</div>
+        </div>
+      </div>
+    </div>
+
+    
+    <!-- COMPTE -->
+    <div class="dp" id="dp-compte">
+      <div style="font-size:1.28rem;font-weight:800;letter-spacing:-.4px;margin-bottom:.26rem;">Mon Compte</div>
+      <div style="color:var(--muted);font-size:.76rem;margin-bottom:1.8rem;font-family:'Space Mono',monospace;">// Informations liées à votre compte Discord</div>
+
+      <!-- Info cards grid -->
+      <div class="acct-grid">
+
+        <!-- Identité -->
+        <div class="acct-card">
+          <div class="acct-card-head">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Identité
+          </div>
+          <div class="acct-rows" id="acct-identity"></div>
+        </div>
+
+        <!-- Compte Discord -->
+        <div class="acct-card">
+          <div class="acct-card-head">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color:var(--accent)"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+            Discord
+          </div>
+          <div class="acct-rows" id="acct-discord"></div>
+        </div>
+
+        <!-- Sécurité / Session -->
+        <div class="acct-card">
+          <div class="acct-card-head">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Sécurité &amp; Session
+          </div>
+          <div class="acct-rows" id="acct-security"></div>
+        </div>
+
+        <!-- Dev Center -->
+        <div class="acct-card">
+          <div class="acct-card-head">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            Dev Center
+          </div>
+          <div class="acct-rows" id="acct-dc"></div>
+        </div>
+
+      </div>
+
+      <!-- Danger zone -->
+      <div class="acct-danger">
+        <div class="acct-danger-title">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Zone dangereuse
+        </div>
+        <div class="acct-danger-row">
+          <div>
+            <div style="font-size:.82rem;font-weight:700;margin-bottom:.2rem;">Se déconnecter</div>
+            <div style="font-size:.74rem;color:var(--muted);">Termine la session en cours sur ce navigateur.</div>
+          </div>
+          <button class="btn btn-sm btn-danger" onclick="logout()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Déconnexion
+          </button>
         </div>
       </div>
     </div>
@@ -1467,5 +1577,319 @@ function toast(msg){
   els.forEach(el=>obs.observe(el));
 })();
 </script>
+
+<script>
+/* ════════════════════════════════════════════
+   FLOATING PARTICLES
+════════════════════════════════════════════ */
+(function(){
+  const canvas=document.createElement('canvas');
+  canvas.id='particles-canvas';
+  document.body.prepend(canvas);
+  const ctx=canvas.getContext('2d');
+  let W,H,pts=[];
+
+  function resize(){
+    W=canvas.width=window.innerWidth;
+    H=canvas.height=window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  const isDark=()=>document.documentElement.getAttribute('data-theme')!=='light';
+
+  function mkPt(){
+    return{
+      x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
+      r:Math.random()*1.5+.5,
+      a:Math.random()*.5+.1
+    };
+  }
+
+  for(let i=0;i<55;i++) pts.push(mkPt());
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const col=isDark()?'249,115,22':'59,130,246';
+    pts.forEach(p=>{
+      p.x+=p.vx; p.y+=p.vy;
+      if(p.x<0||p.x>W) p.vx*=-1;
+      if(p.y<0||p.y>H) p.vy*=-1;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${col},${p.a})`;
+      ctx.fill();
+    });
+    // lines between close pts
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y;
+        const d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){
+          ctx.beginPath();
+          ctx.moveTo(pts[i].x,pts[i].y);
+          ctx.lineTo(pts[j].x,pts[j].y);
+          ctx.strokeStyle=`rgba(${col},${(.12*(1-d/120)).toFixed(3)})`;
+          ctx.lineWidth=.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ════════════════════════════════════════════
+   CARD MOUSE SHIMMER
+════════════════════════════════════════════ */
+document.querySelectorAll('.pc,.why-card,.mod-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    card.style.setProperty('--my',(e.clientY-r.top)+'px');
+  });
+});
+</script>
+
+
+<script>
+/* ════════════════════════════════════
+   TERMINAL — ANIMATION DYNAMIQUE
+════════════════════════════════════ */
+(function(){
+  const body  = document.getElementById('term-body');
+  const prog1 = document.getElementById('wt-prog1');
+  const prog2 = document.getElementById('wt-prog2');
+  if(!body) return;
+
+  const PROMPT = '<span class="wp">user@devcenter:~$</span> ';
+  const SEQ = [
+    {t:'cmd', txt:'npm install dev-center'},
+    {t:'out', txt:'Résolution des dépendances...'},
+    {t:'out', txt:'Téléchargement des packages', delay:180},
+    {t:'out', txt:'Compilation des modules', delay:150},
+    {t:'out', txt:'✓ Installation réussie', cls:'wo ws', delay:120},
+    {t:'gap'},
+    {t:'cmd', txt:'devcenter deploy --prod', pause:500},
+    {t:'out', txt:'Initialisation du déploiement...'},
+    {t:'bar', el:'wt-prog1', val:'78%', delay:600},
+    {t:'out', txt:'Build optimisé · 2.4 MB', delay:200},
+    {t:'bar', el:'wt-prog2', val:'52%', delay:500},
+    {t:'out', txt:'CDN · Cache invalidé', delay:200},
+    {t:'out', txt:'✓ Déploiement réussi — 3.2s', cls:'wo ws', delay:150},
+    {t:'gap'},
+    {t:'cursor'},
+  ];
+
+  let queue = [...SEQ];
+  let running = false;
+
+  function addLine(el){
+    body.appendChild(el);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function typeInto(el, text, cb){
+    el.classList.add('wt-anim');
+    let i=0;
+    const speed = text.length > 20 ? 32 : 45;
+    const iv = setInterval(()=>{
+      el.textContent += text[i++];
+      if(i >= text.length){ clearInterval(iv); setTimeout(cb||function(){}, 60); }
+    }, speed);
+  }
+
+  function runNext(){
+    if(!queue.length) return;
+    const s = queue.shift();
+    const pause = s.pause || (s.t==='gap'?0:s.delay||220);
+
+    if(s.t === 'cmd'){
+      const cur = body.querySelector('.wcur'); if(cur) cur.remove();
+      const line = document.createElement('div');
+      line.className = 'wt-line wt-anim';
+      line.innerHTML = PROMPT;
+      const span = document.createElement('span');
+      span.className = 'ww';
+      line.appendChild(span);
+      addLine(line);
+      setTimeout(()=> typeInto(span, s.txt, ()=> setTimeout(runNext, pause)), 80);
+    }
+    else if(s.t === 'out'){
+      const sp = document.createElement('span');
+      sp.className = s.cls || 'wo';
+      addLine(sp);
+      setTimeout(()=> typeInto(sp, s.txt, ()=> setTimeout(runNext, pause)), 60);
+    }
+    else if(s.t === 'gap'){
+      const br = document.createElement('br');
+      addLine(br);
+      setTimeout(runNext, 200);
+    }
+    else if(s.t === 'bar'){
+      const el = document.getElementById(s.el);
+      if(el){ setTimeout(()=>{ el.style.width=s.val; }, 100); }
+      setTimeout(runNext, pause);
+    }
+    else if(s.t === 'cursor'){
+      const line = document.createElement('div');
+      line.className = 'wt-line wt-anim';
+      line.innerHTML = PROMPT + '<span class="wcur"></span>';
+      addLine(line);
+      // Loop: restart after 5s
+      setTimeout(()=>{
+        body.innerHTML = '<div class="wt-line"><span class="wp">user@devcenter:~$</span> <span class="wcur"></span></div>';
+        if(prog1) prog1.style.width='0%';
+        if(prog2) prog2.style.width='0%';
+        queue = [...SEQ];
+        setTimeout(runNext, 1200);
+      }, 5000);
+    }
+  }
+
+  setTimeout(runNext, 1000);
+})();
+
+/* ════════════════════════════════════
+   FILL COMPTE PANEL
+════════════════════════════════════ */
+function fillCompte(){
+  const u = window.CU;
+  if(!u) return;
+
+  function row(label, val, mono, canCopy){
+    const copyBtn = canCopy
+      ? `<button class="acct-copy" title="Copier" onclick="navigator.clipboard.writeText('${val.replace(/'/g,"\'")}');this.textContent='✓';setTimeout(()=>this.textContent='⎘',1200)">⎘</button>`
+      : '';
+    return `<div class="acct-row">
+      <span class="acct-row-label">${label}</span>
+      <span class="acct-row-val${mono?' mono':''}">${val}${copyBtn}</span>
+    </div>`;
+  }
+
+  function pill(text, cls){ return `<span class="acct-badge-pill ${cls}">${text}</span>`; }
+
+  const createdAt = window.discordCreatedAt ? discordCreatedAt(u.id) : '—';
+  const tag = (u.discriminator && u.discriminator!=='0') ? `${u.username}#${u.discriminator}` : u.username;
+  const avatarUrl = window.av ? av(u) : `https://cdn.discordapp.com/embed/avatars/0.png`;
+  const locale = u.locale || '—';
+  const mfa = u.mfa_enabled ? pill('Activé','green') : pill('Désactivé','gray');
+  const verified = u.verified ? pill('Vérifié ✓','green') : pill('Non vérifié','gray');
+  const premium = u.premium_type===1?'Nitro Classic':u.premium_type===2?'Nitro':u.premium_type===3?'Nitro Basic':'Aucun';
+  const premiumPill = u.premium_type>0 ? pill('● '+premium,'blue') : pill('Aucun abonnement','gray');
+  const sessionStart = localStorage.getItem('dc_session_start')||'—';
+
+  // Identité
+  const idEl = document.getElementById('acct-identity');
+  if(idEl) idEl.innerHTML = `
+    <div class="acct-row">
+      <span class="acct-row-label">Avatar</span>
+      <span class="acct-row-val"><img src="${avatarUrl}" class="acct-avatar-preview" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'"></span>
+    </div>
+    ${row('Nom affiché', u.global_name||u.username, false)}
+    ${row('Identifiant (@)', '@'+tag, true, true)}
+    ${row('ID Discord', u.id, true, true)}
+    ${row('Compte créé le', createdAt, true)}
+  `;
+
+  // Discord
+  const discEl = document.getElementById('acct-discord');
+  if(discEl) discEl.innerHTML = `
+    <div class="acct-row">
+      <span class="acct-row-label">Email</span>
+      <span class="acct-row-val mono">${u.email||'Non communiqué'}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">2FA</span>
+      <span class="acct-row-val">${mfa}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Email vérifié</span>
+      <span class="acct-row-val">${verified}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Langue</span>
+      <span class="acct-row-val mono">${locale}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Abonnement Nitro</span>
+      <span class="acct-row-val">${premiumPill}</span>
+    </div>
+  `;
+
+  // Sécurité
+  const secEl = document.getElementById('acct-security');
+  if(secEl) secEl.innerHTML = `
+    <div class="acct-row">
+      <span class="acct-row-label">Méthode de connexion</span>
+      <span class="acct-row-val">${pill('Discord OAuth2','blue')}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Session démarrée</span>
+      <span class="acct-row-val mono">${sessionStart}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Navigateur</span>
+      <span class="acct-row-val mono" id="acct-ua" style="font-size:.64rem;max-width:200px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">—</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Statut de session</span>
+      <span class="acct-row-val">${pill('● Connecté','green')}</span>
+    </div>
+  `;
+  const uaEl = document.getElementById('acct-ua');
+  if(uaEl){
+    const ua = navigator.userAgent;
+    const browser = ua.includes('Chrome')?'Chrome':ua.includes('Firefox')?'Firefox':ua.includes('Safari')?'Safari':ua.includes('Edge')?'Edge':'Inconnu';
+    const os = ua.includes('Windows')?'Windows':ua.includes('Mac')?'macOS':ua.includes('Linux')?'Linux':ua.includes('Android')?'Android':ua.includes('iPhone')?'iOS':'Inconnu';
+    uaEl.textContent = browser+' · '+os;
+    uaEl.title = ua;
+  }
+
+  // Dev Center
+  const dcEl = document.getElementById('acct-dc');
+  const visits = window.getVisits ? getVisits() : '—';
+  const roles = JSON.parse(localStorage.getItem('dc_roles_'+(u.id||''))||'[]');
+  const inGuild = localStorage.getItem('dc_inguild_'+(u.id||''));
+  const memberStatus = inGuild==='1' ? pill('● Membre du serveur','green') : inGuild==='0' ? pill('Non membre','gray') : pill('Inconnu','gray');
+  const roleCount = roles.length;
+  if(dcEl) dcEl.innerHTML = `
+    <div class="acct-row">
+      <span class="acct-row-label">Visites sur le site</span>
+      <span class="acct-row-val mono">${visits}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Serveur Discord</span>
+      <span class="acct-row-val">${memberStatus}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Rôles obtenus</span>
+      <span class="acct-row-val mono">${roleCount} rôle${roleCount!==1?'s':''}</span>
+    </div>
+    <div class="acct-row">
+      <span class="acct-row-label">Inscription Dev Center</span>
+      <span class="acct-row-val mono">${createdAt}</span>
+    </div>
+  `;
+}
+
+// Hook into showPanel to fill compte when opened
+const _origShowPanel = window.showPanel;
+window.showPanel = function(id, el){
+  _origShowPanel(id, el);
+  if(id === 'compte') fillCompte();
+};
+// Also save session start time on login
+const _origFillProfile = window.fillProfile;
+window.fillProfile = function(){
+  _origFillProfile();
+  if(!localStorage.getItem('dc_session_start') && window.CU){
+    localStorage.setItem('dc_session_start', new Date().toLocaleString('fr-FR'));
+  }
+};
+</script>
+
 </body>
 </html>
