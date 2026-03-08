@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<!DOCTYPE ht
+
+ml>
 <html lang="fr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
@@ -390,6 +392,25 @@ footer{display:block;width:100%;position:relative;z-index:2;margin-top:2rem;bord
 .acct-danger-title{display:flex;align-items:center;gap:.5rem;font-size:.75rem;font-weight:800;color:#f87171;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.8px;}
 .acct-danger-row{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
 
+
+/* ═══════════ MODULES BOTS DISCORD ═══════════ */
+#s-modules{padding:6rem 6% 5rem;max-width:1200px;margin:0 auto;}
+.modules-grid{display:flex;justify-content:center;gap:1.8rem;margin-top:3rem;flex-wrap:wrap;}
+.mbot-card{background:var(--card);border:1px solid var(--border);border-radius:20px;overflow:hidden;position:relative;transition:transform .3s cubic-bezier(.22,.68,0,1),box-shadow .3s;cursor:default;width:100%;max-width:420px;}
+.mbot-card:hover{transform:translateY(-6px);box-shadow:0 24px 60px rgba(0,0,0,.35);}
+.mbot-banner{height:5px;width:100%;}
+.mbot-inner{padding:1.6rem 1.6rem 1.4rem;}
+.mbot-head{display:flex;align-items:center;gap:1rem;margin-bottom:1rem;}
+.mbot-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 8px 24px rgba(0,0,0,.25);}
+.mbot-name{font-size:1.05rem;font-weight:800;margin-bottom:.3rem;}
+.mbot-badge{display:inline-block;font-size:.6rem;font-weight:800;letter-spacing:1px;padding:.2rem .65rem;border-radius:100px;background:rgba(168,85,247,.12);color:#c084fc;border:1px solid rgba(168,85,247,.25);font-family:'Space Mono',monospace;}
+.mbot-desc{font-size:.82rem;color:var(--muted);line-height:1.6;margin-bottom:1.2rem;}
+.mbot-feats{list-style:none;padding:0;margin:0 0 1.5rem;display:flex;flex-direction:column;gap:.42rem;}
+.mbot-feats li{font-size:.8rem;color:var(--text);padding:.32rem .5rem;border-radius:7px;display:flex;align-items:center;gap:.6rem;transition:background .2s;}
+.mbot-feats li:hover{background:rgba(128,128,128,.05);}
+.mbot-feats li::before{content:'✓';display:inline-flex;align-items:center;justify-content:center;width:17px;height:17px;border-radius:50%;background:rgba(74,222,128,.12);color:#4ade80;font-size:.65rem;font-weight:800;flex-shrink:0;}
+.mbot-btn{width:100%;justify-content:center;}
+
 /* ═══════════ RESPONSIVE ═══════════ */
 @media(max-width:900px){.win-term-wrap,.about-cards{display:none;}.about-g{grid-template-columns:1fr;}.foot-top{grid-template-columns:1fr 1fr;}}
 @media(max-width:680px){.nav-center{display:none;}.d-sidebar{display:none;}.d-main{margin-left:0;}.prof-stats{gap:.8rem;}.foot-top{grid-template-columns:1fr;gap:1.8rem;}}
@@ -597,6 +618,50 @@ footer{display:block;width:100%;position:relative;z-index:2;margin-top:2rem;bord
           </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- MODULES BOTS DISCORD -->
+  <section id="s-modules" class="reveal">
+    <div class="sh">
+      <div class="stag">Modules</div>
+      <h2>Modules Bots Discord</h2>
+      <p class="sdesc">Choisissez le module qui correspond à vos besoins et démarrez rapidement.</p>
+    </div>
+
+    <div class="modules-grid">
+
+      <!-- STARTER -->
+      <div class="mbot-card">
+        <div class="mbot-banner" style="background:linear-gradient(135deg,#a855f7,#7c3aed);"></div>
+        <div class="mbot-inner">
+          <div class="mbot-head">
+            <div class="mbot-icon" style="background:linear-gradient(135deg,#a855f7,#7c3aed);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div>
+              <div class="mbot-name">Starter</div>
+              <span class="mbot-badge">DISPONIBLE</span>
+            </div>
+          </div>
+          <p class="mbot-desc">Parfait pour démarrer avec un bot Discord simple. Bot prêt à utiliser, configuré et livré rapidement.</p>
+          <ul class="mbot-feats">
+            <li>23 commandes personnalisées</li>
+            <li>Commandes de modération</li>
+            <li>Commandes fun</li>
+            <li>Commandes utilitaires</li>
+            <li>Configuration simple</li>
+            <li>Bot prêt à utiliser</li>
+            <li>Support ticket 48h</li>
+          </ul>
+          <a class="btn btn-primary mbot-btn" href="https://discord.gg/nfkWAPvyWV" target="_blank" style="background:linear-gradient(135deg,#a855f7,#7c3aed);border:none;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            Commander
+          </a>
+        </div>
+      </div>
+
+
     </div>
   </section>
 
@@ -951,32 +1016,32 @@ footer{display:block;width:100%;position:relative;z-index:2;margin-top:2rem;bord
       <div style="color:var(--muted);font-size:.76rem;margin-bottom:1.65rem;font-family:'Space Mono',monospace;">// Tous nos modules — commandez sur Discord</div>
       <div class="mod-grid">
 
-        <!-- BOTS DISCORD — À VENIR -->
-        <div class="mod-card mod-soon">
+        <!-- BOT DISCORD — DISPONIBLE -->
+        <div class="mod-card">
           <div class="mod-banner" style="background:linear-gradient(90deg,#5865F2,#7289da);"></div>
           <div class="mod-body">
             <div class="mod-head">
-              <div class="mod-ico" style="background:rgba(88,101,242,.15)">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="#7289da"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
+              <div class="mod-ico" style="background:linear-gradient(135deg,#5865F2,#7289da)">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028 14.09 14.09 0 001.226-1.994.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z"/></svg>
               </div>
               <div class="mod-meta">
-                <div class="mod-name" style="color:var(--muted)">Bots Discord</div>
-                <span class="mod-badge soon-b">À VENIR</span>
+                <div class="mod-name">Bot Discord</div>
+                <span class="mod-badge avail">DISPONIBLE</span>
               </div>
             </div>
-            <p class="mod-desc">Créez et hébergez vos bots Discord avec facilité. Support complet pour Discord.js, modules personnalisés, et gestion automatique.</p>
-            <ul class="mod-feats mod-feats-dim">
-              <li>Hébergement 24/7 gratuit</li>
-              <li>Déploiement automatique</li>
-              <li>Gestion des modules</li>
-              <li>Logs en temps réel</li>
-              <li>Redémarrage automatique</li>
-              <li>Support Discord.js / Python</li>
+            <p class="mod-desc">Parfait pour démarrer avec un bot Discord simple. Bot prêt à utiliser, configuré et livré rapidement.</p>
+            <ul class="mod-feats">
+              <li>23 commandes personnalisées</li>
+              <li>Commandes de modération</li>
+              <li>Commandes fun</li>
+              <li>Commandes utilitaires</li>
+              <li>Configuration simple</li>
+              <li>Support ticket 48h</li>
             </ul>
-            <button class="btn" disabled style="width:100%;justify-content:center;background:rgba(128,128,128,.06);color:var(--muted);border:1px solid var(--border);cursor:not-allowed;gap:.5rem;">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              À venir
-            </button>
+            <a class="btn btn-primary" href="https://discord.gg/nfkWAPvyWV" target="_blank" style="width:100%;justify-content:center;background:linear-gradient(135deg,#5865F2,#7289da);border:none;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              Commander
+            </a>
           </div>
         </div>
 
@@ -1008,6 +1073,8 @@ footer{display:block;width:100%;position:relative;z-index:2;margin-top:2rem;bord
             </a>
           </div>
         </div>
+
+
 
         <!-- SITE WEB — DISPONIBLE -->
         <div class="mod-card">
