@@ -411,13 +411,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 @media(max-width:1100px){.compte-grid{grid-template-columns:1fr 1fr;}.pgrid3{grid-template-columns:1fr 1fr;}}
 
 /* ── MOBILE BURGER BUTTONS ── */
-.nav-burger{display:none;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;border:1px solid var(--border);background:var(--bg2);border-radius:10px;flex-shrink:0;}
-.app-burger{display:none;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;border:1px solid var(--border);background:var(--bg2);border-radius:10px;flex-shrink:0;margin-right:6px;}
+.nav-burger{display:none;align-items:center;justify-content:center;width:40px;height:40px;cursor:pointer;border:1.5px solid var(--primary);background:var(--primary-l);border-radius:11px;flex-shrink:0;}
+.nav-burger svg,.app-burger svg{display:block;color:var(--primary);}
+.app-burger{display:none;align-items:center;justify-content:center;width:38px;height:38px;cursor:pointer;border:1.5px solid var(--primary);background:var(--primary-l);border-radius:10px;flex-shrink:0;color:var(--primary);}
 
-/* ── MOBILE MENUS ── */
-.mobile-menu{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);backdrop-filter:blur(14px);}
-.mobile-menu.open{display:flex;flex-direction:column;}
-.mobile-menu-inner{background:var(--bg2);padding:16px;display:flex;flex-direction:column;gap:3px;margin-top:auto;border-radius:20px 20px 0 0;border-top:1px solid var(--border);border-left:1px solid var(--border);border-right:1px solid var(--border);max-height:82vh;overflow-y:auto;}
+/* ── MOBILE MENUS — slide from RIGHT ── */
+.mobile-menu{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.5);backdrop-filter:blur(12px);}
+.mobile-menu.open{display:flex;justify-content:flex-end;}
+.mobile-menu-inner{background:var(--bg2);padding:16px;display:flex;flex-direction:column;gap:3px;width:min(320px,88vw);border-left:1px solid var(--border);max-height:100vh;overflow-y:auto;animation:slideInRight .22s ease;}
+@keyframes slideInRight{from{transform:translateX(100%);opacity:.5}to{transform:translateX(0);opacity:1}}
 .mobile-menu-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:12px;border-bottom:1px solid var(--border);}
 .mm-sep{height:1px;background:var(--border);margin:6px 0;}
 .mm-section-lbl{font-size:10px;font-weight:800;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:8px 14px 4px;}
@@ -445,12 +447,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
   .navbar{padding:0 14px;height:58px;}
   .nav-logo{font-size:15px;gap:8px;}
   .nav-logo-img{width:26px;height:26px;}
-  .hero{padding:70px 16px 32px;gap:22px;}
-  .hero-title{font-size:32px;letter-spacing:-.025em;}
-  .hero-badge{font-size:11px;padding:5px 12px;}
-  .hero-desc{font-size:13px;line-height:1.6;}
-  .hero-btns{flex-direction:column;gap:10px;}
-  .hero-btns>*{width:100%;justify-content:center;text-align:center;}
+  .hero{padding:72px 16px 32px;gap:16px;text-align:center;}
+  .hero-title{font-size:28px;letter-spacing:-.025em;line-height:1.15;}
+  .hero-badge{font-size:11px;padding:5px 12px;margin:0 auto;}
+  .hero-desc{font-size:13px;line-height:1.65;color:var(--text2);}
+  .hero-btns{flex-direction:column;gap:10px;align-items:stretch;}
+  .hero-btns>*{width:100%;justify-content:center;text-align:center;padding:12px 18px;font-size:14px;}
   .s-title{font-size:24px;}
   .section{padding:36px 16px;}
   .why-grid{grid-template-columns:1fr;}
@@ -467,6 +469,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
   .topbar-logo-img{width:26px;height:26px;}
   .app-burger{display:flex !important;}
   .btn-home,.btn-logout{display:none !important;}
+  .app-burger{margin-left:2px;}
   .topbar-r{gap:6px;}
   .user-pill{background:transparent;border:none;padding:2px;}
   .user-pill img{width:30px;height:30px;}
@@ -599,7 +602,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
   <div class="hero">
     <div>
       <div class="hero-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>100% Gratuit · 24/7 · Sans limite</div>
-      <h1 class="hero-title">Construisez,<br>déployez<br>avec<br><span>Dev Center</span></h1>
+      <h1 class="hero-title">Construisez &amp; déployez avec <span>Dev Center</span></h1>
       <p class="hero-desc">Votre espace de développement tout-en-un.<br>Créez des serveurs Discord professionnels,<br>lancez vos sites web sans effort.<br>La communauté qui code avec vous.</p>
       <div class="hero-btns">
         <a class="btn-primary" href="https://discord.gg/fyBrf8UJuu" target="_blank" rel="noopener">
@@ -708,9 +711,6 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 <!-- APP -->
 <div id="app-page" class="page">
   <div class="topbar">
-    <button class="app-burger" onclick="document.getElementById('mobile-app-menu').classList.add('open')" aria-label="Menu">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
     <div class="topbar-logo" onclick="goToLanding()" style="cursor:pointer;">
       <img src="https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=64" class="topbar-logo-img" alt="">
       Dev Center
@@ -720,6 +720,9 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
       <button class="btn-icon" onclick="toggleTheme()"><svg id="ti2" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
       <div class="user-pill"><img id="user-av" src="" alt=""><span id="user-nm" class="user-nm-text"></span><span id="staff-bdg" class="badge-staff" style="display:none">STAFF</span></div>
       <button class="btn-logout" onclick="logout()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg><span class="btn-logout-text">Déconnexion</span></button>
+      <button class="app-burger" onclick="document.getElementById('mobile-app-menu').classList.add('open')" aria-label="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
   </div>
   <div class="app-body">
@@ -1070,7 +1073,7 @@ async function init(){
   if(!loadSession()){showPage('landing-page');return;}
   launchApp();
 }
-function launchApp(){
+async function launchApp(){
   document.getElementById('user-av').src=me.avatar;
   document.getElementById('user-nm').textContent=me.username;
   document.getElementById('c-av').src=me.avatar;
@@ -1081,7 +1084,14 @@ function launchApp(){
   document.getElementById('c-roles').textContent=isAdmin?'Admin + Staff + Membre':isStaff?'Staff + Membre':'Membre';
   document.getElementById('c-staff-val').innerHTML=isStaff?'<span class="c-badge c-green">Oui</span>':'<span class="c-badge c-gray">Non</span>';
   if(me.email) document.getElementById('c-email-val').textContent=me.email;
-  if(isStaff){document.getElementById('staff-bdg').style.display='inline-block';document.getElementById('staff-nav').style.display='block';var mms=document.getElementById('mm-staff');if(mms)mms.style.display='block';}
+  // Load staff permissions first so they apply everywhere
+  if(isStaff){
+    try{const{data:sp}=await db.from('staff_role_config').select('*').eq('id',1).single();if(sp)staffPerms=sp;}catch(_){}
+    document.getElementById('staff-bdg').style.display='inline-block';
+    // Respect can_view_all_tickets
+    if(staffPerms.can_view_all_tickets!==false){document.getElementById('staff-nav').style.display='block';var mms=document.getElementById('mm-staff');if(mms)mms.style.display='block';}
+    else{document.getElementById('staff-nav').style.display='none';}
+  }
   if(isAdmin){document.getElementById('btn-add-cl').style.display='inline-flex';document.getElementById('btn-add-ann').style.display='inline-flex';document.getElementById('admin-nav').style.display='block';var mma=document.getElementById('mm-admin');if(mma)mma.style.display='block';}
   updateNavbar();
   showPage('app-page');
@@ -1100,8 +1110,8 @@ function goPanel(n){
   clearInterval(rtInterval);rtInterval=null;
   if(n==='tickets')loadMyTickets();
   if(n==='commandes')loadMyCommandes();
-  if(n==='all-t')loadAllTickets();
-  if(n==='all-c')loadAllCommandes();
+  if(n==='all-t'&&staffPerms.can_view_all_tickets!==false)loadAllTickets();
+  if(n==='all-c'&&staffPerms.can_view_all_commandes!==false)loadAllCommandes();
   if(n==='compte')loadEmail();
   if(n==='changelogs')loadChangelogs();
   if(n==='annonces')loadAnnonces();
@@ -1140,7 +1150,7 @@ async function loadMyTickets(){
   else{tc.style.display='none';if(bnc)bnc.style.display='none';}
   renderList('list-t',data||[],false,'openTDet');
 }
-async function loadAllTickets(){document.getElementById('list-at').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('tickets').select('*').order('created_at',{ascending:false});renderList('list-at',data||[],true,'openATDet');}
+async function loadAllTickets(){document.getElementById('list-at').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('tickets').select('*').order('created_at',{ascending:false});const filtered=(data||[]).filter(function(t){return t.discord_user_id!==me.id;});renderList('list-at',filtered,true,'openATDet');}
 async function openTDet(id){showDet('tv-list','tv-det',id,'tickets',false);}
 async function openATDet(id){showDet('atv-list','atv-det',id,'tickets',true);}
 
@@ -1151,13 +1161,15 @@ async function loadMyCommandes(){
   if(error){document.getElementById('list-c').innerHTML='<div class="empty"><h3>Erreur</h3><p>'+esc(error.message)+'</p></div>';return;}
   renderList('list-c',data||[],false,'openCDet');
 }
-async function loadAllCommandes(){document.getElementById('list-ac').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('commandes').select('*').order('created_at',{ascending:false});renderList('list-ac',data||[],true,'openACDet');}
+async function loadAllCommandes(){document.getElementById('list-ac').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('commandes').select('*').order('created_at',{ascending:false});const filteredc=(data||[]).filter(function(c){return c.discord_user_id!==me.id;});renderList('list-ac',filteredc,true,'openACDet');}
 async function openCDet(id){showDet('cv-list','cv-det',id,'commandes',false);}
 async function openACDet(id){showDet('acv-list','acv-det',id,'commandes',true);}
 
 /* ── DETAIL ── */
 async function showDet(listId,detId,id,table,staffView){
   clearInterval(rtInterval);rtInterval=null;
+  // Reload staffPerms fresh from DB to ensure latest permissions
+  if(isStaff){try{const{data:sp}=await db.from('staff_role_config').select('*').eq('id',1).single();if(sp)staffPerms=sp;}catch(_){}}
   document.getElementById(listId).style.display='none';
   const dv=document.getElementById(detId);dv.style.display='flex';dv.style.flexDirection='column';
   dv.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3);">Chargement...</div>';
@@ -1165,7 +1177,11 @@ async function showDet(listId,detId,id,table,staffView){
   if(!t)return;
   const fkField=table==='tickets'?'ticket_id':'commande_id';
   const msgTable=table==='tickets'?'ticket_messages':'commande_messages';
-  const canAct=isStaff&&staffView;
+  const isTicket=table==='tickets';
+  const canAct=isStaff&&staffView&&(isTicket?staffPerms.can_close_tickets!==false:staffPerms.can_close_commandes!==false);
+  const canReply=isStaff&&staffView&&(isTicket?staffPerms.can_reply_tickets!==false:staffPerms.can_reply_commandes!==false);
+  const canDelete=isStaff&&staffView&&staffPerms.can_close_permanent!==false;
+  const canViewEmail=!isStaff||(staffPerms.can_view_email!==false);
   const takenBadge=t.taken_by?'<span style="font-size:11px;font-weight:700;background:rgba(34,197,94,.12);color:#22c55e;padding:3px 10px;border-radius:6px;border:1px solid rgba(34,197,94,.2);display:inline-flex;align-items:center;gap:5px;"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Pris en charge par '+esc(t.taken_by_name||'Staff')+'</span>':'';
   const takeBtn=canAct&&!t.taken_by?'<button class="btn-action btn-action-take" onclick="takeCharge(\''+id+'\',\''+table+'\',\''+listId+'\',\''+detId+'\','+staffView+')"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Prendre en charge</button>':'';
   const staffHtml=canAct?'<div class="staff-acts"><span class="acts-lbl">Statut :</span>'
@@ -1174,12 +1190,12 @@ async function showDet(listId,detId,id,table,staffView){
     +'<button class="btn-sm sm-red" onclick="setStatus(\''+id+'\',\'closed\',\''+listId+'\',\''+detId+'\',\''+table+'\','+staffView+')">Fermé</button>'
     +(takeBtn?'<span style="margin-left:4px;">'+takeBtn+'</span>':'')
     +(takenBadge?'<span style="margin-left:8px;">'+takenBadge+'</span>':'')
-    +'<button class="btn-sm sm-dark" style="margin-left:8px;" onclick="setStatus(\''+id+'\',\'closed\',\''+listId+'\',\''+detId+'\',\''+table+'\','+staffView+',true)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:3px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Supprimer</button>'
+    +(canDelete?'<button class="btn-sm sm-dark" style="margin-left:8px;" onclick="setStatus(\''+id+'\',\'closed\',\''+listId+'\',\''+detId+'\',\''+table+'\','+staffView+',true)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:3px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Supprimer</button>':'')
     +'</div>':'';
   // get user email
   let userEmail='';
   try{const{data:prof}=await db.from('user_profiles').select('email').eq('discord_user_id',t.discord_user_id).single();if(prof&&prof.email)userEmail=prof.email;}catch(_){}
-  const emailHtml=userEmail?'<div class="creator-item"><div class="creator-lbl">Email</div><div class="creator-val" style="color:var(--primary);font-size:11px;">'+esc(userEmail)+'</div></div>':'';
+  const emailHtml=(userEmail&&(canViewEmail||!isStaff))?'<div class="creator-item"><div class="creator-lbl">Email</div><div class="creator-val" style="color:var(--primary);font-size:11px;">'+esc(userEmail)+'</div></div>':'';
 
   dv.innerHTML='<button class="det-back" onclick="closeDet(\''+listId+'\',\''+detId+'\',\''+table+'\','+staffView+')">'+'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>Retour</button>'
   +'<div class="det-card">'
@@ -1190,7 +1206,7 @@ async function showDet(listId,detId,id,table,staffView){
   +'<div class="msg-sec">'
   +'<div class="msg-hdr"><span style="display:flex;align-items:center;gap:8px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Fil de discussion</span><span class="realtime-badge"><span class="rt-dot"></span>En direct</span></div>'
   +'<div class="msg-list" id="ml-'+id+'"></div>'
-  +(t.status!=='closed'||isStaff?'<div class="msg-inp-wrap"><textarea class="msg-ta" id="mi-'+id+'" placeholder="Votre message..."></textarea><div class="msg-send-row"><span></span><button class="btn-primary" onclick="sendMsg(\''+id+'\',\''+fkField+'\',\''+msgTable+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Envoyer</button></div></div>':'<div style="padding:12px 18px;text-align:center;font-size:12px;color:var(--text3);">Ce ticket est fermé.</div>')
+  +((t.status!=='closed'||isStaff)&&(!isStaff||canReply)?'<div class="msg-inp-wrap"><textarea class="msg-ta" id="mi-'+id+'" placeholder="Votre message..."></textarea><div class="msg-send-row"><span></span><button class="btn-primary" onclick="sendMsg(\''+id+'\',\''+fkField+'\',\''+msgTable+'\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Envoyer</button></div></div>':'<div style="padding:12px 18px;text-align:center;font-size:12px;color:var(--text3);">Ce ticket est fermé.</div>')
   +'</div>'
   +'<div class="creator-card"><img class="creator-av" src="'+esc(t.avatar_url||'https://cdn.discordapp.com/embed/avatars/0.png')+'" alt=""><div style="flex:1;min-width:0;"><div style="font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;">Informations du demandeur</div><div class="creator-grid"><div class="creator-item"><div class="creator-lbl">Nom</div><div class="creator-val">'+esc(t.username)+'</div></div><div class="creator-item"><div class="creator-lbl">ID Discord</div><div class="creator-val" style="font-family:Outfit,monospace;font-size:11px;">'+esc(t.discord_user_id)+'</div></div>'+emailHtml+'<div class="creator-item"><div class="creator-lbl">Créé le</div><div class="creator-val" style="font-size:11px;">'+fd(t.created_at)+'</div></div></div></div></div>';
 
