@@ -564,6 +564,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .team-av-new{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:#fff;margin-bottom:4px;}
 .team-name-new{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;}
 .team-role-new{font-size:12px;color:var(--primary);font-weight:600;}
+
+/* ── EQUIPE MODAL PREVIEW ── */
+.eq-preview-wrap{display:flex;align-items:center;gap:14px;background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.eq-preview-av{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;background:linear-gradient(135deg,#4f6ef7,#818cf8);flex-shrink:0;transition:background .3s;}
 </style>
 </head>
 <body>
@@ -1024,17 +1028,50 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 
 <!-- MODAL EQUIPE -->
 <div class="modal-ov" id="modal-equipe" onclick="if(event.target===this)this.classList.remove('open')">
-  <div class="modal">
-    <div class="modal-hdr">
-      <div class="modal-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Ajouter un membre</div>
+  <div class="modal" style="max-width:460px;">
+    <div class="modal-hdr" style="border-bottom:1px solid var(--border);padding-bottom:16px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="width:38px;height:38px;border-radius:10px;background:var(--primary-l);display:flex;align-items:center;justify-content:center;color:var(--primary);">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+        </div>
+        <div>
+          <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:15px;">Ajouter un membre</div>
+          <div style="font-size:12px;color:var(--text3);margin-top:1px;">Affiché sur la page d'accueil</div>
+        </div>
+      </div>
       <button class="modal-close" onclick="document.getElementById('modal-equipe').classList.remove('open')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
-    <div class="modal-body">
-      <div class="form-group"><label class="form-label">Prénom / Nom</label><input class="form-input" id="eq-name" placeholder="ex: Joan" maxlength="40"></div>
-      <div class="form-group"><label class="form-label">Rôle / Poste</label><input class="form-input" id="eq-role" placeholder="ex: Responsable Infrastructures" maxlength="80"></div>
-      <div class="form-group"><label class="form-label">Description (optionnel)</label><input class="form-input" id="eq-desc" placeholder="ex: Backend, Node.js, Discord..." maxlength="120"></div>
+    <div class="modal-body" style="display:flex;flex-direction:column;gap:14px;">
+      <div class="eq-preview-wrap">
+        <div class="eq-preview-av" id="eq-preview-av">?</div>
+        <div>
+          <div id="eq-preview-name" style="font-weight:700;font-size:14px;color:var(--text);">Prénom Nom</div>
+          <div id="eq-preview-role" style="font-size:12px;color:var(--primary);margin-top:2px;">Rôle</div>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Prénom / Nom <span style="color:#ef4444;">*</span></label>
+          <input class="form-input" id="eq-name" placeholder="Joan Dupont" maxlength="40" oninput="updateEqPreview()">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">ID Discord</label>
+          <input class="form-input" id="eq-discord" placeholder="538812769207307300" maxlength="20" style="font-family:'Outfit',monospace;font-size:12px;">
+        </div>
+      </div>
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Rôle / Poste <span style="color:#ef4444;">*</span></label>
+        <input class="form-input" id="eq-role" placeholder="Responsable Infrastructures" maxlength="80" oninput="updateEqPreview()">
+      </div>
+      <div class="form-group" style="margin:0;">
+        <label class="form-label">Description <span style="color:var(--text3);font-weight:400;">(optionnel)</span></label>
+        <input class="form-input" id="eq-desc" placeholder="Backend, Node.js, Discord..." maxlength="120">
+      </div>
     </div>
-    <div class="modal-acts"><button class="btn-cancel" onclick="document.getElementById('modal-equipe').classList.remove('open')">Annuler</button><button class="btn-primary" onclick="submitEquipe()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ajouter</button></div>
+    <div class="modal-acts">
+      <button class="btn-cancel" onclick="document.getElementById('modal-equipe').classList.remove('open')">Annuler</button>
+      <button class="btn-primary" onclick="submitEquipe()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ajouter le membre</button>
+    </div>
   </div>
 </div>
 <div id="toast"></div>
@@ -1873,6 +1910,23 @@ async function editContrat(id,username){
 }
 
 
+
+function updateEqPreview(){
+  var name=document.getElementById('eq-name')?document.getElementById('eq-name').value.trim():'';
+  var role=document.getElementById('eq-role')?document.getElementById('eq-role').value.trim():'';
+  var av=document.getElementById('eq-preview-av');
+  var pn=document.getElementById('eq-preview-name');
+  var pr=document.getElementById('eq-preview-role');
+  if(!av)return;
+  var letter=name?name[0].toUpperCase():'?';
+  var colors=["linear-gradient(135deg,#f97316,#fb923c)","linear-gradient(135deg,#4f6ef7,#818cf8)","linear-gradient(135deg,#22c55e,#4ade80)","linear-gradient(135deg,#a855f7,#c084fc)","linear-gradient(135deg,#ef4444,#f87171)","linear-gradient(135deg,#06b6d4,#22d3ee)","linear-gradient(135deg,#f59e0b,#fbbf24)","linear-gradient(135deg,#ec4899,#f472b6)"];
+  var idx=name?name.charCodeAt(0)%colors.length:1;
+  av.textContent=letter;
+  av.style.background=colors[idx];
+  if(pn)pn.textContent=name||'Prénom Nom';
+  if(pr)pr.textContent=role||'Rôle';
+}
+
 /* ── EQUIPE ── */
 const TEAM_COLORS=["linear-gradient(135deg,#f97316,#fb923c)","linear-gradient(135deg,#4f6ef7,#818cf8)","linear-gradient(135deg,#22c55e,#4ade80)","linear-gradient(135deg,#a855f7,#c084fc)","linear-gradient(135deg,#ef4444,#f87171)","linear-gradient(135deg,#06b6d4,#22d3ee)","linear-gradient(135deg,#f59e0b,#fbbf24)","linear-gradient(135deg,#ec4899,#f472b6)"];
 function teamColor(name,idx){return TEAM_COLORS[(idx||0)%TEAM_COLORS.length];}
@@ -1882,9 +1936,7 @@ async function loadTeamLanding(){
   var el=document.getElementById('team-grid-landing');if(!el)return;
   var{data,error}=await db.from('equipe').select('*').order('created_at',{ascending:true});
   if(error||!data||!data.length){
-    // fallback to defaults
-    el.innerHTML='<div class="team-card-new"><div class="team-av-new" style="background:linear-gradient(135deg,#f97316,#fb923c)">J</div><div class="team-name-new">Joan</div><div class="team-role-new">Responsable Infrastructures</div></div>'
-    +'<div class="team-card-new"><div class="team-av-new" style="background:linear-gradient(135deg,#4f6ef7,#818cf8)">P</div><div class="team-name-new">Pedro</div><div class="team-role-new">Responsable Discord</div></div>';
+    el.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;width:100%;">Aucun membre pour le moment.</div>';
     return;
   }
   el.innerHTML=data.map(function(m,i){
@@ -1912,6 +1964,7 @@ async function loadEquipe(){
       +'<div class="team-manage-av" style="background:'+bg+'">'+esc(letter)+'</div>'
       +'<div class="team-manage-info"><div class="team-manage-name">'+esc(m.name)+'</div>'
       +'<div class="team-manage-role">'+esc(m.role||'')+'</div>'
+      +(m.discord_id?'<div style="font-size:10px;color:var(--text3);font-family:Outfit,monospace;margin-top:3px;">ID: '+esc(m.discord_id)+'</div>':'')
       +(m.description?'<div style="font-size:11px;color:var(--text3);margin-top:2px;">'+esc(m.description)+'</div>':'')
       +'</div>'
       +'<div class="action-row">'
@@ -1925,11 +1978,13 @@ async function submitEquipe(){
   var name=document.getElementById('eq-name').value.trim();
   var role=document.getElementById('eq-role').value.trim();
   var desc=document.getElementById('eq-desc').value.trim();
+  var discord_id=document.getElementById('eq-discord').value.trim();
   if(!name||!role){toast('Prénom et rôle requis','e');return;}
-  var{error}=await db.from('equipe').insert({name,role,description:desc||null});
+  var{error}=await db.from('equipe').insert({name,role,description:desc||null,discord_id:discord_id||null});
   if(error){toast('Erreur: '+error.message,'e');return;}
   document.getElementById('modal-equipe').classList.remove('open');
-  ['eq-name','eq-role','eq-desc'].forEach(function(id){document.getElementById(id).value='';}); 
+  ['eq-name','eq-role','eq-desc','eq-discord'].forEach(function(id){document.getElementById(id).value='';});
+  updateEqPreview();
   toast('Membre ajouté !','s');
   loadEquipe();
   loadTeamLanding();
