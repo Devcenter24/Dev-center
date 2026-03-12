@@ -651,6 +651,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .avis-stat-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--primary);margin-bottom:3px;}
 .avis-stat-lbl{font-size:11px;color:var(--text3);font-weight:600;}
 .avis-empty{text-align:center;padding:50px 20px;color:var(--text3);}
+
+/* ── ROW UNREAD BADGE ── */
+.row-notif{position:relative;display:flex;align-items:center;justify-content:center;width:20px;height:20px;background:#ed4245;border-radius:50%;color:#fff;font-size:10px;font-weight:800;font-family:'Outfit',sans-serif;flex-shrink:0;margin-left:auto;box-shadow:0 0 0 2px var(--bg2),0 2px 6px rgba(237,66,69,.5);animation:notifPulse 2.5s ease-in-out infinite;}
+.row-notif.many{width:auto;padding:0 5px;border-radius:100px;}
+@keyframes notifPulse{0%,100%{box-shadow:0 0 0 2px var(--bg2),0 2px 6px rgba(237,66,69,.4);}50%{box-shadow:0 0 0 2px var(--bg2),0 2px 10px rgba(237,66,69,.7),0 0 16px rgba(237,66,69,.3);}}
 </style>
 </head>
 <body>
@@ -1445,6 +1450,30 @@ function renderList(cid,items,showAuthor,clickFn){
   el.innerHTML=items.map(t=>'<div class="t-row fade-up" onclick="'+clickFn+'(\''+t.id+'\')">'+'<div class="t-num">#'+t.id.substring(0,6).toUpperCase()+'</div>'+'<div class="t-info"><div class="t-tit">'+esc(t.title)+'</div><div class="t-meta">'+(showAuthor?esc(t.username)+' · ':'')+fd(t.created_at)+' · '+plbl(t.priority)+'</div></div>'+'<div class="spill '+scls(t.status)+'"><div class="sdot"></div>'+slbl(t.status)+'</div>'+'</div>').join('');
 }
 
+
+/* ── UNREAD MESSAGE TRACKING ── */
+var unreadSeen={};  // { ticketId: lastSeenTimestamp }
+function getSeenTs(id){return unreadSeen[id]||null;}
+function markSeen(id){unreadSeen[id]=new Date().toISOString();}
+
+async function fetchUnreadMap(ids,msgTable,fkField){
+  // For each id, count messages is_staff=true (for user) or is_staff=false (for staff) after last seen
+  if(!ids||!ids.length)return {};
+  var result={};
+  var{data}=await db.from(msgTable).select(fkField+',created_at,is_staff,discord_user_id').in(fkField,ids).order('created_at',{ascending:false});
+  if(!data)return {};
+  data.forEach(function(msg){
+    var tid=msg[fkField];
+    if(!result[tid])result[tid]=0;
+    var seen=getSeenTs(tid);
+    if(seen&&msg.created_at<=seen)return;  // already seen
+    // For regular user: count staff messages. For staff viewing all: count user messages
+    var relevant= (msg.discord_user_id!==me.id);
+    if(relevant)result[tid]++;
+  });
+  return result;
+}
+
 /* ── TICKETS ── */
 async function loadMyTickets(){
   document.getElementById('list-t').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;font-family:Outfit,monospace;">Chargement...</div>';
@@ -1454,11 +1483,16 @@ async function loadMyTickets(){
   var bnc=document.getElementById('bn-count');
   if(cnt>0){tc.textContent=cnt;tc.style.display='inline-block';if(bnc){bnc.textContent=cnt;bnc.style.display='block';}}
   else{tc.style.display='none';if(bnc)bnc.style.display='none';}
-  renderList('list-t',data||[],false,'openTDet');
+  var ids=(data||[]).map(function(t){return t.id;});
+  var unreadMap=await fetchUnreadMap(ids,'ticket_messages','ticket_id');
+  renderList('list-t',data||[],false,'openTDet',unreadMap);
+  // Update sidebar badge with unread count
+  var totalUnread=Object.values(unreadMap).reduce(function(a,b){return a+b;},0);
+  if(tc){tc.textContent=totalUnread||cnt;tc.style.display=(totalUnread||cnt)?'inline-block':'none';}
 }
-async function loadAllTickets(){document.getElementById('list-at').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('tickets').select('*').order('created_at',{ascending:false});const filtered=(data||[]).filter(function(t){return t.discord_user_id!==me.id;});renderList('list-at',filtered,true,'openATDet');}
-async function openTDet(id){showDet('tv-list','tv-det',id,'tickets',false);}
-async function openATDet(id){showDet('atv-list','atv-det',id,'tickets',true);}
+async function loadAllTickets(){document.getElementById('list-at').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('tickets').select('*').order('created_at',{ascending:false});const filtered=(data||[]).filter(function(t){return t.discord_user_id!==me.id;});var idsAt=filtered.map(function(t){return t.id;});fetchUnreadMap(idsAt,'ticket_messages','ticket_id').then(function(um){renderList('list-at',filtered,true,'openATDet',um);});}
+async function openTDet(id){markSeen(id);var r=document.getElementById('trow-'+id);if(r){var b=r.querySelector('.row-notif');if(b)b.remove();}showDet('tv-list','tv-det',id,'tickets',false);}
+async function openATDet(id){markSeen(id);var r=document.getElementById('trow-'+id);if(r){var b=r.querySelector('.row-notif');if(b)b.remove();}showDet('atv-list','atv-det',id,'tickets',true);}
 
 /* ── COMMANDES ── */
 async function loadMyCommandes(){
@@ -1467,11 +1501,15 @@ async function loadMyCommandes(){
   if(error){document.getElementById('list-c').innerHTML='<div class="empty"><h3>Erreur</h3><p>'+esc(error.message)+'</p></div>';return;}
   var cnt2=(data||[]).length;var cc=document.getElementById('cc');
   if(cnt2>0&&cc){cc.textContent=cnt2;cc.style.display='inline-block';}else if(cc)cc.style.display='none';
-  renderList('list-c',data||[],false,'openCDet');
+  var ids2=(data||[]).map(function(c){return c.id;});
+  var unreadMap2=await fetchUnreadMap(ids2,'commande_messages','commande_id');
+  renderList('list-c',data||[],false,'openCDet',unreadMap2);
+  var totalUnread2=Object.values(unreadMap2).reduce(function(a,b){return a+b;},0);
+  if(cc){cc.textContent=totalUnread2||cnt2;cc.style.display=(totalUnread2||cnt2)?'inline-block':'none';}
 }
-async function loadAllCommandes(){document.getElementById('list-ac').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('commandes').select('*').order('created_at',{ascending:false});const filteredc=(data||[]).filter(function(c){return c.discord_user_id!==me.id;});renderList('list-ac',filteredc,true,'openACDet');}
-async function openCDet(id){showDet('cv-list','cv-det',id,'commandes',false);}
-async function openACDet(id){showDet('acv-list','acv-det',id,'commandes',true);}
+async function loadAllCommandes(){document.getElementById('list-ac').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('commandes').select('*').order('created_at',{ascending:false});const filteredc=(data||[]).filter(function(c){return c.discord_user_id!==me.id;});var idsAc=filteredc.map(function(c){return c.id;});fetchUnreadMap(idsAc,'commande_messages','commande_id').then(function(um){renderList('list-ac',filteredc,true,'openACDet',um);});}
+async function openCDet(id){markSeen(id);var r=document.getElementById('trow-'+id);if(r){var b=r.querySelector('.row-notif');if(b)b.remove();}showDet('cv-list','cv-det',id,'commandes',false);}
+async function openACDet(id){markSeen(id);var r=document.getElementById('trow-'+id);if(r){var b=r.querySelector('.row-notif');if(b)b.remove();}showDet('acv-list','acv-det',id,'commandes',true);}
 
 /* ── DETAIL ── */
 async function showDet(listId,detId,id,table,staffView){
