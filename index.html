@@ -1477,8 +1477,8 @@ async function loadMyTickets(){
   if(error){document.getElementById('list-t').innerHTML='<div class="empty"><h3>Erreur</h3><p>'+esc(error.message)+'</p></div>';return;}
   const cnt=(data||[]).length;const tc=document.getElementById('tc');
   var bnc=document.getElementById('bn-count');
-  if(cnt>0){tc.textContent=cnt;tc.style.display='inline-block';if(bnc){bnc.textContent=cnt;bnc.style.display='block';}}
-  else{tc.style.display='none';if(bnc)bnc.style.display='none';}
+  if(tc){if(cnt>0){tc.textContent=cnt;tc.style.display='inline-block';}else{tc.style.display='none';}}
+  if(bnc){if(cnt>0){bnc.textContent=cnt;bnc.style.display='block';}else{bnc.style.display='none';}}
   renderList('list-t',data||[],false,'openTDet');
 }
 async function loadAllTickets(){document.getElementById('list-at').innerHTML='<div style="padding:30px;text-align:center;color:var(--text3);font-size:13px;">Chargement...</div>';const{data}=await db.from('tickets').select('*').order('created_at',{ascending:false});const filtered=(data||[]).filter(function(t){return t.discord_user_id!==me.id;});renderList('list-at',filtered,true,'openATDet');}
