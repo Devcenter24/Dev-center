@@ -624,6 +624,33 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .pi-tag-blue{background:rgba(79,110,247,.12);color:var(--primary);}
 .pi-tag-yellow{background:rgba(245,158,11,.12);color:#f59e0b;}
 .pi-tag-purple{background:rgba(168,85,247,.12);color:#a855f7;}
+
+/* ── AVIS REVIEWS LIST ── */
+.avis-section-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+.avis-section-title span{font-family:'Outfit',sans-serif;font-size:11px;font-weight:700;background:var(--primary-l);color:var(--primary);padding:2px 9px;border-radius:100px;}
+.avis-reviews-grid{display:flex;flex-direction:column;gap:10px;}
+.review-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 22px;position:relative;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
+.review-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--rc-accent,linear-gradient(90deg,#f59e0b,#fb923c));}
+.review-card:hover{border-color:rgba(79,110,247,.3);box-shadow:var(--shadow);}
+.review-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.review-av{width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid rgba(79,110,247,.15);}
+.review-user-info{flex:1;min-width:0;}
+.review-name{font-size:14px;font-weight:700;margin-bottom:1px;}
+.review-date{font-size:11px;color:var(--text3);}
+.review-stars{display:flex;gap:3px;margin-left:auto;flex-shrink:0;}
+.review-star{color:#d1d5db;}
+.review-star.on{color:#f59e0b;}
+.review-body{font-size:13px;color:var(--text2);line-height:1.7;padding:12px 14px;background:var(--bg3);border-radius:9px;margin-bottom:12px;font-style:italic;}
+.review-body::before{content:'"';font-size:20px;color:var(--primary);font-style:normal;line-height:0;vertical-align:-8px;margin-right:3px;font-family:'Syne',sans-serif;}
+.review-body::after{content:'"';font-size:20px;color:var(--primary);font-style:normal;line-height:0;vertical-align:-8px;margin-left:3px;font-family:'Syne',sans-serif;}
+.review-svc{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--primary-l);color:var(--primary);}
+.review-own{background:rgba(79,110,247,.04);border-color:rgba(79,110,247,.25);}
+.review-own::before{background:linear-gradient(90deg,var(--primary),#a78bfa);}
+.avis-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.avis-stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;text-align:center;}
+.avis-stat-num{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;color:var(--primary);margin-bottom:3px;}
+.avis-stat-lbl{font-size:11px;color:var(--text3);font-weight:600;}
+.avis-empty{text-align:center;padding:50px 20px;color:var(--text3);}
 </style>
 </head>
 <body>
@@ -856,10 +883,24 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
           <div class="avis-card" id="avis-form-wrap">
             <div class="form-group"><div class="f-lbl">Note globale</div><div class="stars-row" id="stars"></div></div>
             <div class="form-group"><label class="f-lbl">Service concerné</label><select class="f-select" id="avis-svc"><option value="general">Général</option><option value="discord">Serveur Discord</option><option value="web">Site Web</option><option value="bot">Bot Discord</option><option value="support">Support</option></select></div>
-            <div class="form-group" style="flex:1;display:flex;flex-direction:column;"><label class="f-lbl">Votre avis</label><textarea class="f-textarea" id="avis-txt" placeholder="Partagez votre expérience..." style="flex:1;min-height:160px;"></textarea></div>
-            <button class="btn-primary" onclick="submitAvis()" style="width:100%;justify-content:center;margin-top:16px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Envoyer l'avis</button>
+            <div class="form-group" style="flex:1;display:flex;flex-direction:column;"><label class="f-lbl">Votre avis</label><textarea class="f-textarea" id="avis-txt" placeholder="Partagez votre expérience..." style="flex:1;min-height:140px;"></textarea></div>
+            <button class="btn-primary" onclick="submitAvis()" style="width:100%;justify-content:center;margin-top:16px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Publier mon avis</button>
           </div>
-          <div class="avis-ok" id="avis-ok-msg"><div style="width:64px;height:64px;border-radius:50%;background:rgba(34,197,94,.1);display:flex;align-items:center;justify-content:center;color:#22c55e;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;">Merci pour votre avis !</h3><p style="font-size:14px;color:var(--text3);">Votre retour a été envoyé à l'équipe.</p></div>
+          <div class="avis-ok" id="avis-ok-msg"><div style="width:64px;height:64px;border-radius:50%;background:rgba(34,197,94,.1);display:flex;align-items:center;justify-content:center;color:#22c55e;"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div><h3 style="font-family:'Syne',sans-serif;font-size:22px;font-weight:800;">Merci pour votre avis !</h3><p style="font-size:14px;color:var(--text3);">Votre retour a bien été publié.</p></div>
+        </div>
+
+        <!-- SECTION VOS AVIS -->
+        <div style="margin-top:32px;">
+          <div style="height:1px;background:var(--border);margin-bottom:24px;"></div>
+          <div class="avis-stats" id="avis-stats-row">
+            <div class="avis-stat"><div class="avis-stat-num" id="avis-stat-total">—</div><div class="avis-stat-lbl">Avis publiés</div></div>
+            <div class="avis-stat"><div class="avis-stat-num" id="avis-stat-avg">—</div><div class="avis-stat-lbl">Note moyenne</div></div>
+            <div class="avis-stat"><div class="avis-stat-num" id="avis-stat-best">—</div><div class="avis-stat-lbl">5 étoiles ⭐</div></div>
+          </div>
+          <div class="avis-section-title">Avis publiés <span id="avis-count-badge">0</span></div>
+          <div class="avis-reviews-grid" id="avis-reviews-list">
+            <div style="text-align:center;padding:40px 20px;color:var(--text3);font-size:13px;">Chargement...</div>
+          </div>
         </div>
       </div>
       <div class="dash-panel" id="panel-compte">
@@ -1377,6 +1418,7 @@ function goPanel(n){
   if(n==='modules')loadModules();
   if(n==='equipe')loadEquipe();
   if(n==='profil')loadProfil();
+  if(n==='avis')loadAvisReviews();
   if(n==='reglages')updateReglagesThemeLabel();
   // Update bottom nav active state
   ['tickets','commandes','avis','compte'].forEach(function(x){var b=document.getElementById('bn-'+x);if(b)b.classList.toggle('active',x===n);});
@@ -1567,12 +1609,65 @@ async function saveEmail(){const email=document.getElementById('c-email').value.
 /* ── AVIS ── */
 function initStars(){const wrap=document.getElementById('stars');if(!wrap)return;wrap.innerHTML='';for(let i=1;i<=5;i++){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('class','star');svg.setAttribute('data-v',i);svg.setAttribute('width','28');svg.setAttribute('height','28');svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('fill','currentColor');svg.innerHTML='<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>';svg.addEventListener('click',()=>{avisRating=i;document.querySelectorAll('.star').forEach(s=>s.classList.toggle('on',parseInt(s.dataset.v)<=i));});wrap.appendChild(svg);}}
 async function submitAvis(){
-  if(!avisRating){toast('Choisis une note','e');return;}
-  const txt=document.getElementById('avis-txt').value.trim();const svc=document.getElementById('avis-svc').value;
-  if(!txt){toast("Écris ton avis",'e');return;}
-  const stars='⭐'.repeat(avisRating);
-  const payload={username:'Dev Center — Avis',embeds:[{title:stars+' Nouvel avis',color:0x4f6ef7,fields:[{name:'Utilisateur',value:me.username+' (`'+me.id+'`)',inline:true},{name:'Service',value:svc,inline:true},{name:'Note',value:avisRating+'/5 '+stars,inline:true},{name:'Avis',value:txt}],thumbnail:{url:me.avatar},timestamp:new Date().toISOString()}]};
-  try{await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});document.getElementById('avis-form-wrap').style.display='none';document.getElementById('avis-ok-msg').classList.add('show');toast('Avis envoyé !','s');}catch(e){toast("Erreur lors de l'envoi",'e');}
+  if(!avisRating){toast('Choisis une note ⭐','e');return;}
+  const txt=document.getElementById('avis-txt').value.trim();
+  const svc=document.getElementById('avis-svc').value;
+  if(!txt){toast("Écris ton avis avant d'envoyer",'e');return;}
+  const{error}=await db.from('avis').insert({
+    discord_user_id:me.id,
+    username:me.username,
+    avatar_url:me.avatar,
+    rating:avisRating,
+    service:svc,
+    content:txt
+  });
+  if(error){toast('Erreur: '+error.message,'e');return;}
+  document.getElementById('avis-form-wrap').style.display='none';
+  document.getElementById('avis-ok-msg').classList.add('show');
+  toast('Avis publié ! Merci 🎉','s');
+  loadAvisReviews();
+}
+
+const SVC_LABELS={general:'Général',discord:'Discord',web:'Site Web',bot:'Bot',support:'Support'};
+const SVC_ICONS={general:'🌐',discord:'💬',web:'🖥️',bot:'🤖',support:'🛡️'};
+const STAR_COLORS={1:'#ef4444',2:'#f97316',3:'#f59e0b',4:'#84cc16',5:'#22c55e'};
+
+async function loadAvisReviews(){
+  const el=document.getElementById('avis-reviews-list');
+  if(!el)return;
+  el.innerHTML='<div style="text-align:center;padding:40px 20px;color:var(--text3);font-size:13px;">Chargement...</div>';
+  const{data,error}=await db.from('avis').select('*').order('created_at',{ascending:false}).limit(50);
+  if(error){el.innerHTML='<div class="avis-empty">Erreur: '+esc(error.message)+'<br><small style="font-size:11px;margin-top:8px;display:block;">Créez la table : CREATE TABLE avis (id UUID DEFAULT gen_random_uuid() PRIMARY KEY, discord_user_id TEXT, username TEXT, avatar_url TEXT, rating INT, service TEXT, content TEXT, created_at TIMESTAMPTZ DEFAULT NOW()); ALTER TABLE avis DISABLE ROW LEVEL SECURITY;</small></div>';return;}
+  // Stats
+  var total=data?data.length:0;
+  var avg=total?Math.round((data.reduce((a,r)=>a+r.rating,0)/total)*10)/10:0;
+  var fivestar=total?data.filter(r=>r.rating===5).length:0;
+  var si=document.getElementById('avis-stat-total');var sa=document.getElementById('avis-stat-avg');var sb=document.getElementById('avis-stat-best');var cb=document.getElementById('avis-count-badge');
+  if(si)si.textContent=total;
+  if(sa)sa.textContent=total?(avg+' ★'):'—';
+  if(sb)sb.textContent=fivestar;
+  if(cb)cb.textContent=total;
+  if(!data||!data.length){el.innerHTML='<div class="avis-empty"><div style="font-size:40px;margin-bottom:12px;">&#x1F4AC;</div><div style="font-size:14px;font-weight:600;color:var(--text2);margin-bottom:6px;">Aucun avis pour le moment</div><div style="font-size:13px;">Soyez le premier !</div></div>';return;}
+  el.innerHTML=data.map(function(r){
+    var isMe=r.discord_user_id===me.id;
+    var av=r.avatar_url||'https://cdn.discordapp.com/embed/avatars/0.png';
+    var starsHtml='';for(var i=1;i<=5;i++)starsHtml+='<svg class="review-star'+(i<=r.rating?' on':'')+'" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
+    var color=STAR_COLORS[r.rating]||'#f59e0b';
+    var svcIcon=SVC_ICONS[r.service]||'🌐';
+    var svcLabel=SVC_LABELS[r.service]||r.service;
+    return '<div class="review-card'+(isMe?' review-own':'')+'" style="--rc-accent:linear-gradient(90deg,'+color+','+color+'88);">'
+      +'<div class="review-head">'
+        +'<img class="review-av" src="'+esc(av)+'" alt="">'  
+        +'<div class="review-user-info">'
+          +'<div class="review-name">'+esc(r.username||'Anonyme')+(isMe?' <span style="font-size:10px;background:var(--primary-l);color:var(--primary);padding:1px 7px;border-radius:4px;font-weight:700;">Vous</span>':'')+'</div>'
+          +'<div class="review-date">'+fd(r.created_at)+'</div>'
+        +'</div>'
+        +'<div class="review-stars">'+starsHtml+'</div>'
+      +'</div>'
+      +'<div class="review-body">'+esc(r.content)+'</div>'
+      +'<div class="review-svc">'+svcIcon+' '+svcLabel+'</div>'
+    +'</div>';
+  }).join('');
 }
 
 /* ── PRICING ── */
