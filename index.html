@@ -727,14 +727,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 
 /* ── DASHBOARD ORBS ── */
 .dash-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.dash-orbs .orb1{width:380px;height:380px;opacity:.55;}
-.dash-orbs .orb2{width:300px;height:300px;opacity:.45;}
-.dash-orbs .orb3{width:260px;height:260px;opacity:.35;}
-.dash-orbs .orb4{width:220px;height:220px;opacity:.3;}
-[data-theme="light"] .dash-orbs .orb1{opacity:.35;}
-[data-theme="light"] .dash-orbs .orb2{opacity:.28;}
-[data-theme="light"] .dash-orbs .orb3{opacity:.22;}
-[data-theme="light"] .dash-orbs .orb4{opacity:.2;}
+/* Override orb positions to center in content area (after 220px sidebar) */
+.dash-orbs .orb1{width:500px;height:500px;top:5%;left:calc(220px + 10%);right:auto;bottom:auto;opacity:.5;}
+.dash-orbs .orb2{width:380px;height:380px;top:40%;left:calc(220px + 40%);right:auto;bottom:auto;opacity:.4;}
+.dash-orbs .orb3{width:320px;height:320px;top:60%;left:calc(220px + 20%);right:auto;bottom:auto;opacity:.3;}
+.dash-orbs .orb4{width:280px;height:280px;top:15%;left:calc(220px + 55%);right:auto;bottom:auto;opacity:.28;}
+[data-theme="light"] .dash-orbs .orb1{opacity:.3;}
+[data-theme="light"] .dash-orbs .orb2{opacity:.25;}
+[data-theme="light"] .dash-orbs .orb3{opacity:.2;}
+[data-theme="light"] .dash-orbs .orb4{opacity:.18;}
 
 /* ── GLASS CARDS (orbs visible) ── */
 body[data-theme="dark"] .t-row,
