@@ -1465,6 +1465,7 @@ async function launchApp(){
   }
   if(isAdmin){document.getElementById('admin-nav').style.display='block';var mma=document.getElementById('mm-admin');if(mma)mma.style.display='block';}
   updateNavbar();
+  updateSidebarUserCard();
   showPage('app-page');
   initStars();
   loadMyTickets();
