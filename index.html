@@ -440,13 +440,13 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .mm-link-icon{width:30px;height:30px;border-radius:8px;background:var(--bg3);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--text3);}
 
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;padding:72px 20px 40px;gap:28px;}
+  .hero{grid-template-columns:1fr;padding:72px 28px 40px;gap:28px;}
   .hero-title{font-size:44px;}
   .terminal{display:none;}
   .pgrid3,.pgrid2{grid-template-columns:1fr;}
   .about-grid{grid-template-columns:1fr;}
   .why-grid{grid-template-columns:1fr 1fr;}
-  .section{padding:52px 20px;}
+  .section{padding:52px 28px;}
   .navbar{padding:0 16px;}
   .nav-links{display:none;}
   .nav-burger{display:flex;}
@@ -462,15 +462,15 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
   .btn-connect{padding:7px 12px;font-size:12px;gap:5px;}
   .btn-connect svg{width:16px;height:12px;}
   .nav-right{gap:6px;}
-  .hero{padding:60px 16px 28px;gap:12px;text-align:center;}
+  .hero{padding:60px 22px 28px;gap:12px;text-align:center;}
   .hero-title{font-size:24px;letter-spacing:-.02em;line-height:1.2;}
   .hero-badge{font-size:11px;padding:4px 11px;margin:0 auto 12px;}
   .hero-desc{font-size:13px;line-height:1.6;color:var(--text2);}
   .hero-btns{flex-direction:column;gap:8px;align-items:stretch;margin-top:16px;}
   .hero-btns>*{width:100%;justify-content:center;text-align:center;padding:13px 16px;font-size:13px;border-radius:12px;}
   .s-title{font-size:22px;}
-  .section{padding:32px 14px;}
-  .section-inner{padding:0;}
+  .section{padding:32px 22px;}
+  .section-inner{padding:0 22px;}
   .why-grid{grid-template-columns:1fr;}
   .about-grid{grid-template-columns:1fr;}
   .team-grid{display:grid !important;grid-template-columns:1fr 1fr;gap:10px;}
@@ -697,7 +697,8 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .footer-socials{display:flex;gap:10px;}
 .footer-soc-btn{width:32px;height:32px;border-radius:9px;background:var(--bg3);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text2);transition:all .2s;text-decoration:none;}
 .footer-soc-btn:hover{background:var(--primary-l);border-color:rgba(79,110,247,.3);color:var(--primary);}
-@media(max-width:768px){.footer-inner{grid-template-columns:1fr 1fr;gap:28px;padding:32px 20px 20px;}.footer-bottom{padding:14px 20px;flex-direction:column;gap:10px;text-align:center;}}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr 1fr;gap:28px;padding:32px 28px 20px;}.footer-bottom{padding:14px 28px;flex-direction:column;gap:10px;text-align:center;}}
+@media(max-width:480px){.footer-inner{grid-template-columns:1fr;padding:28px 22px 16px;}.footer-bottom{padding:12px 22px;}}
 @media(max-width:480px){.footer-inner{grid-template-columns:1fr;}}
 
 .nav-center-group{display:flex;align-items:center;gap:16px;}
@@ -727,15 +728,14 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 
 /* ── DASHBOARD ORBS ── */
 .dash-orbs{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-/* Override orb positions to center in content area (after 220px sidebar) */
-.dash-orbs .orb1{width:500px;height:500px;top:5%;left:calc(220px + 10%);right:auto;bottom:auto;opacity:.5;}
-.dash-orbs .orb2{width:380px;height:380px;top:40%;left:calc(220px + 40%);right:auto;bottom:auto;opacity:.4;}
-.dash-orbs .orb3{width:320px;height:320px;top:60%;left:calc(220px + 20%);right:auto;bottom:auto;opacity:.3;}
-.dash-orbs .orb4{width:280px;height:280px;top:15%;left:calc(220px + 55%);right:auto;bottom:auto;opacity:.28;}
-[data-theme="light"] .dash-orbs .orb1{opacity:.3;}
-[data-theme="light"] .dash-orbs .orb2{opacity:.25;}
-[data-theme="light"] .dash-orbs .orb3{opacity:.2;}
-[data-theme="light"] .dash-orbs .orb4{opacity:.18;}
+.dash-orbs .orb1{width:700px;height:700px;top:-100px;left:calc(220px + 5%);right:auto;bottom:auto;opacity:.75;filter:blur(70px);}
+.dash-orbs .orb2{width:550px;height:550px;top:35%;left:calc(220px + 38%);right:auto;bottom:auto;opacity:.65;filter:blur(80px);}
+.dash-orbs .orb3{width:480px;height:480px;top:55%;left:calc(220px + 8%);right:auto;bottom:auto;opacity:.55;filter:blur(75px);}
+.dash-orbs .orb4{width:420px;height:420px;top:10%;left:calc(220px + 58%);right:auto;bottom:auto;opacity:.5;filter:blur(70px);}
+[data-theme="light"] .dash-orbs .orb1{opacity:.5;}
+[data-theme="light"] .dash-orbs .orb2{opacity:.42;}
+[data-theme="light"] .dash-orbs .orb3{opacity:.36;}
+[data-theme="light"] .dash-orbs .orb4{opacity:.32;}
 
 /* ── GLASS CARDS (orbs visible) ── */
 body[data-theme="dark"] .t-row,
