@@ -48,7 +48,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 /* ── PAGES ── */
 .page{display:none;position:relative;z-index:1;width:100%;}
 .page.active{display:block;}
-#app-page.active{display:flex;flex-direction:column;min-height:100vh;}
+#app-page.active{display:flex;flex-direction:column;min-height:100vh;background:var(--bg);}
 
 /* ── NAVBAR ── */
 .navbar{position:sticky;top:0;z-index:200;height:62px;background:rgba(8,8,16,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;width:100%;}
@@ -163,10 +163,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .btn-logout:hover{border-color:var(--red);color:var(--red);}
 .btn-home{background:transparent;border:1px solid var(--border);color:var(--text2);padding:6px 12px;border-radius:8px;font-size:13px;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;display:flex;align-items:center;gap:6px;}
 .btn-home:hover{border-color:var(--primary);color:var(--primary);}
-.app-body{display:flex;flex:1;min-height:0;width:100%;}
+.app-body{display:flex;flex:1;min-height:0;width:100%;background:transparent;}
 
 /* ── SIDEBAR ── */
-.sidebar{width:220px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);padding:0;display:flex;flex-direction:column;position:sticky;top:58px;height:calc(100vh - 58px);overflow:hidden;}
+.sidebar{width:220px;flex-shrink:0;background:rgba(8,8,24,.7);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-right:1px solid var(--border);padding:0;display:flex;flex-direction:column;position:sticky;top:58px;height:calc(100vh - 58px);overflow:hidden;z-index:10;}
 .sb-scroll{flex:1;overflow-y:auto;padding:18px 10px 10px;display:flex;flex-direction:column;gap:2px;}
 .sb-bottom{padding:10px;border-top:1px solid var(--border);flex-shrink:0;}
 .sb-lbl{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:0 8px;margin:14px 0 6px;}
@@ -178,7 +178,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .sb-count{margin-left:auto;background:var(--primary);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:100px;}
 
 /* ── APP MAIN ── */
-.app-main{flex:1;padding:24px 28px;overflow-y:auto;display:flex;flex-direction:column;min-width:0;}
+.app-main{flex:1;padding:24px 28px;overflow-y:auto;display:flex;flex-direction:column;min-width:0;position:relative;z-index:1;}
 .dash-panel{display:none;flex-direction:column;flex:1;}
 .dash-panel.active{display:flex;}
 .ph{margin-bottom:22px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
@@ -601,7 +601,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 [data-theme="light"] body{background:linear-gradient(160deg,#f0f2ff 0%,#e8ecff 50%,#f5f0ff 100%);}
 [data-theme="light"] .navbar{background:rgba(248,249,255,.9);box-shadow:0 1px 0 rgba(79,110,247,.12),0 4px 20px rgba(79,110,247,.06);}
 [data-theme="light"] .t-row:hover{border-color:rgba(79,110,247,.4);box-shadow:0 4px 16px rgba(79,110,247,.15);}
-[data-theme="light"] .sidebar{background:rgba(255,255,255,.85);backdrop-filter:blur(10px);}
+[data-theme="light"] .sidebar{background:rgba(238,240,255,.75);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);}
 [data-theme="light"] .sb-link.active{background:rgba(79,110,247,.1);}
 [data-theme="light"] .why-card,[data-theme="light"] .stat-box{background:rgba(255,255,255,.8);backdrop-filter:blur(8px);}
 
@@ -611,7 +611,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 [data-theme="light"] .app-wrapper{background:linear-gradient(160deg,#f0f2ff 0%,#eaecff 40%,#f5f0ff 100%);}
 [data-theme="light"] .navbar{background:rgba(255,255,255,.88);border-bottom:1px solid rgba(79,110,247,.14);}
 [data-theme="light"] .topbar{background:rgba(255,255,255,.92);border-bottom:1px solid rgba(79,110,247,.12);}
-[data-theme="light"] .sidebar{background:rgba(255,255,255,.88);}
+
 [data-theme="light"] .modal{background:#fff;box-shadow:0 24px 70px rgba(79,110,247,.18);}
 [data-theme="light"] .t-row{background:rgba(255,255,255,.85);}
 [data-theme="light"] .t-row:hover{background:#fff;border-color:rgba(79,110,247,.35);}
@@ -670,7 +670,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .sb-logout-btn:hover{background:rgba(239,68,68,.1);border-color:rgba(239,68,68,.2);color:#ef4444;}
 
 /* ── DASHBOARD VISUAL IMPROVEMENTS ── */
-.app-main{background:var(--bg);}
+.app-main{background:transparent;}
 .dash-panel.active{animation:panelIn .25s ease;}
 @keyframes panelIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
 .ph{padding-bottom:18px;border-bottom:1px solid var(--border);margin-bottom:24px;}
@@ -735,6 +735,32 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 [data-theme="light"] .dash-orbs .orb2{opacity:.28;}
 [data-theme="light"] .dash-orbs .orb3{opacity:.22;}
 [data-theme="light"] .dash-orbs .orb4{opacity:.2;}
+
+/* ── GLASS CARDS (orbs visible) ── */
+body[data-theme="dark"] .t-row,
+body[data-theme="dark"] .det-card,
+body[data-theme="dark"] .msg-sec,
+body[data-theme="dark"] .creator-card,
+body[data-theme="dark"] .rgl-card,
+body[data-theme="dark"] .cl-card,
+body[data-theme="dark"] .ann-card,
+body[data-theme="dark"] .contrat-card {
+  background:rgba(12,14,30,.72);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+body[data-theme="light"] .t-row,
+body[data-theme="light"] .det-card,
+body[data-theme="light"] .msg-sec,
+body[data-theme="light"] .creator-card,
+body[data-theme="light"] .rgl-card,
+body[data-theme="light"] .cl-card,
+body[data-theme="light"] .ann-card,
+body[data-theme="light"] .contrat-card {
+  background:rgba(255,255,255,.72);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
 </style>
 </head>
 <body>
@@ -1713,13 +1739,23 @@ async function loadMsgs(id,fkField,msgTable,silent){
   const{data}=await db.from(msgTable).select('*').eq(fkField,id).order('created_at',{ascending:true});
   if(!data||!data.length){if(!silent)el.innerHTML='<div style="text-align:center;padding:24px;font-size:13px;color:var(--text3);font-family:Outfit,monospace;">// Aucun message pour l\'instant</div>';return;}
   const supportIcon='<span class="support-ico" title="Support"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.38 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l.77-.77a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span class="support-tip">Membre du support Dev Center</span></span>';
-  const newHtml=data.map(m=>'<div class="msg-item"><img class="msg-av" src="'+esc(m.avatar_url||'https://cdn.discordapp.com/embed/avatars/0.png')+'" alt=""><div class="msg-c"><div class="msg-ar"><span class="msg-name">'+esc(m.username)+'</span>'+(m.is_staff?supportIcon:'')+'<span class="msg-time">'+fd(m.created_at)+'</span></div><div class="msg-txt">'+esc(m.content)+'</div></div></div>').join('');
-  if(el.innerHTML!==newHtml){el.innerHTML=newHtml;if(!silent||wasBottom)el.scrollTop=el.scrollHeight;}
+  const newHtml=data.map(m=>'<div class="msg-item"><img class="msg-av" src="'+esc(m.avatar_url||'https://cdn.discordapp.com/embed/avatars/0.png')+'" onerror="this.src=\'https://cdn.discordapp.com/embed/avatars/0.png\'" alt=""><div class="msg-c"><div class="msg-ar"><span class="msg-name">'+esc(m.username)+'</span>'+(m.is_staff?supportIcon:'')+'<span class="msg-time">'+fd(m.created_at)+'</span></div><div class="msg-txt">'+esc(m.content)+'</div></div></div>').join('');
+  if(el.innerHTML!==newHtml){
+    if(silent){
+      // silent refresh: update without scroll jump unless already at bottom
+      el.innerHTML=newHtml;
+      if(wasBottom)el.scrollTop=el.scrollHeight;
+    } else {
+      el.innerHTML=newHtml;
+      el.scrollTop=el.scrollHeight;
+    }
+  }
 }
 
 async function sendMsg(id,fkField,msgTable){
   const inp=document.getElementById('mi-'+id);const content=inp.value.trim();if(!content)return;
-  const row={discord_user_id:me.id,username:me.username,avatar_url:me.avatar,content,is_staff:isStaff};
+  const avatarFull=me.avatar?me.avatar.replace('size=64','size=128'):me.avatar;
+  const row={discord_user_id:me.id,username:me.username,avatar_url:avatarFull||me.avatar,content,is_staff:isStaff};
   row[fkField]=id;
   const{error}=await db.from(msgTable).insert(row);
   if(error){toast('Erreur: '+error.message,'e');return;}
