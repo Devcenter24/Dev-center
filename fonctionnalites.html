@@ -106,7 +106,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .ptab.active{background:var(--primary);color:#fff;}
 .pgrid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .pgrid2{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:720px;}
-.pcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:26px;position:relative;transition:all .3s;cursor:pointer;}
+.pcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:26px;position:relative;transition:all .3s;cursor:pointer;backdrop-filter:none !important;}
 .pcard:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:rgba(79,110,247,.3);}
 .pcard.pop{border-color:var(--primary);border-width:2px;}
 .pop-badge{position:absolute;top:14px;right:14px;background:var(--primary);color:#fff;font-size:9px;font-weight:700;padding:2px 9px;border-radius:5px;letter-spacing:.06em;}
@@ -780,11 +780,14 @@ body[data-theme="light"] .creator-card,
 body[data-theme="light"] .rgl-card,
 body[data-theme="light"] .cl-card,
 body[data-theme="light"] .ann-card,
-body[data-theme="light"] .contrat-card {
-  background:rgba(255,255,255,.72);
+body[data-theme="light"] .contrat-card,
+body[data-theme="light"] .pcard {
+  background:rgba(255,255,255,.85);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
 }
+/* Force pcard background always solid */
+.pcard,.pcard.pop{background:var(--bg2) !important;backdrop-filter:none !important;-webkit-backdrop-filter:none !important;}
 
 .orb5{width:420px;height:420px;top:60%;left:60%;background:radial-gradient(circle,rgba(34,197,94,.18),transparent 70%);animation-delay:-2s;}
 .orb6{width:360px;height:360px;top:20%;left:45%;background:radial-gradient(circle,rgba(245,158,11,.15),transparent 70%);animation-delay:-9s;}
@@ -898,7 +901,6 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
     <div id="p-bot" style="display:none"><div class="pgrid2" style="max-width:720px;margin:0 auto;">
       <div class="pcard"><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;"><div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#a78bfa);display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg></div><div><div class="pname">Starter <span id="mod-badge-bot_starter" style="display:none;font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;vertical-align:middle;"></span></div><div style="font-size:11px;color:var(--text3);" id="mpr-bot_starter">0 Crédit</div></div></div><ul class="pfeats" style="margin-bottom:20px;"><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>15 commandes personnalisées</li><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Modération + fun</li><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Bot prêt à utiliser</li></ul><button class="btn-plan" onclick="goToOrder('Bot Discord Starter')">Commander</button></div>
       <div class="pcard pop"><div class="pop-badge">Populaire</div><div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;"><div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#4f6ef7,#818cf8);display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1"/></svg></div><div><div class="pname">Pro <span id="mod-badge-bot_pro" style="display:none;font-size:10px;font-weight:700;padding:2px 8px;border-radius:5px;vertical-align:middle;"></span></div><div style="font-size:11px;color:var(--primary);" id="mpr-bot_pro">400 Crédits</div></div></div><ul class="pfeats" style="margin-bottom:20px;"><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>40 commandes personnalisées</li><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Modération + fun + utilitaires</li><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Tableau de bord web</li><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Support prioritaire</li></ul><button class="btn-plan" onclick="goToOrder('Bot Discord Pro')">Commander</button></div>
-    </div></div></div><ul class="pfeats" style="margin-bottom:20px;"><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>40 commandes personnalisées</li><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Modération + fun + utilitaires</li><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Tableau de bord web</li><li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Support prioritaire</li></ul><button class="btn-plan" onclick="goToOrder('Bot Discord Pro')">Commander</button></div>
     </div></div>
   </div>
 </main>
