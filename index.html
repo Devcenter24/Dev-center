@@ -2549,18 +2549,26 @@ async function loadModules(){
     mods.forEach(function(m){
       var cur=modulesCache[m.key]||{status:'active',message:''};
       var st=MODULE_STATUSES[cur.status]||MODULE_STATUSES.active;
+      var creditsVal=cur.credits!==undefined?cur.credits:(m.credits||0);
       html+='<div style="padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;flex-wrap:wrap;" id="mrow-'+m.key+'">'
         +'<div style="flex:1;min-width:180px;">'
-        +'<div style="font-size:14px;font-weight:600;margin-bottom:3px;">'+m.label+'</div>'
+        +'<div style="font-size:14px;font-weight:600;margin-bottom:6px;">'+m.label+'</div>'
+        +'<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">'
         +'<div style="display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;background:'+st.bg+';color:'+st.color+';" id="mst-'+m.key+'">'
         +'<span style="width:6px;height:6px;border-radius:50%;background:'+st.dot+';display:inline-block;"></span>'+st.label
+        +'</div>'
+        +'<div style="display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;background:rgba(245,158,11,.1);color:#f59e0b;">'
+        +'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
+        +'<span id="mcr-'+m.key+'">'+creditsVal+'</span> crédit'+(creditsVal!==1?'s':'')
+        +'</div>'
         +'</div>'
         +'</div>'
         +'<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">'
         +'<select onchange="updateModuleStatus(\''+m.key+'\',this.value)" style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;font-family:Outfit,sans-serif;outline:none;cursor:pointer;" id="msel-'+m.key+'">'
         +Object.keys(MODULE_STATUSES).map(function(s){return'<option value="'+s+'"'+(cur.status===s?' selected':'')+'>'+MODULE_STATUSES[s].label+'</option>';}).join('')
         +'</select>'
-        +'<input style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;font-family:Outfit,sans-serif;outline:none;width:180px;" placeholder="Message optionnel..." value="'+esc(cur.message||'')+'" id="mmsg-'+m.key+'">'
+        +'<input style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:7px 10px;color:var(--text);font-size:12px;font-family:Outfit,sans-serif;outline:none;width:130px;" placeholder="Message..." value="'+esc(cur.message||'')+'" id="mmsg-'+m.key+'">'
+        +'<input style="background:var(--bg3);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:7px 10px;color:#f59e0b;font-size:12px;font-family:Outfit,sans-serif;outline:none;width:80px;font-weight:700;" type="number" placeholder="Crédits" value="'+creditsVal+'" min="0" id="mcrinp-'+m.key+'" title="Modifier les crédits">'
         +'<button onclick="saveModuleConfig(\''+m.key+'\')" class="btn-sm sm-green">Sauvegarder</button>'
         +'</div></div>';
     });
