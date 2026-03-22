@@ -894,10 +894,10 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
         <li><a href="/nous-soutenir.html" style="color:#f59e0b;">Nous soutenir</a></li>
       </ul>
       <button class="btn-connect" id="nav-dash-btn" style="display:none" onclick="window.location.href='/dashboard.html'"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Dashboard</button>
+      <label class="theme-switch" onclick="toggleTheme()" title="Changer le thème"><div class="theme-track"><div class="theme-thumb"><svg class="theme-icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="theme-icon-sun" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></div></div></label>
       <button class="btn-connect" id="nav-login-btn" style="display:none" onclick="loginWithDiscord()"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="flex-shrink:0;"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>Se connecter</button>
     </div>
     <div class="nav-right">
-      <label class="theme-switch" onclick="toggleTheme()" title="Changer le thème"><div class="theme-track"><div class="theme-thumb"><svg class="theme-icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="theme-icon-sun" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></div></div></label>
       <button class="nav-burger" onclick="document.getElementById('mobile-menu').classList.add('open')" aria-label="Menu">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
       </button>
@@ -1050,6 +1050,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
         <button class="sb-link" id="nav-all-t" onclick="goPanel('all-t')"><div class="sb-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><span>Tous les tickets</span></button>
         <button class="sb-link" id="nav-all-c" onclick="goPanel('all-c')"><div class="sb-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div><span>Toutes les commandes</span></button>
         <button class="sb-link" id="nav-contrats" onclick="goPanel('contrats')"><div class="sb-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></div><span>Contrats</span></button>
+          <button class="sb-link" id="nav-credits-add" onclick="goPanel('credits-add')"><div class="sb-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><span>Ajouter des crédits</span></button>
           <button class="sb-link" id="nav-factures" onclick="goPanel('factures')"><div class="sb-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/><line x1="8" y1="15" x2="12" y2="15"/><line x1="16" y1="15" x2="16.01" y2="15"/></svg></div><span>Factures</span></button>
         <button class="sb-link" id="nav-annonces" onclick="goPanel('annonces')"><div class="sb-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/></svg></div><span>Annonces</span></button>
         <div id="admin-nav" style="display:none">
@@ -1189,6 +1190,23 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
       <div class="dash-panel" id="panel-factures">
         <div class="ph"><div class="ph-left"><h2>Factures</h2><p>Créez et gérez les factures clients.</p></div><button class="btn-primary" onclick="openNewFacture()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>Nouvelle facture</button></div>
         <div class="contrat-grid" id="list-factures"></div>
+      </div>
+      <!-- CREDITS ADD -->
+      <div class="dash-panel" id="panel-credits-add">
+        <div class="ph"><div class="ph-left"><h2>Ajouter des crédits</h2><p>Attribuez des crédits à un utilisateur.</p></div></div>
+        <div style="max-width:520px;">
+          <div class="rgl-card">
+            <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(34,197,94,.12);color:#22c55e;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><div class="rgl-title">Attribution de crédits</div><div class="rgl-sub">Ajouter ou retirer des crédits</div></div></div>
+            <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px;">
+              <div><label class="f-lbl">ID Discord de l'utilisateur</label><input class="f-input" id="cr-uid" placeholder="ex: 538812769207307300"></div>
+              <div><label class="f-lbl">Nom d'utilisateur (optionnel)</label><input class="f-input" id="cr-name" placeholder="ex: JeanDupont"></div>
+              <div><label class="f-lbl">Nombre de crédits <span style="font-size:11px;color:var(--text3);">(négatif pour retirer)</span></label><input class="f-input" id="cr-amount" type="number" placeholder="ex: 200" step="1"></div>
+              <div><label class="f-lbl">Raison</label><input class="f-input" id="cr-reason" placeholder="ex: Achat Boss Discord"></div>
+              <button class="btn-primary" onclick="submitAddCredits()" style="align-self:flex-start;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Attribuer</button>
+            </div>
+          </div>
+          <div style="margin-top:16px;"><div style="font-size:12px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Historique récent</div><div id="credits-log-list"><div style="font-size:13px;color:var(--text3);text-align:center;padding:20px;">Chargement...</div></div></div>
+        </div>
       </div>
       <!-- MODULES CONFIG -->
       <div class="dash-panel" id="panel-modules">
@@ -1656,6 +1674,7 @@ function applyStaffPerms(){
   sv('nav-all-t',perm('can_view_all_tickets'));
   sv('nav-all-c',perm('can_view_all_commandes'));
   sv('nav-contrats',perm('can_create_contrats'));
+  sv('nav-credits-add',isStaff);
   sv('nav-factures',perm('can_create_contrats'));
   sv('nav-annonces',true);  // visible pour tout staff, btn +  contrôlé par perm
 
@@ -1689,6 +1708,7 @@ function goPanel(n){
   if(n==='dashboard')loadDashboard();
   if(n==='logs'){if(isAdmin)loadLogs();}
   if(n==='factures'){if(perm('can_create_contrats'))loadFactures();}
+  if(n==='credits-add'){if(isStaff)loadCreditsLog();}
   if(n==='contrats'){if(perm('can_create_contrats'))loadContrats();else{document.getElementById('list-contrats').innerHTML='<div class="empty"><h3>Accès refusé</h3><p>Vous n\'avez pas la permission de cr\u00e9er des contrats.</p></div>';}}
   if(n==='perms')loadPerms();
   if(n==='modules')loadModules();
@@ -2698,10 +2718,12 @@ async function loadProfil(){
           +(isStaff?'<div class="pi-cell" style="grid-column:1/-1;"><div class="pi-lbl">Accès staff</div><div class="pi-val" style="display:flex;gap:6px;flex-wrap:wrap;">'+(isAdmin?'<span class="pi-tag pi-tag-yellow" style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Staff complet</span>':'')+'<span class="pi-tag pi-tag-blue" style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Support</span>'+(isAdmin?'<span class="pi-tag pi-tag-purple" style="display:inline-flex;align-items:center;gap:4px;"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg> Administration</span>':'')+'</div></div>':'')
         +'</div>'
         +(emailVal?'<div class="pi-cell"><div class="pi-lbl">Email Discord</div><div class="pi-val" style="color:var(--primary);">'+esc(emailVal)+'</div></div>':'')
+        +'<div class="pi-cell"><div class="pi-lbl">Crédits</div><div class="pi-val"><span id="profil-credits" style="font-family:Syne,sans-serif;font-size:16px;font-weight:800;color:#f59e0b;">—</span></div></div>'
       +'</div>'
     +'</div>';
   // Fetch recent activity
   loadRecentActivity(grid);
+  loadUserCreditsProfile();
 }
 
 
@@ -3209,6 +3231,34 @@ function generateFacturePDF(f){
   }catch(e){console.error(e);toast('Erreur PDF: '+e.message,'e');}
 }
 preloadDCLogo();
+
+
+/* SQL requis pour les crédits :
+CREATE TABLE credits (id UUID DEFAULT gen_random_uuid() PRIMARY KEY, discord_user_id TEXT UNIQUE NOT NULL, username TEXT, balance INT DEFAULT 0, updated_at TIMESTAMPTZ DEFAULT NOW());
+ALTER TABLE credits DISABLE ROW LEVEL SECURITY;
+CREATE TABLE credits_log (id UUID DEFAULT gen_random_uuid() PRIMARY KEY, discord_user_id TEXT, username TEXT, amount INT, reason TEXT, admin_id TEXT, admin_name TEXT, created_at TIMESTAMPTZ DEFAULT NOW());
+ALTER TABLE credits_log DISABLE ROW LEVEL SECURITY;
+*/
+/* ── CREDITS ── */
+async function getUserCredits(discordId){
+  try{
+    var{data}=await db.from('credits').select('balance').eq('discord_user_id',discordId).maybeSingle();
+    return data?data.balance:0;
+  }catch(e){return 0;}
+}
+async function addCredits(discordId,username,amount,reason,adminId,adminName){
+  // Upsert balance
+  var cur=await getUserCredits(discordId);
+  var newBal=Math.max(0,cur+amount);
+  await db.from('credits').upsert({discord_user_id:discordId,username,balance:newBal,updated_at:new Date().toISOString()},{onConflict:'discord_user_id'});
+  // Log transaction
+  await db.from('credits_log').insert({discord_user_id:discordId,username,amount,reason:reason||null,admin_id:adminId,admin_name:adminName,created_at:new Date().toISOString()});
+}
+async function loadUserCreditsProfile(){
+  var el=document.getElementById('profil-credits');if(!el)return;
+  var bal=await getUserCredits(me.id);
+  el.textContent=bal+' crédit'+(bal!==1?'s':'');
+}
 function openNewCL(){
   _editCLId=null;
   ['cl-ver','cl-title','cl-desc'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
