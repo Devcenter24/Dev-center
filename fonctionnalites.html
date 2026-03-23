@@ -980,7 +980,11 @@ function updateNavbar(){
   }
 }
 function switchPricing(t,btn){document.querySelectorAll('#p-discord,#p-web,#p-bot').forEach(el=>el.style.display='none');document.getElementById('p-'+t).style.display='';document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');}
-function goToOrder(s){if(me){sessionStorage.setItem('dc_order',s);window.location.href='/';}else{window.location.href='/';}}
+function goToOrder(s){
+  sessionStorage.setItem('dc_order',s);
+  sessionStorage.setItem('dc_want_dash','1');
+  window.location.href='/';
+}
 function loginWithDiscord(){
   var CLIENT_ID='1477279042230157404';
   var REDIRECT_URI='https://devcenter.vyral-studio.com/';
