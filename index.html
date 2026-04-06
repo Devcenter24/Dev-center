@@ -4,6 +4,9 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Dev Center — Hébergez vos projets</title>
+<link rel="icon" type="image/png" href="https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=256"/>
+<link rel="apple-touch-icon" href="https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=256"/>
+<meta name="theme-color" content="#7c3aed"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -570,23 +573,16 @@ footer{
 <nav>
   <div class="nav-logo">
     <!-- SVG Logo Icon -->
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-      <rect width="28" height="28" rx="8" fill="url(#logoGrad)"/>
-      <path d="M8 8l6 6-6 6M15 20h5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <defs>
-        <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
-          <stop stop-color="#7c3aed"/>
-          <stop offset="1" stop-color="#3b82f6"/>
-        </linearGradient>
-      </defs>
-    </svg>
+    <img src="https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=64"
+         style="width:32px;height:32px;border-radius:8px;object-fit:cover;" alt="Dev Center"/>
     Dev Center
   </div>
   <div class="nav-links">
-    <a href="#" onclick="showPage('home')">Accueil</a>
-    <a href="#" onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})">Tarifs</a>
-    <a href="#" onclick="document.getElementById('features-section').scrollIntoView({behavior:'smooth'})">Services</a>
-    <a href="#" onclick="document.getElementById('reviews-section').scrollIntoView({behavior:'smooth'})">Avis</a>
+    <a href="#" onclick="goHome()">Accueil</a>
+    <a href="#" onclick="goHome('pricing-section')">Tarifs</a>
+    <a href="#" onclick="goHome('features-section')">Services</a>
+    <a href="#" onclick="goHome('reviews-section')">Avis</a>
+    <a href="#" onclick="goHome('team-section')">Équipe</a>
   </div>
   <div class="nav-right" id="nav-right">
     <button class="btn btn-discord" onclick="loginWithDiscord()">
@@ -894,16 +890,28 @@ footer{
     </div>
   </section>
 
+  <!-- ÉQUIPE -->
+  <section class="features" id="team-section" style="padding-top:0">
+    <div class="section-header">
+      <div class="section-tag">Notre équipe</div>
+      <h2 class="section-title">Les personnes derrière Dev Center</h2>
+      <p class="section-desc">Une équipe passionnée à votre service.</p>
+    </div>
+    <div id="public-team-grid" style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;">
+      <div class="loading"><div class="spinner"></div></div>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer>
     <div class="footer-logo">Dev Center</div>
     <div class="footer-links">
-      <a href="#">Accueil</a>
-      <a href="#">Tarifs</a>
-      <a href="#">Support</a>
-      <a href="#">CGU</a>
+      <a href="#" onclick="goHome()">Accueil</a>
+      <a href="#" onclick="goHome('pricing-section')">Tarifs</a>
+      <a href="#" onclick="goHome('team-section')">Équipe</a>
+      <a href="#" onclick="goHome('reviews-section')">Avis</a>
     </div>
-    <div class="footer-copy">© 2025 Vyral Studio · Tous droits réservés</div>
+    <div class="footer-copy">© 2025 Dev Center · Tous droits réservés</div>
   </footer>
 </div><!-- end page-home -->
 
@@ -1147,6 +1155,10 @@ footer{
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Crédits
         </a></li>
+        <li><a href="#" onclick="switchStaffTab('team')" id="staff-nav-team">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Équipe
+        </a></li>
         <li><a href="#" onclick="logout()" style="color:#ef4444">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
           Déconnexion
@@ -1261,12 +1273,52 @@ footer{
         </div>
       </div>
 
+      <!-- Staff tab: Équipe -->
+      <div id="staff-panel-team" class="tab-panel" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+
+          <!-- Add member form -->
+          <div class="price-card" style="padding:24px">
+            <h3 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:18px">Ajouter un membre</h3>
+            <label style="font-size:.82rem;color:var(--text2);display:block;margin-bottom:6px">Nom affiché</label>
+            <input type="text" id="team-name-input" class="chat-input" placeholder="Ex: Jojo" style="width:100%;margin-bottom:12px"/>
+            <label style="font-size:.82rem;color:var(--text2);display:block;margin-bottom:6px">Rôle / Titre</label>
+            <input type="text" id="team-role-input" class="chat-input" placeholder="Ex: Fondateur, Développeur..." style="width:100%;margin-bottom:12px"/>
+            <label style="font-size:.82rem;color:var(--text2);display:block;margin-bottom:6px">URL photo de profil</label>
+            <input type="url" id="team-photo-input" class="chat-input" placeholder="https://..." style="width:100%;margin-bottom:12px"/>
+            <label style="font-size:.82rem;color:var(--text2);display:block;margin-bottom:6px">Description courte (optionnel)</label>
+            <input type="text" id="team-desc-input" class="chat-input" placeholder="Ex: Gère le support et les bots" style="width:100%;margin-bottom:16px"/>
+
+            <!-- Preview -->
+            <div id="team-preview" style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:16px;opacity:.5">
+              <img id="team-preview-img" src="https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=64"
+                style="width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--purple)"/>
+              <div>
+                <div style="font-weight:700;font-size:.95rem" id="team-preview-name">Nom</div>
+                <div style="font-size:.78rem;color:var(--purple2)" id="team-preview-role">Rôle</div>
+                <div style="font-size:.75rem;color:var(--text3)" id="team-preview-desc"></div>
+              </div>
+            </div>
+
+            <button class="chat-send" onclick="addTeamMember()" style="width:100%;padding:12px;border-radius:8px;font-size:.92rem;display:flex;align-items:center;justify-content:center;gap:8px">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Ajouter à l'équipe
+            </button>
+          </div>
+
+          <!-- Members list -->
+          <div class="price-card" style="padding:24px">
+            <h3 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:16px">Membres actuels</h3>
+            <div id="team-members-list" style="display:flex;flex-direction:column;gap:10px;max-height:520px;overflow-y:auto">
+              <div class="loading"><div class="spinner"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
   </div>
 </div>
-
-<!-- ══════════════════════════════════════════
-     NEW TICKET MODAL
 ══════════════════════════════════════════ -->
 <div class="modal-overlay" id="modal-ticket">
   <div class="modal" style="position:relative">
@@ -1327,6 +1379,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   terminalAnimation();
   await handleOAuthCallback();
   loadPublicReviews();
+  loadPublicTeam();
 });
 
 // ═══════════════════════════════
@@ -1669,13 +1722,14 @@ let staffTicketFilter = 'all';
 let creditsSearchUser = null; // { user_id, user_name, credits }
 
 function switchStaffTab(name) {
-  ['tickets','credits'].forEach(t => {
+  ['tickets','credits','team'].forEach(t => {
     const panel = document.getElementById(`staff-panel-${t}`);
     const nav   = document.getElementById(`staff-nav-${t}`);
     if (panel) panel.style.display = t === name ? 'block' : 'none';
-    if (nav)   { nav.classList.toggle('active', t === name); }
+    if (nav)   nav.classList.toggle('active', t === name);
   });
   if (name === 'credits') loadAllUsersCredits();
+  if (name === 'team')    loadTeamMembers();
 }
 
 async function loadStaffDashboard() {
@@ -2043,6 +2097,131 @@ function resetTerminal() {
   ['line3','line4','line5','line6'].forEach(id => {
     const el = document.getElementById(id); if(el) el.style.display='none';
   });
+}
+
+// ═══════════════════════════════
+// NAVBAR HELPER
+// ═══════════════════════════════
+function goHome(sectionId) {
+  showPage('home');
+  if (sectionId) {
+    setTimeout(() => {
+      const el = document.getElementById(sectionId);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }, 80);
+  }
+}
+
+// ═══════════════════════════════
+// TEAM MEMBERS
+// ═══════════════════════════════
+
+// Live preview while typing
+['team-name-input','team-role-input','team-photo-input','team-desc-input'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener('input', updateTeamPreview);
+});
+
+function updateTeamPreview() {
+  const name  = document.getElementById('team-name-input').value  || 'Nom';
+  const role  = document.getElementById('team-role-input').value  || 'Rôle';
+  const photo = document.getElementById('team-photo-input').value || 'https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=64';
+  const desc  = document.getElementById('team-desc-input').value  || '';
+  const prev  = document.getElementById('team-preview');
+  document.getElementById('team-preview-name').textContent = name;
+  document.getElementById('team-preview-role').textContent = role;
+  document.getElementById('team-preview-desc').textContent = desc;
+  document.getElementById('team-preview-img').src          = photo;
+  if (prev) prev.style.opacity = '1';
+}
+
+async function addTeamMember() {
+  const name  = document.getElementById('team-name-input').value.trim();
+  const role  = document.getElementById('team-role-input').value.trim();
+  const photo = document.getElementById('team-photo-input').value.trim();
+  const desc  = document.getElementById('team-desc-input').value.trim();
+  if (!name || !role) { showToast('Nom et rôle requis', 'error'); return; }
+  if (!sb) { showToast('Supabase non configuré', 'error'); return; }
+
+  const { error } = await sb.from('team_members').insert({
+    name, role, photo_url: photo || null, description: desc || null,
+    created_at: new Date().toISOString()
+  });
+  if (error) { showToast('Erreur : ' + error.message, 'error'); console.error(error); return; }
+
+  showToast(`${name} ajouté à l'équipe !`, 'success');
+  ['team-name-input','team-role-input','team-photo-input','team-desc-input'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+  updateTeamPreview();
+  document.getElementById('team-preview').style.opacity = '.5';
+  loadTeamMembers();
+  loadPublicTeam();
+}
+
+async function loadTeamMembers() {
+  const list = document.getElementById('team-members-list');
+  if (!list || !sb) return;
+  list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+  const { data, error } = await sb.from('team_members').select('*').order('created_at', { ascending: true });
+  if (error) { list.innerHTML = `<p style="color:var(--text3);font-size:.85rem;text-align:center">Erreur : ${error.message}</p>`; return; }
+  if (!data || !data.length) { list.innerHTML = `<p style="color:var(--text3);font-size:.85rem;text-align:center">Aucun membre pour l'instant.</p>`; return; }
+
+  list.innerHTML = data.map(m => `
+    <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg3);border:1px solid var(--border);border-radius:10px">
+      <img src="${escHtml(m.photo_url || 'https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=64')}"
+        style="width:42px;height:42px;border-radius:50%;object-fit:cover;border:2px solid var(--purple);flex-shrink:0"
+        onerror="this.src='https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=64'"/>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;font-size:.9rem">${escHtml(m.name)}</div>
+        <div style="font-size:.76rem;color:var(--purple2)">${escHtml(m.role)}</div>
+        ${m.description ? `<div style="font-size:.73rem;color:var(--text3);margin-top:2px">${escHtml(m.description)}</div>` : ''}
+      </div>
+      <button onclick="removeTeamMember('${m.id}')"
+        style="background:transparent;border:1px solid rgba(239,68,68,.3);border-radius:6px;padding:5px 8px;color:#ef4444;cursor:pointer;font-size:.75rem;flex-shrink:0;transition:all .2s"
+        onmouseover="this.style.background='rgba(239,68,68,.1)'" onmouseout="this.style.background='transparent'">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+      </button>
+    </div>
+  `).join('');
+}
+
+async function removeTeamMember(id) {
+  if (!sb) return;
+  if (!confirm('Supprimer ce membre ?')) return;
+  const { error } = await sb.from('team_members').delete().eq('id', id);
+  if (error) { showToast('Erreur : ' + error.message, 'error'); return; }
+  showToast('Membre supprimé', 'success');
+  loadTeamMembers();
+  loadPublicTeam();
+}
+
+async function loadPublicTeam() {
+  const grid = document.getElementById('public-team-grid');
+  if (!grid) return;
+
+  if (!sb) {
+    grid.innerHTML = `<p style="color:var(--text3);text-align:center;font-size:.9rem">Configurez Supabase pour afficher l'équipe.</p>`;
+    return;
+  }
+
+  const { data, error } = await sb.from('team_members').select('*').order('created_at', { ascending: true });
+  if (error || !data || !data.length) {
+    grid.innerHTML = `<p style="color:var(--text3);text-align:center;font-size:.9rem;grid-column:1/-1">L'équipe se construit… Revenez bientôt !</p>`;
+    return;
+  }
+
+  grid.innerHTML = data.map(m => `
+    <div class="feat-card" style="text-align:center;padding:28px 20px">
+      <img src="${escHtml(m.photo_url || 'https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=128')}"
+        style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:3px solid var(--purple);margin:0 auto 14px;display:block"
+        onerror="this.src='https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=128'"/>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:1.05rem;margin-bottom:4px">${escHtml(m.name)}</div>
+      <div style="font-size:.8rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-weight:600;margin-bottom:8px">${escHtml(m.role)}</div>
+      ${m.description ? `<div style="font-size:.82rem;color:var(--text2);line-height:1.5">${escHtml(m.description)}</div>` : ''}
+    </div>
+  `).join('');
 }
 
 // ═══════════════════════════════
