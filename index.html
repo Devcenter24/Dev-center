@@ -1353,15 +1353,28 @@ const DISCORD_REDIRECT   = 'https://devcenter.vyral-studio.com';
 const DISCORD_GUILD_ID   = '1452963098284785765';
 const STAFF_ROLE_ID      = '1480159806903029822';
 const SUPABASE_URL       = 'https://llheudregeksbyjuscrw.supabase.co';
-const SUPABASE_ANON_KEY  = 'YOUR_SUPABASE_ANON_KEY'; // ⚠️ Remplacez par votre clé anon Supabase
+const SUPABASE_ANON_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxsaGV1ZHJlZ2Vrc2J5anVzY3J3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5ODg1NzUsImV4cCI6MjA4ODU2NDU3NX0.oglo1qODsVra6EdJcrwZ9p2P_SR73R_XfH736V1Giuk';
 
 // ═══════════════════════════════
 // SUPABASE
 // ═══════════════════════════════
-let sb;
-try {
-  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-} catch(e) { console.warn('Supabase non initialisé:', e); }
+let sb = null;
+
+function initSupabase() {
+  if (sb) return true;
+  try {
+    if (typeof supabase === 'undefined' || !supabase.createClient) return false;
+    sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    console.log('✅ Supabase initialisé');
+    return true;
+  } catch(e) {
+    console.error('❌ Supabase init error:', e);
+    return false;
+  }
+}
+
+// Premier essai immédiat
+initSupabase();
 
 // ═══════════════════════════════
 // STATE
@@ -1376,6 +1389,7 @@ let realtimeSub      = null;
 // INIT
 // ═══════════════════════════════
 document.addEventListener('DOMContentLoaded', async () => {
+  initSupabase(); // s'assure que Supabase est bien prêt
   terminalAnimation();
   await handleOAuthCallback();
   loadPublicReviews();
@@ -1725,32 +1739,56 @@ function switchStaffTab(name) {
   ['tickets','credits','team'].forEach(t => {
     const panel = document.getElementById(`staff-panel-${t}`);
     const nav   = document.getElementById(`staff-nav-${t}`);
-    if (panel) panel.style.display = t === name ? 'block' : 'none';
-    if (nav)   nav.classList.toggle('active', t === name);
+    if (panel) { panel.style.display = t === name ? 'block' : 'none'; }
+    if (nav)   { nav.classList.toggle('active', t === name); }
   });
+  // Charger les données seulement quand on bascule vers cet onglet
   if (name === 'credits') loadAllUsersCredits();
   if (name === 'team')    loadTeamMembers();
+  // tickets est chargé par loadStaffDashboard() qui appelle renderStaffTickets()
 }
 
 async function loadStaffDashboard() {
-  if (!isStaff) { showToast('Accès refusé', 'error'); showPage('dashboard'); return; }
-  if (!sb) { showToast('Supabase non configuré', 'error'); return; }
+  // Si Supabase n'est pas encore initialisé, on attend un court instant
+  if (!sb) {
+    try {
+      sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } catch(e) {
+      showToast('Erreur Supabase : ' + e.message, 'error');
+      return;
+    }
+  }
+
+  // Forcer l'affichage de l'onglet tickets et masquer les autres
+  ['tickets','credits','team'].forEach(t => {
+    const panel = document.getElementById(`staff-panel-${t}`);
+    const nav   = document.getElementById(`staff-nav-${t}`);
+    if (panel) panel.style.display = t === 'tickets' ? 'block' : 'none';
+    if (nav)   nav.classList.toggle('active', t === 'tickets');
+  });
 
   const list = document.getElementById('staff-ticket-list');
+  if (!list) return;
   list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
 
   const { data, error } = await sb.from('tickets').select('*').order('created_at', { ascending: false });
-  if (error) { list.innerHTML = renderEmpty('Erreur : ' + error.message); console.error(error); return; }
+  if (error) {
+    list.innerHTML = renderEmpty('Erreur Supabase : ' + error.message);
+    console.error('Staff tickets error:', error);
+    return;
+  }
 
   allStaffTickets = data || [];
 
-  const open   = allStaffTickets.filter(t => t.status === 'open').length;
-  const closed = allStaffTickets.filter(t => t.status === 'closed').length;
+  const open    = allStaffTickets.filter(t => t.status === 'open').length;
+  const closed  = allStaffTickets.filter(t => t.status !== 'open').length;
   const userSet = new Set(allStaffTickets.map(t => t.user_id));
-  document.getElementById('stat-open').textContent   = open;
-  document.getElementById('stat-closed').textContent = closed;
-  document.getElementById('stat-total').textContent  = allStaffTickets.length;
-  document.getElementById('stat-users').textContent  = userSet.size;
+
+  const setEl = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setEl('stat-open',   open);
+  setEl('stat-closed', closed);
+  setEl('stat-total',  allStaffTickets.length);
+  setEl('stat-users',  userSet.size);
 
   renderStaffTickets();
 }
@@ -1791,7 +1829,8 @@ function renderStaffTickets() {
 // ═══════════════════════════════
 async function loadAllUsersCredits() {
   const list = document.getElementById('all-users-credits');
-  if (!list || !sb) return;
+  if (!list) return;
+  if (!sb) { list.innerHTML = `<p style="color:var(--text3);text-align:center;font-size:.85rem">Supabase non initialisé.</p>`; return; }
   list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
 
   const { data, error } = await sb.from('user_credits').select('*').order('credits', { ascending: false });
@@ -2161,7 +2200,8 @@ async function addTeamMember() {
 
 async function loadTeamMembers() {
   const list = document.getElementById('team-members-list');
-  if (!list || !sb) return;
+  if (!list) return;
+  if (!sb) { list.innerHTML = `<p style="color:var(--text3);font-size:.85rem;text-align:center">Supabase non initialisé.</p>`; return; }
   list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
 
   const { data, error } = await sb.from('team_members').select('*').order('created_at', { ascending: true });
