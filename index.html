@@ -1,101 +1,2107 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site en Maintenance</title>
-    <style>
-        :root {
-            --primary-color: #4a90e2;
-            --text-color: #2c3e50;
-            --bg-color: #ffffff;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dev Center — Hébergez vos projets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+/* ══════════════════════════════════════════
+   VARIABLES & RESET
+══════════════════════════════════════════ */
+:root{
+  --bg:#07070f;
+  --bg2:#0d0d1a;
+  --bg3:#111128;
+  --card:#12121f;
+  --border:#1e1e35;
+  --border2:#2a2a4a;
+  --purple:#7c3aed;
+  --purple2:#a855f7;
+  --blue:#3b82f6;
+  --cyan:#06b6d4;
+  --pink:#ec4899;
+  --green:#22c55e;
+  --orange:#f97316;
+  --text:#e2e8f0;
+  --text2:#94a3b8;
+  --text3:#4a5568;
+  --grad:linear-gradient(135deg,#7c3aed,#3b82f6,#06b6d4);
+  --grad2:linear-gradient(135deg,#a855f7,#ec4899);
+  --glow:0 0 40px rgba(124,58,237,.3);
+  --radius:14px;
+  --font:'Outfit',sans-serif;
+  --font-display:'Syne',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:hidden;min-height:100vh;}
+a{text-decoration:none;color:inherit;}
+button{cursor:pointer;font-family:var(--font);}
+img{max-width:100%;}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--bg2);}
+::-webkit-scrollbar-thumb{background:var(--purple);border-radius:3px;}
 
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow: hidden;
-        }
+/* ══════════════════════════════════════════
+   NOISE TEXTURE OVERLAY
+══════════════════════════════════════════ */
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:0;opacity:.4;
+}
 
-        .wrapper {
-            text-align: center;
-            max-width: 500px;
-            padding: 20px;
-        }
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;height:64px;
+  background:rgba(7,7,15,.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  font-family:var(--font-display);font-size:1.4rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-links{display:flex;align-items:center;gap:32px;}
+.nav-links a{
+  font-size:.9rem;font-weight:500;color:var(--text2);
+  transition:color .2s;position:relative;
+}
+.nav-links a:hover{color:var(--text);}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;
+  background:var(--grad);border-radius:2px;
+  transform:scaleX(0);transition:transform .2s;
+}
+.nav-links a:hover::after{transform:scaleX(1);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.btn{
+  padding:9px 20px;border-radius:8px;font-size:.9rem;font-weight:600;
+  border:none;transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-ghost{background:transparent;color:var(--text2);border:1px solid var(--border2);}
+.btn-ghost:hover{border-color:var(--purple);color:var(--text);}
+.btn-primary{
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  color:#fff;box-shadow:0 4px 20px rgba(124,58,237,.3);
+}
+.btn-primary:hover{box-shadow:0 6px 30px rgba(124,58,237,.5);transform:translateY(-1px);}
+.btn-discord{
+  background:linear-gradient(135deg,#5865F2,#4752c4);
+  color:#fff;padding:10px 22px;border-radius:8px;
+  font-weight:600;font-size:.95rem;
+  display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 4px 20px rgba(88,101,242,.35);
+  border:none;transition:all .2s;
+}
+.btn-discord:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(88,101,242,.5);}
 
-        /* Style du SVG */
-        .svg-container {
-            width: 250px;
-            margin: 0 auto 30px auto;
-            animation: float 3s ease-in-out infinite;
-        }
+/* ══════════════════════════════════════════
+   SECTIONS / ROUTING
+══════════════════════════════════════════ */
+.page{display:none;}
+.page.active{display:block;}
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
+/* ══════════════════════════════════════════
+   HERO SECTION
+══════════════════════════════════════════ */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:80px 40px 60px;position:relative;overflow:hidden;
+}
+.hero-bg-orb{
+  position:absolute;border-radius:50%;filter:blur(80px);opacity:.15;pointer-events:none;
+}
+.orb1{width:600px;height:600px;background:var(--purple);top:-200px;right:-100px;}
+.orb2{width:400px;height:400px;background:var(--blue);bottom:-100px;left:-100px;}
+.orb3{width:300px;height:300px;background:var(--cyan);top:50%;right:20%;}
+.hero-inner{
+  max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;align-items:center;position:relative;z-index:1;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(124,58,237,.1);border:1px solid rgba(124,58,237,.3);
+  border-radius:100px;padding:6px 16px;font-size:.8rem;color:var(--purple2);
+  margin-bottom:24px;
+}
+.hero-title{
+  font-family:var(--font-display);font-size:clamp(2.5rem,5vw,4rem);
+  font-weight:800;line-height:1.1;margin-bottom:16px;
+}
+.hero-title .accent{
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hero-desc{
+  font-size:1.1rem;color:var(--text2);line-height:1.7;margin-bottom:36px;max-width:500px;
+}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+.hero-stats{
+  display:flex;gap:32px;margin-top:48px;padding-top:32px;
+  border-top:1px solid var(--border);
+}
+.stat-item{text-align:center;}
+.stat-num{
+  font-family:var(--font-display);font-size:1.8rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.stat-label{font-size:.8rem;color:var(--text3);margin-top:4px;}
 
-        h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            letter-spacing: -1px;
-        }
+/* Terminal card */
+.terminal{
+  background:#0d0d1a;border:1px solid var(--border2);border-radius:16px;
+  overflow:hidden;box-shadow:0 20px 80px rgba(0,0,0,.5),var(--glow);
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.terminal-bar{
+  display:flex;align-items:center;gap:8px;padding:14px 18px;
+  background:#0a0a18;border-bottom:1px solid var(--border);
+}
+.dot{width:12px;height:12px;border-radius:50%;}
+.dot.r{background:#ff5f57;} .dot.y{background:#ffbd2e;} .dot.g{background:#28c840;}
+.terminal-title{font-size:.75rem;color:var(--text3);margin-left:8px;font-family:var(--font-mono);}
+.terminal-body{padding:20px;font-family:var(--font-mono);font-size:.85rem;line-height:1.8;}
+.t-line{display:flex;align-items:center;gap:8px;}
+.t-prompt{color:var(--purple2);}
+.t-cmd{color:var(--text);}
+.t-out{color:var(--text3);}
+.t-success{color:var(--green);}
+.t-cursor{display:inline-block;width:8px;height:16px;background:var(--purple2);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
 
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #7f8c8d;
-            margin-top: 15px;
-        }
+/* Dashboard preview card */
+.dashboard-preview{
+  background:rgba(124,58,237,.05);border:1px solid rgba(124,58,237,.2);
+  border-radius:12px;padding:16px;margin-top:16px;
+}
+.dash-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid var(--border);
+}
+.dash-row:last-child{border:none;}
+.dash-label{font-size:.85rem;color:var(--text2);display:flex;align-items:center;gap:8px;}
+.dash-status{font-size:.75rem;padding:3px 10px;border-radius:100px;}
+.status-online{background:rgba(34,197,94,.15);color:var(--green);}
+.status-open{background:rgba(59,130,246,.15);color:var(--blue);}
+.progress-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:8px;}
+.progress-fill{height:100%;border-radius:3px;background:var(--grad);}
 
-        /* Petite barre de progression décorative */
-        .loader {
-            width: 100px;
-            height: 4px;
-            background: #eee;
-            margin: 25px auto;
-            position: relative;
-            border-radius: 2px;
-            overflow: hidden;
-        }
+/* ══════════════════════════════════════════
+   FEATURES
+══════════════════════════════════════════ */
+.features{padding:80px 40px;position:relative;}
+.section-header{text-align:center;margin-bottom:60px;}
+.section-tag{
+  display:inline-block;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--purple2);margin-bottom:12px;
+}
+.section-title{
+  font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;
+  margin-bottom:16px;
+}
+.section-desc{color:var(--text2);font-size:1rem;max-width:500px;margin:0 auto;line-height:1.7;}
+.features-grid{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;
+}
+.feat-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px;transition:all .3s;position:relative;overflow:hidden;
+}
+.feat-card::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(124,58,237,.05),transparent);
+  opacity:0;transition:opacity .3s;
+}
+.feat-card:hover{border-color:var(--purple);transform:translateY(-4px);box-shadow:var(--glow);}
+.feat-card:hover::before{opacity:1;}
+.feat-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(59,130,246,.2));
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+}
+.feat-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:10px;}
+.feat-desc{font-size:.9rem;color:var(--text2);line-height:1.65;}
 
-        .loader::after {
-            content: '';
-            position: absolute;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-color);
-            animation: loading 2s infinite;
-        }
+/* ══════════════════════════════════════════
+   PRICING
+══════════════════════════════════════════ */
+.pricing{padding:80px 40px;position:relative;}
+.pricing-inner{max-width:1200px;margin:0 auto;}
+.pricing-category{margin-bottom:72px;}
+.category-title{
+  font-family:var(--font-display);font-size:1.4rem;font-weight:700;
+  margin-bottom:28px;display:flex;align-items:center;gap:12px;
+}
+.category-title::after{
+  content:'';flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent);
+}
+.pricing-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+.price-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px;position:relative;overflow:hidden;transition:all .3s;
+}
+.price-card.featured{
+  border-color:transparent;
+  background:linear-gradient(var(--card),var(--card)) padding-box,
+             var(--grad) border-box;
+  box-shadow:var(--glow);
+}
+.price-card:hover{transform:translateY(-4px);}
+.price-badge{
+  position:absolute;top:16px;right:16px;
+  font-size:.7rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  background:var(--grad);color:#fff;padding:4px 10px;border-radius:100px;
+}
+.plan-name{
+  font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:6px;
+}
+.plan-tagline{font-size:.8rem;color:var(--text3);margin-bottom:20px;}
+.plan-price{margin-bottom:24px;}
+.price-amount{
+  font-family:var(--font-display);font-size:2rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.price-unit{font-size:.85rem;color:var(--text3);}
+.price-free{
+  font-family:var(--font-display);font-size:2rem;font-weight:800;color:var(--green);
+}
+.plan-features{list-style:none;}
+.plan-features li{
+  display:flex;align-items:center;gap:10px;
+  font-size:.88rem;color:var(--text2);padding:7px 0;
+  border-bottom:1px solid rgba(255,255,255,.04);
+}
+.plan-features li:last-child{border:none;}
+.plan-features li svg{flex-shrink:0;}
+.price-card-cta{
+  margin-top:24px;width:100%;padding:11px;border-radius:8px;
+  font-weight:600;font-size:.9rem;border:none;
+  background:linear-gradient(135deg,rgba(124,58,237,.15),rgba(59,130,246,.15));
+  border:1px solid var(--border2);color:var(--text);
+  transition:all .2s;
+}
+.price-card-cta:hover{
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  border-color:transparent;box-shadow:0 4px 20px rgba(124,58,237,.3);
+}
 
-        @keyframes loading {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-    </style>
+/* ══════════════════════════════════════════
+   REVIEWS STRIP
+══════════════════════════════════════════ */
+.reviews-strip{padding:80px 40px;overflow:hidden;position:relative;}
+.reviews-inner{max-width:1200px;margin:0 auto;}
+.reviews-scroll{display:flex;gap:20px;margin-top:40px;}
+.review-card{
+  flex-shrink:0;width:300px;background:var(--card);
+  border:1px solid var(--border);border-radius:var(--radius);padding:22px;
+}
+.review-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.review-avatar{width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.9rem;}
+.review-name{font-weight:600;font-size:.9rem;}
+.review-date{font-size:.75rem;color:var(--text3);}
+.review-stars{display:flex;gap:3px;margin-bottom:10px;}
+.review-text{font-size:.85rem;color:var(--text2);line-height:1.6;}
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer{
+  padding:40px;border-top:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
+}
+.footer-logo{
+  font-family:var(--font-display);font-size:1.2rem;font-weight:800;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.footer-links{display:flex;gap:24px;}
+.footer-links a{font-size:.85rem;color:var(--text3);transition:color .2s;}
+.footer-links a:hover{color:var(--text);}
+.footer-copy{font-size:.8rem;color:var(--text3);}
+
+/* ══════════════════════════════════════════
+   DASHBOARD
+══════════════════════════════════════════ */
+#page-dashboard{padding-top:64px;}
+.dash-layout{display:flex;min-height:calc(100vh - 64px);}
+.dash-sidebar{
+  width:260px;flex-shrink:0;background:var(--bg2);
+  border-right:1px solid var(--border);padding:24px 16px;
+  position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;
+}
+.dash-sidebar-title{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);margin-bottom:12px;padding:0 8px;}
+.sidebar-nav{list-style:none;}
+.sidebar-nav li{margin-bottom:4px;}
+.sidebar-nav a{
+  display:flex;align-items:center;gap:10px;padding:10px 12px;
+  border-radius:8px;font-size:.9rem;color:var(--text2);transition:all .2s;
+}
+.sidebar-nav a:hover,.sidebar-nav a.active{
+  background:rgba(124,58,237,.1);color:var(--text);border:1px solid rgba(124,58,237,.2);
+}
+.sidebar-nav a svg{flex-shrink:0;}
+.dash-content{flex:1;padding:32px;overflow-y:auto;}
+.user-card{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:20px;display:flex;align-items:center;gap:16px;margin-bottom:24px;
+}
+.user-avatar{width:52px;height:52px;border-radius:50%;border:2px solid var(--purple);object-fit:cover;}
+.user-avatar-placeholder{width:52px;height:52px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;}
+.user-name{font-family:var(--font-display);font-size:1.1rem;font-weight:700;}
+.user-tag{font-size:.8rem;color:var(--text3);}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:16px;}
+.tab-btn{
+  padding:8px 18px;border-radius:8px;border:none;background:transparent;
+  color:var(--text2);font-size:.9rem;font-weight:500;transition:all .2s;
+}
+.tab-btn.active,.tab-btn:hover{background:rgba(124,58,237,.1);color:var(--text);}
+.tab-btn.active{border-bottom:2px solid var(--purple);border-radius:8px 8px 0 0;}
+.tab-panel{display:none;}
+.tab-panel.active{display:block;}
+
+/* Tickets */
+.ticket-list{display:flex;flex-direction:column;gap:12px;}
+.ticket-item{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:18px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:all .2s;
+}
+.ticket-item:hover{border-color:var(--purple);background:rgba(124,58,237,.05);}
+.ticket-info{flex:1;}
+.ticket-title{font-weight:600;font-size:.95rem;margin-bottom:4px;}
+.ticket-meta{font-size:.8rem;color:var(--text3);}
+.ticket-status{
+  font-size:.75rem;font-weight:600;padding:4px 12px;border-radius:100px;
+}
+.t-open{background:rgba(59,130,246,.15);color:var(--blue);}
+.t-closed{background:rgba(74,85,104,.2);color:var(--text3);}
+.t-pending{background:rgba(249,115,22,.15);color:var(--orange);}
+.new-ticket-btn{
+  display:flex;align-items:center;gap:8px;padding:12px 20px;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  border:none;border-radius:8px;color:#fff;font-weight:600;font-size:.9rem;
+  margin-bottom:20px;box-shadow:0 4px 20px rgba(124,58,237,.3);transition:all .2s;
+}
+.new-ticket-btn:hover{box-shadow:0 6px 30px rgba(124,58,237,.5);transform:translateY(-1px);}
+.empty-state{
+  text-align:center;padding:60px 20px;color:var(--text3);
+}
+.empty-state svg{margin-bottom:16px;opacity:.4;}
+.empty-state p{font-size:.95rem;}
+
+/* Chat */
+.chat-container{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  display:flex;flex-direction:column;height:500px;
+}
+.chat-header{
+  padding:16px 20px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.chat-title{font-family:var(--font-display);font-weight:700;}
+.chat-body{flex:1;overflow-y:auto;padding:20px;display:flex;flex-direction:column;gap:14px;}
+.msg{display:flex;gap:10px;align-items:flex-start;}
+.msg.mine{flex-direction:row-reverse;}
+.msg-avatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;object-fit:cover;}
+.msg-avatar-ph{width:32px;height:32px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0;}
+.msg-content{max-width:70%;}
+.msg-name{font-size:.75rem;color:var(--text3);margin-bottom:4px;}
+.msg-bubble{
+  background:var(--bg3);border:1px solid var(--border);
+  border-radius:12px;padding:10px 14px;font-size:.88rem;line-height:1.5;
+}
+.msg.mine .msg-bubble{
+  background:linear-gradient(135deg,rgba(124,58,237,.2),rgba(59,130,246,.2));
+  border-color:rgba(124,58,237,.3);
+}
+.msg.staff .msg-bubble{
+  background:linear-gradient(135deg,rgba(249,115,22,.1),rgba(236,72,153,.1));
+  border-color:rgba(249,115,22,.3);
+}
+.msg-time{font-size:.7rem;color:var(--text3);margin-top:4px;}
+.chat-footer{
+  padding:14px;border-top:1px solid var(--border);
+  display:flex;gap:10px;
+}
+.chat-input{
+  flex:1;background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;padding:10px 14px;color:var(--text);font-size:.9rem;font-family:var(--font);
+  outline:none;transition:border-color .2s;
+}
+.chat-input:focus{border-color:var(--purple);}
+.chat-send{
+  padding:10px 18px;background:linear-gradient(135deg,var(--purple),var(--blue));
+  border:none;border-radius:8px;color:#fff;font-weight:600;font-size:.85rem;transition:all .2s;
+}
+.chat-send:hover{box-shadow:0 4px 15px rgba(124,58,237,.4);}
+
+/* Review form */
+.review-form{
+  background:var(--card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px;margin-bottom:24px;
+}
+.review-form-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:20px;}
+.star-select{display:flex;gap:8px;margin-bottom:16px;}
+.star-btn{background:transparent;border:none;font-size:1.5rem;transition:transform .1s;}
+.star-btn:hover,.star-btn.selected{transform:scale(1.1);}
+.form-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;padding:12px 14px;color:var(--text);font-size:.9rem;font-family:var(--font);
+  outline:none;resize:vertical;transition:border-color .2s;
+}
+.form-input:focus{border-color:var(--purple);}
+.form-submit{
+  margin-top:12px;padding:11px 24px;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  border:none;border-radius:8px;color:#fff;font-weight:600;font-size:.9rem;transition:all .2s;
+}
+.form-submit:hover{box-shadow:0 4px 20px rgba(124,58,237,.3);}
+
+/* Staff badge */
+.staff-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:linear-gradient(135deg,rgba(249,115,22,.15),rgba(236,72,153,.15));
+  border:1px solid rgba(249,115,22,.3);border-radius:100px;
+  padding:4px 12px;font-size:.75rem;font-weight:700;color:var(--orange);
+}
+
+/* Modal */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);
+  z-index:2000;display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(8px);
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal{
+  background:var(--bg2);border:1px solid var(--border2);border-radius:20px;
+  padding:32px;max-width:480px;width:90%;
+  transform:translateY(20px);transition:transform .3s;
+}
+.modal-overlay.open .modal{transform:translateY(0);}
+.modal-title{font-family:var(--font-display);font-size:1.3rem;font-weight:800;margin-bottom:8px;}
+.modal-desc{font-size:.9rem;color:var(--text2);margin-bottom:24px;}
+.modal-close{
+  position:absolute;top:16px;right:16px;
+  background:transparent;border:none;color:var(--text3);font-size:1.2rem;
+}
+.modal input,.modal textarea{
+  width:100%;background:var(--bg3);border:1px solid var(--border2);
+  border-radius:8px;padding:11px 14px;color:var(--text);font-family:var(--font);font-size:.9rem;
+  outline:none;margin-bottom:12px;transition:border-color .2s;
+}
+.modal input:focus,.modal textarea:focus{border-color:var(--purple);}
+.modal label{display:block;font-size:.85rem;color:var(--text2);margin-bottom:6px;}
+.modal-actions{display:flex;gap:10px;margin-top:8px;}
+
+/* ══════════════════════════════════════════
+   TOASTS
+══════════════════════════════════════════ */
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:9999;display:flex;flex-direction:column;gap:10px;}
+.toast{
+  background:var(--bg2);border:1px solid var(--border2);border-radius:10px;
+  padding:12px 18px;font-size:.88rem;display:flex;align-items:center;gap:10px;
+  box-shadow:0 8px 30px rgba(0,0,0,.4);
+  animation:slideIn .3s ease;
+}
+@keyframes slideIn{from{transform:translateX(100%);opacity:0;}to{transform:translateX(0);opacity:1;}}
+.toast.success{border-color:rgba(34,197,94,.3);}
+.toast.error{border-color:rgba(239,68,68,.3);}
+
+/* ══════════════════════════════════════════
+   LOADING
+══════════════════════════════════════════ */
+.loading{
+  display:flex;align-items:center;justify-content:center;
+  min-height:200px;
+}
+.spinner{
+  width:40px;height:40px;border-radius:50%;
+  border:3px solid var(--border);border-top-color:var(--purple);
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp .6s ease both;}
+.fade-up-1{animation-delay:.1s;}
+.fade-up-2{animation-delay:.2s;}
+.fade-up-3{animation-delay:.3s;}
+.fade-up-4{animation-delay:.4s;}
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media(max-width:900px){
+  .hero-inner{grid-template-columns:1fr;}
+  .terminal{display:none;}
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .dash-sidebar{width:220px;}
+}
+@media(max-width:600px){
+  .hero{padding:80px 20px 40px;}
+  .features,.pricing,.reviews-strip{padding:60px 20px;}
+  .dash-layout{flex-direction:column;}
+  .dash-sidebar{width:100%;height:auto;position:relative;top:0;}
+  .dash-content{padding:20px;}
+}
+</style>
 </head>
 <body>
 
-    <div class="wrapper">
-        <div class="svg-container">
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path fill="#4a90e2" d="M100,30 C105,30 110,35 110,40 L110,45 C120,48 130,52 138,58 L142,54 C146,50 152,50 156,54 L166,64 C170,68 170,74 166,78 L162,82 C168,90 172,100 175,110 L180,110 C186,110 190,115 190,120 L190,134 C190,140 186,144 180,144 L175,144 C172,154 168,164 162,172 L166,176 C170,180 170,186 166,190 L156,200 C152,204 146,204 142,200 L138,196 C130,202 120,206 110,209 L110,214 C110,219 105,224 100,224 L86,224 C80,224 76,219 76,214 L76,209 C66,206 56,202 48,196 L44,200 C40,204 34,204 30,200 L20,190 C16,186 16,180 20,176 L24,172 C18,164 14,154 11,144 L6,144 C1,144 -4,140 -4,134 L-4,120 C-4,115 1,110 6,110 L11,110 C14,100 18,90 24,82 L20,78 C16,74 16,68 20,64 L30,54 C34,50 40,50 44,54 L48,58 C56,52 66,48 76,45 L76,40 C76,35 80,30 86,30 L100,30 Z M93,94 C77,94 64,107 64,123 C64,139 77,152 93,152 C109,152 122,139 122,123 C122,107 109,94 93,94 Z" transform="translate(5 -20)"/>
-            </svg>
+<!-- ══════════════════════════════════════════
+     NAVIGATION
+══════════════════════════════════════════ -->
+<nav>
+  <div class="nav-logo">
+    <!-- SVG Logo Icon -->
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+      <rect width="28" height="28" rx="8" fill="url(#logoGrad)"/>
+      <path d="M8 8l6 6-6 6M15 20h5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <defs>
+        <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+          <stop stop-color="#7c3aed"/>
+          <stop offset="1" stop-color="#3b82f6"/>
+        </linearGradient>
+      </defs>
+    </svg>
+    Dev Center
+  </div>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')">Accueil</a>
+    <a href="#" onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})">Tarifs</a>
+    <a href="#" onclick="document.getElementById('features-section').scrollIntoView({behavior:'smooth'})">Services</a>
+    <a href="#" onclick="document.getElementById('reviews-section').scrollIntoView({behavior:'smooth'})">Avis</a>
+  </div>
+  <div class="nav-right" id="nav-right">
+    <button class="btn btn-discord" onclick="loginWithDiscord()">
+      <!-- Discord SVG -->
+      <svg width="18" height="18" viewBox="0 0 71 55" fill="white">
+        <path d="M60.1 4.9A58.5 58.5 0 0 0 45.6.7a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.3 37.3 0 0 0 25.6.8a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.9 4.9a.2.2 0 0 0-.1.1C1.6 18.1-.9 31-.5 43.7a.2.2 0 0 0 .1.2 58.8 58.8 0 0 0 17.7 8.9.2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4c.4-.3.7-.6 1.1-.9a.2.2 0 0 1 .2 0c11.5 5.2 24 5.2 35.3 0a.2.2 0 0 1 .2 0l1.1.9a.2.2 0 0 1 0 .4 36 36 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1A58.6 58.6 0 0 0 71 43.9a.2.2 0 0 0 .1-.2C72 29.4 68.2 16.6 60.2 5a.2.2 0 0 0-.1-.1zM23.7 36c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.9 7.1-6.4 7.1zm23.6 0c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.8 7.1-6.4 7.1z"/>
+      </svg>
+      Connexion Discord
+    </button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════════
+     PAGE HOME
+══════════════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-orb orb1"></div>
+    <div class="hero-bg-orb orb2"></div>
+    <div class="hero-bg-orb orb3"></div>
+    <div class="hero-inner">
+      <div>
+        <div class="hero-badge fade-up">
+          <!-- Lightning SVG -->
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+          Hébergement gratuit 24/7
         </div>
+        <h1 class="hero-title fade-up fade-up-1">
+          Hébergez vos projets<br>
+          <span class="accent">gratuitement</span>
+        </h1>
+        <p class="hero-desc fade-up fade-up-2">
+          Hébergez gratuitement vos bots Discord, sites web et applications. Alternative à Heroku avec <strong>99.9% uptime</strong> garanti.
+        </p>
+        <div class="hero-cta fade-up fade-up-3">
+          <button class="btn btn-discord" onclick="loginWithDiscord()">
+            <svg width="18" height="18" viewBox="0 0 71 55" fill="white">
+              <path d="M60.1 4.9A58.5 58.5 0 0 0 45.6.7a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.3 37.3 0 0 0 25.6.8a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.9 4.9a.2.2 0 0 0-.1.1C1.6 18.1-.9 31-.5 43.7a.2.2 0 0 0 .1.2 58.8 58.8 0 0 0 17.7 8.9.2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4c.4-.3.7-.6 1.1-.9a.2.2 0 0 1 .2 0c11.5 5.2 24 5.2 35.3 0a.2.2 0 0 1 .2 0l1.1.9a.2.2 0 0 1 0 .4 36 36 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1A58.6 58.6 0 0 0 71 43.9a.2.2 0 0 0 .1-.2C72 29.4 68.2 16.6 60.2 5a.2.2 0 0 0-.1-.1zM23.7 36c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.9 7.1-6.4 7.1zm23.6 0c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.8 7.1-6.4 7.1z"/>
+            </svg>
+            Commencer gratuitement
+          </button>
+          <button class="btn btn-ghost" onclick="document.getElementById('pricing-section').scrollIntoView({behavior:'smooth'})">Voir les tarifs</button>
+        </div>
+        <div class="hero-stats fade-up fade-up-4">
+          <div class="stat-item"><div class="stat-num">99.9%</div><div class="stat-label">Uptime garanti</div></div>
+          <div class="stat-item"><div class="stat-num">0€</div><div class="stat-label">Pour commencer</div></div>
+          <div class="stat-item"><div class="stat-num">24/7</div><div class="stat-label">Support disponible</div></div>
+        </div>
+      </div>
 
-        <h1>Maintenance</h1>
-        <p>Nous peaufinons les derniers détails pour vous offrir une meilleure expérience.</p>
-        
-        <div class="loader"></div>
+      <!-- Terminal -->
+      <div class="terminal fade-up fade-up-2">
+        <div class="terminal-bar">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="terminal-title">bash — devcenter</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line"><span class="t-prompt">user@vyral:~$</span> <span class="t-cmd" id="cmd1"></span></div>
+          <div class="t-line"><span class="t-out" id="out1"></span></div>
+          <div class="t-line"><span class="t-out" id="out2"></span></div>
+          <div class="t-line" id="line3" style="display:none"><span class="t-success" id="out3"></span></div>
+          <div class="t-line" id="line4" style="display:none"><span class="t-prompt">user@vyral:~$</span> <span class="t-cmd" id="cmd2"></span></div>
+          <div class="t-line" id="line5" style="display:none"><span class="t-out" id="out4"></span></div>
+          <div class="t-line" id="line6" style="display:none"><span class="t-success" id="out5"></span></div>
+          <span class="t-cursor" id="cursor1"></span>
+        </div>
+        <div class="dashboard-preview" style="margin:0 16px 16px">
+          <div class="dash-row">
+            <span class="dash-label">
+              <!-- Circle SVG -->
+              <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="#22c55e"/></svg>
+              Tableau de bord
+            </span>
+            <span class="dash-status status-online">En ligne</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" style="width:70%;animation:grow 2s ease"></div></div>
+          <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:45%;animation:grow 2.5s ease"></div></div>
+        </div>
+      </div>
     </div>
+  </section>
 
+  <!-- FEATURES -->
+  <section class="features" id="features-section">
+    <div class="section-header">
+      <div class="section-tag">Nos services</div>
+      <h2 class="section-title">Tout ce dont vous avez besoin</h2>
+      <p class="section-desc">Une plateforme complète pour héberger, gérer et scaler vos projets Discord et web.</p>
+    </div>
+    <div class="features-grid">
+      <!-- Card 1 -->
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#g1)" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/><defs><linearGradient id="g1" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs></svg>
+        </div>
+        <div class="feat-title">Bots Discord</div>
+        <div class="feat-desc">Hébergez vos bots Discord avec déploiement automatique, logs en temps réel et redémarrages automatiques.</div>
+      </div>
+      <!-- Card 2 -->
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#g2)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/><defs><linearGradient id="g2" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>
+        </div>
+        <div class="feat-title">Sites Web</div>
+        <div class="feat-desc">Hébergement de sites vitrines, blogs et applications web avec sous-domaine inclus et SSL gratuit.</div>
+      </div>
+      <!-- Card 3 -->
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#g3)" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><defs><linearGradient id="g3" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#3b82f6"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>
+        </div>
+        <div class="feat-title">Uptime 99.9%</div>
+        <div class="feat-desc">Infrastructure redondante avec monitoring automatique et alertes instantanées en cas de panne.</div>
+      </div>
+      <!-- Card 4 -->
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#g4)" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/><defs><linearGradient id="g4" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#a855f7"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs></svg>
+        </div>
+        <div class="feat-title">Déploiement rapide</div>
+        <div class="feat-desc">Déployez en quelques secondes via notre CLI ou directement depuis GitHub avec intégration CI/CD.</div>
+      </div>
+      <!-- Card 5 -->
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#g5)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><defs><linearGradient id="g5" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#22c55e"/><stop offset="1" stop-color="#06b6d4"/></linearGradient></defs></svg>
+        </div>
+        <div class="feat-title">Sécurisé</div>
+        <div class="feat-desc">Isolation des processus, chiffrement des données et protection DDoS incluse sur tous les plans.</div>
+      </div>
+      <!-- Card 6 -->
+      <div class="feat-card">
+        <div class="feat-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="url(#g6)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><defs><linearGradient id="g6" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#ec4899"/><stop offset="1" stop-color="#7c3aed"/></linearGradient></defs></svg>
+        </div>
+        <div class="feat-title">Support 24/7</div>
+        <div class="feat-desc">Système de tickets intégré avec staff réactif. Réponse garantie en moins de 48h sur tous les plans.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing-section">
+    <div class="pricing-inner">
+      <div class="section-header">
+        <div class="section-tag">Tarifs</div>
+        <h2 class="section-title">Choisissez votre plan</h2>
+        <p class="section-desc">Des crédits transparents, sans surprise. Commencez gratuitement et évoluez à votre rythme.</p>
+      </div>
+
+      <!-- Serveur Discord -->
+      <div class="pricing-category">
+        <div class="category-title">
+          <svg width="20" height="20" viewBox="0 0 71 55" fill="url(#catg1)">
+            <path d="M60.1 4.9A58.5 58.5 0 0 0 45.6.7a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.3 37.3 0 0 0 25.6.8a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.9 4.9a.2.2 0 0 0-.1.1C1.6 18.1-.9 31-.5 43.7a.2.2 0 0 0 .1.2 58.8 58.8 0 0 0 17.7 8.9.2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4c.4-.3.7-.6 1.1-.9a.2.2 0 0 1 .2 0c11.5 5.2 24 5.2 35.3 0a.2.2 0 0 1 .2 0l1.1.9a.2.2 0 0 1 0 .4 36 36 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1A58.6 58.6 0 0 0 71 43.9a.2.2 0 0 0 .1-.2C72 29.4 68.2 16.6 60.2 5a.2.2 0 0 0-.1-.1zM23.7 36c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.9 7.1-6.4 7.1zm23.6 0c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.8 7.1-6.4 7.1z"/>
+            <defs><linearGradient id="catg1" x1="0" y1="0" x2="71" y2="55"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs>
+          </svg>
+          Modules Serveur Discord
+        </div>
+        <div class="pricing-grid">
+          <!-- Free -->
+          <div class="price-card">
+            <div class="plan-name">Free</div>
+            <div class="plan-tagline">Parfait pour débuter</div>
+            <div class="plan-price"><span class="price-free">Gratuit</span></div>
+            <ul class="plan-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Salon personnalisé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Rôle personnalisé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Pas de permissions</li>
+            </ul>
+            <button class="price-card-cta" onclick="loginWithDiscord()">Commencer</button>
+          </div>
+          <!-- Boss -->
+          <div class="price-card featured">
+            <div class="price-badge">Populaire</div>
+            <div class="plan-name">Boss</div>
+            <div class="plan-tagline">Pour les serveurs actifs</div>
+            <div class="plan-price"><span class="price-amount">200</span> <span class="price-unit">crédits</span></div>
+            <ul class="plan-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Salon personnalisé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Rôle personnalisé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Permissions complètes</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Système de suggestions</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Support prioritaire</li>
+            </ul>
+            <button class="price-card-cta" onclick="loginWithDiscord()">Choisir Boss</button>
+          </div>
+          <!-- Master -->
+          <div class="price-card">
+            <div class="plan-name">Master</div>
+            <div class="plan-tagline">Le pack ultime</div>
+            <div class="plan-price"><span class="price-amount">400</span> <span class="price-unit">crédits</span></div>
+            <ul class="plan-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Salon personnalisé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Rôle personnalisé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Permissions complètes</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Configuration bot</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Suggestions + badges</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Support prioritaire</li>
+            </ul>
+            <button class="price-card-cta" onclick="loginWithDiscord()">Choisir Master</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sites Web -->
+      <div class="pricing-category">
+        <div class="category-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#catg2)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/><defs><linearGradient id="catg2" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#06b6d4"/><stop offset="1" stop-color="#3b82f6"/></linearGradient></defs></svg>
+          Modules Sites Web
+        </div>
+        <div class="pricing-grid" style="max-width:600px">
+          <!-- Starter -->
+          <div class="price-card">
+            <div class="plan-name">Starter</div>
+            <div class="plan-tagline">Particuliers / Petits projets</div>
+            <div class="plan-price"><span class="price-amount">200</span> <span class="price-unit">crédits</span></div>
+            <ul class="plan-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Site vitrine</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Template personnalisé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Hébergement + sous-domaine</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Support ticket 48h</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 1 modification mensuelle</li>
+            </ul>
+            <button class="price-card-cta" onclick="loginWithDiscord()">Choisir Starter</button>
+          </div>
+          <!-- Pro -->
+          <div class="price-card featured">
+            <div class="price-badge">Pro</div>
+            <div class="plan-name">Pro</div>
+            <div class="plan-tagline">Projet structuré / Business</div>
+            <div class="plan-price"><span class="price-amount">750</span> <span class="price-unit">crédits</span></div>
+            <ul class="plan-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Site vitrine avancé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Design 100% personnalisé</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Blog + statistiques</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Sauvegardes automatiques</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Support prioritaire</li>
+            </ul>
+            <button class="price-card-cta" onclick="loginWithDiscord()">Choisir Pro</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bots Discord -->
+      <div class="pricing-category">
+        <div class="category-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="url(#catg3)" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="10" r="1.5" fill="url(#catg3)"/><circle cx="15" cy="10" r="1.5" fill="url(#catg3)"/><path d="M9 15s1 1.5 3 1.5 3-1.5 3-1.5"/><defs><linearGradient id="catg3" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#a855f7"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs></svg>
+          Modules Bots Discord
+        </div>
+        <div class="pricing-grid" style="max-width:600px">
+          <!-- Starter -->
+          <div class="price-card">
+            <div class="plan-name">Starter</div>
+            <div class="plan-tagline">Prêt à l'emploi</div>
+            <div class="plan-price"><span class="price-free">Gratuit</span></div>
+            <ul class="plan-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 15 commandes</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Commandes de modération</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Commandes fun</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Commandes utilitaires</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Configuration simple</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Bot prêt à utiliser</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Support ticket 48h</li>
+            </ul>
+            <button class="price-card-cta" onclick="loginWithDiscord()">Commencer</button>
+          </div>
+          <!-- Pro -->
+          <div class="price-card featured">
+            <div class="price-badge">Pro</div>
+            <div class="plan-name">Pro</div>
+            <div class="plan-tagline">Fonctionnalités avancées</div>
+            <div class="plan-price"><span class="price-amount">400</span> <span class="price-unit">crédits</span></div>
+            <ul class="plan-features">
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> 40 commandes</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Modération + fun + utilitaires</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Tableau de bord web</li>
+              <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Support prioritaire</li>
+            </ul>
+            <button class="price-card-cta" onclick="loginWithDiscord()">Choisir Pro</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-strip" id="reviews-section">
+    <div class="reviews-inner">
+      <div class="section-header" style="text-align:left">
+        <div class="section-tag">Témoignages</div>
+        <h2 class="section-title">Ce que disent nos utilisateurs</h2>
+        <p class="section-desc" style="text-align:left;margin:8px 0 0">Avis 100% réels déposés par nos utilisateurs depuis leur compte Discord.</p>
+      </div>
+      <div class="reviews-scroll" id="public-reviews-list" style="flex-wrap:wrap;gap:16px;margin-top:32px">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+      <p id="public-reviews-empty" style="display:none;color:var(--text3);margin-top:24px;font-size:.9rem">
+        Aucun avis pour l'instant — connectez-vous pour être le premier !
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Dev Center</div>
+    <div class="footer-links">
+      <a href="#">Accueil</a>
+      <a href="#">Tarifs</a>
+      <a href="#">Support</a>
+      <a href="#">CGU</a>
+    </div>
+    <div class="footer-copy">© 2025 Vyral Studio · Tous droits réservés</div>
+  </footer>
+</div><!-- end page-home -->
+
+<!-- ══════════════════════════════════════════
+     PAGE DASHBOARD (USER)
+══════════════════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <div class="dash-layout">
+    <!-- Sidebar -->
+    <aside class="dash-sidebar">
+      <div class="dash-sidebar-title">Navigation</div>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="#" onclick="switchTab('tickets')" id="nav-tickets" class="active">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Mes Tickets
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="switchTab('profile')" id="nav-profile">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            Mon Profil
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="switchTab('reviews')" id="nav-reviews">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            Avis
+          </a>
+        </li>
+        <li id="nav-staff-link" style="display:none">
+          <a href="#" onclick="showPage('staff')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            Staff Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#" onclick="logout()" style="color:#ef4444">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            Déconnexion
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Main content -->
+    <main class="dash-content">
+      <!-- User info -->
+      <div class="user-card">
+        <div id="user-avatar-wrap"></div>
+        <div>
+          <div class="user-name" id="dash-username">Chargement...</div>
+          <div class="user-tag" id="dash-usertag"></div>
+        </div>
+        <div id="staff-badge-wrap" style="margin-left:auto;display:none">
+          <span class="staff-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Staff
+          </span>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-tickets" onclick="switchTab('tickets')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Tickets
+        </button>
+        <button class="tab-btn" id="tab-profile" onclick="switchTab('profile')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          Profil
+        </button>
+        <button class="tab-btn" id="tab-reviews" onclick="switchTab('reviews')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:inline;margin-right:6px"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          Avis
+        </button>
+      </div>
+
+      <!-- Profile panel -->
+      <div class="tab-panel" id="panel-profile">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px">
+          <!-- Discord info card -->
+          <div class="price-card" style="padding:28px">
+            <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px">
+              <div id="profile-avatar-wrap" style="position:relative">
+                <img id="profile-avatar" src="" style="width:72px;height:72px;border-radius:50%;border:3px solid var(--purple);display:none"/>
+                <div id="profile-avatar-ph" style="width:72px;height:72px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700"></div>
+              </div>
+              <div>
+                <div style="font-family:var(--font-display);font-size:1.2rem;font-weight:800" id="profile-name">—</div>
+                <div style="font-size:.8rem;color:var(--text3)" id="profile-id">ID Discord : —</div>
+                <div id="profile-staff-badge" style="display:none;margin-top:6px">
+                  <span class="staff-badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Staff</span>
+                </div>
+              </div>
+            </div>
+            <div style="border-top:1px solid var(--border);padding-top:16px">
+              <div style="font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Informations compte</div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.88rem">
+                <span style="color:var(--text2)">Pseudo Discord</span>
+                <span id="profile-username" style="font-weight:600">—</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:.88rem">
+                <span style="color:var(--text2)">Identifiant</span>
+                <span id="profile-discord-id" style="font-weight:600;font-family:var(--font-mono);font-size:.8rem">—</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;padding:8px 0;font-size:.88rem">
+                <span style="color:var(--text2)">Rôle</span>
+                <span id="profile-role" style="font-weight:600">Utilisateur</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Credits card -->
+          <div class="price-card featured" style="padding:28px;text-align:center">
+            <div style="font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px">Solde de crédits</div>
+            <div style="font-family:var(--font-display);font-size:4rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1" id="profile-credits">—</div>
+            <div style="font-size:.9rem;color:var(--text3);margin-top:8px">crédits disponibles</div>
+            <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--border)">
+              <div style="font-size:.8rem;color:var(--text3);margin-bottom:12px">Que peut-on faire avec des crédits ?</div>
+              <div style="display:flex;flex-direction:column;gap:8px;text-align:left">
+                <div style="display:flex;align-items:center;gap:8px;font-size:.83rem;color:var(--text2)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Bot Discord Starter — 0 cr
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.83rem;color:var(--text2)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Serveur Discord Boss — 200 cr
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;font-size:.83rem;color:var(--text2)">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  Site Web Pro — 750 cr
+                </div>
+              </div>
+            </div>
+            <button class="price-card-cta" style="margin-top:20px" onclick="switchTab('tickets');setTimeout(openNewTicketModal,100)">
+              Obtenir des crédits via ticket
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tickets panel -->
+      <div class="tab-panel active" id="panel-tickets">
+        <button class="new-ticket-btn" onclick="openNewTicketModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Nouveau ticket
+        </button>
+        <div class="ticket-list" id="ticket-list">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <!-- Reviews panel -->
+      <div class="tab-panel" id="panel-reviews">
+        <div class="review-form">
+          <div class="review-form-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="url(#rfg)" stroke-width="2" style="margin-right:8px;vertical-align:middle"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/><defs><linearGradient id="rfg" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#f97316"/></linearGradient></defs></svg>
+            Laisser un avis
+          </div>
+          <div class="star-select" id="star-select">
+            <button class="star-btn" data-val="1" onclick="setRating(1)"></button>
+            <button class="star-btn" data-val="2" onclick="setRating(2)"></button>
+            <button class="star-btn" data-val="3" onclick="setRating(3)"></button>
+            <button class="star-btn" data-val="4" onclick="setRating(4)"></button>
+            <button class="star-btn" data-val="5" onclick="setRating(5)"></button>
+          </div>
+          <textarea class="form-input" id="review-text" rows="4" placeholder="Partagez votre expérience avec Dev Center..."></textarea>
+          <button class="form-submit" onclick="submitReview()">Publier l'avis</button>
+        </div>
+        <h3 style="margin-bottom:16px;font-family:var(--font-display)">Avis de la communauté</h3>
+        <div id="reviews-list" class="reviews-scroll" style="flex-wrap:wrap">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div><!-- end page-dashboard -->
+
+<!-- ══════════════════════════════════════════
+     PAGE TICKET CHAT
+══════════════════════════════════════════ -->
+<div id="page-ticket" class="page">
+  <div class="dash-layout">
+    <aside class="dash-sidebar">
+      <div class="dash-sidebar-title">Navigation</div>
+      <ul class="sidebar-nav">
+        <li><a href="#" onclick="showPage('dashboard')">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Retour aux tickets
+        </a></li>
+      </ul>
+    </aside>
+    <main class="dash-content">
+      <div id="ticket-chat-header" style="margin-bottom:20px">
+        <h2 class="section-title" style="font-size:1.5rem" id="ticket-chat-title">Ticket #</h2>
+        <div style="display:flex;gap:10px;margin-top:8px;align-items:center">
+          <span class="ticket-status t-open" id="ticket-chat-status">Ouvert</span>
+          <span style="font-size:.8rem;color:var(--text3)" id="ticket-chat-date"></span>
+          <button id="close-ticket-btn" onclick="closeTicket()" style="margin-left:auto;padding:6px 14px;border-radius:6px;border:1px solid #ef4444;background:transparent;color:#ef4444;font-size:.8rem;font-weight:600;cursor:pointer">
+            Fermer le ticket
+          </button>
+        </div>
+      </div>
+      <div class="chat-container">
+        <div class="chat-header">
+          <span class="chat-title">Discussion</span>
+          <span style="font-size:.8rem;color:var(--text3)">Temps de réponse : &lt;48h</span>
+        </div>
+        <div class="chat-body" id="chat-messages">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+        <div class="chat-footer">
+          <input type="text" class="chat-input" id="chat-input" placeholder="Écrire un message..." onkeydown="if(event.key==='Enter')sendMessage()"/>
+          <button class="chat-send" onclick="sendMessage()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     PAGE STAFF DASHBOARD
+══════════════════════════════════════════ -->
+<div id="page-staff" class="page">
+  <div class="dash-layout">
+    <aside class="dash-sidebar">
+      <div class="dash-sidebar-title">Staff Panel</div>
+      <ul class="sidebar-nav">
+        <li><a href="#" onclick="showPage('dashboard')" id="nav-staff-home">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          Retour dashboard
+        </a></li>
+        <li><a href="#" onclick="switchStaffTab('tickets')" id="staff-nav-tickets" class="active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Tickets
+        </a></li>
+        <li><a href="#" onclick="switchStaffTab('credits')" id="staff-nav-credits">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Crédits
+        </a></li>
+        <li><a href="#" onclick="logout()" style="color:#ef4444">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Déconnexion
+        </a></li>
+      </ul>
+    </aside>
+    <main class="dash-content">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+        <h2 style="font-family:var(--font-display);font-size:1.6rem;font-weight:800">Staff Dashboard</h2>
+        <span class="staff-badge">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Staff
+        </span>
+      </div>
+
+      <!-- Stats row -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px;margin-bottom:28px">
+        <div class="price-card" style="text-align:center;padding:18px">
+          <div style="font-size:2rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="stat-open">—</div>
+          <div style="font-size:.78rem;color:var(--text3);margin-top:4px">Tickets ouverts</div>
+        </div>
+        <div class="price-card" style="text-align:center;padding:18px">
+          <div style="font-size:2rem;font-weight:800;color:var(--green)" id="stat-closed">—</div>
+          <div style="font-size:.78rem;color:var(--text3);margin-top:4px">Tickets fermés</div>
+        </div>
+        <div class="price-card" style="text-align:center;padding:18px">
+          <div style="font-size:2rem;font-weight:800;color:var(--orange)" id="stat-total">—</div>
+          <div style="font-size:.78rem;color:var(--text3);margin-top:4px">Total</div>
+        </div>
+        <div class="price-card" style="text-align:center;padding:18px">
+          <div style="font-size:2rem;font-weight:800;color:var(--cyan)" id="stat-users">—</div>
+          <div style="font-size:.78rem;color:var(--text3);margin-top:4px">Utilisateurs</div>
+        </div>
+      </div>
+
+      <!-- Staff tab: Tickets -->
+      <div id="staff-panel-tickets" class="tab-panel active">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <h3 style="font-family:var(--font-display);font-size:1.05rem">Tous les tickets</h3>
+          <div style="display:flex;gap:8px">
+            <button onclick="filterStaffTickets('all')" id="sf-all" class="btn btn-primary" style="padding:6px 14px;font-size:.8rem">Tous</button>
+            <button onclick="filterStaffTickets('open')" id="sf-open" class="btn btn-ghost" style="padding:6px 14px;font-size:.8rem">Ouverts</button>
+            <button onclick="filterStaffTickets('closed')" id="sf-closed" class="btn btn-ghost" style="padding:6px 14px;font-size:.8rem">Fermés</button>
+          </div>
+        </div>
+        <div class="ticket-list" id="staff-ticket-list">
+          <div class="loading"><div class="spinner"></div></div>
+        </div>
+      </div>
+
+      <!-- Staff tab: Credits -->
+      <div id="staff-panel-credits" class="tab-panel" style="display:none">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+
+          <!-- Search & Manage user -->
+          <div class="price-card" style="padding:24px">
+            <h3 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:18px">Gérer les crédits</h3>
+            <label style="font-size:.82rem;color:var(--text2);display:block;margin-bottom:6px">ID Discord ou pseudo de l'utilisateur</label>
+            <div style="display:flex;gap:8px;margin-bottom:16px">
+              <input type="text" id="credits-search-input" class="chat-input" placeholder="Ex: 123456789 ou username"
+                style="flex:1" onkeydown="if(event.key==='Enter')searchUserCredits()"/>
+              <button class="chat-send" onclick="searchUserCredits()" style="padding:10px 16px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </button>
+            </div>
+
+            <!-- Found user display -->
+            <div id="credits-user-result" style="display:none">
+              <div style="background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:16px;margin-bottom:16px">
+                <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+                  <div id="cred-user-av" style="width:44px;height:44px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem"></div>
+                  <div>
+                    <div style="font-weight:700" id="cred-user-name">—</div>
+                    <div style="font-size:.78rem;color:var(--text3)" id="cred-user-id">—</div>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:var(--bg2);border-radius:8px;border:1px solid var(--border)">
+                  <span style="font-size:.85rem;color:var(--text2)">Crédits actuels</span>
+                  <span style="font-family:var(--font-display);font-size:1.5rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent" id="cred-current">0</span>
+                </div>
+              </div>
+
+              <label style="font-size:.82rem;color:var(--text2);display:block;margin-bottom:6px">Montant à modifier</label>
+              <input type="number" id="credits-amount-input" class="chat-input" placeholder="Ex: 200" min="0" style="width:100%;margin-bottom:12px"/>
+
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <button onclick="adjustCredits('add')" style="padding:10px;border-radius:8px;border:none;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Ajouter
+                </button>
+                <button onclick="adjustCredits('remove')" style="padding:10px;border-radius:8px;border:none;background:linear-gradient(135deg,#ef4444,#b91c1c);color:#fff;font-weight:700;font-size:.9rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                  Retirer
+                </button>
+              </div>
+              <button onclick="setCredits()" style="margin-top:8px;width:100%;padding:10px;border-radius:8px;border:1px solid var(--border2);background:transparent;color:var(--text2);font-size:.85rem;cursor:pointer">
+                Définir à ce montant exact
+              </button>
+            </div>
+            <div id="credits-user-notfound" style="display:none;text-align:center;padding:20px;color:var(--text3);font-size:.88rem">
+              Aucun utilisateur trouvé avec cet ID / pseudo.
+            </div>
+          </div>
+
+          <!-- All users credits list -->
+          <div class="price-card" style="padding:24px">
+            <h3 style="font-family:var(--font-display);font-size:1.05rem;margin-bottom:16px">Tous les comptes</h3>
+            <div id="all-users-credits" style="display:flex;flex-direction:column;gap:10px;max-height:480px;overflow-y:auto">
+              <div class="loading"><div class="spinner"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     NEW TICKET MODAL
+══════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-ticket">
+  <div class="modal" style="position:relative">
+    <button class="modal-close" onclick="closeModal('modal-ticket')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="modal-title">Nouveau ticket</div>
+    <div class="modal-desc">Décrivez votre problème ou votre demande, notre staff vous répondra rapidement.</div>
+    <label>Titre du ticket</label>
+    <input type="text" id="ticket-title-input" placeholder="Ex: Problème avec mon bot Discord"/>
+    <label>Description</label>
+    <textarea id="ticket-desc-input" rows="4" placeholder="Décrivez votre problème en détail..."></textarea>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-ticket')" style="flex:1">Annuler</button>
+      <button class="btn btn-primary" onclick="createTicket()" style="flex:1">Créer le ticket</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ══════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════ -->
+<script>
+// ═══════════════════════════════
+// CONFIG
+// ═══════════════════════════════
+const DISCORD_CLIENT_ID = '1480269493447168102';
+const DISCORD_REDIRECT   = 'https://devcenter.vyral-studio.com';
+const DISCORD_GUILD_ID   = '1452963098284785765';
+const STAFF_ROLE_ID      = '1480159806903029822';
+const SUPABASE_URL       = 'https://llheudregeksbyjuscrw.supabase.co';
+const SUPABASE_ANON_KEY  = 'YOUR_SUPABASE_ANON_KEY'; // ⚠️ Remplacez par votre clé anon Supabase
+
+// ═══════════════════════════════
+// SUPABASE
+// ═══════════════════════════════
+let sb;
+try {
+  sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+} catch(e) { console.warn('Supabase non initialisé:', e); }
+
+// ═══════════════════════════════
+// STATE
+// ═══════════════════════════════
+let currentUser = null;
+let isStaff     = false;
+let currentTicketId  = null;
+let selectedRating   = 0;
+let realtimeSub      = null;
+
+// ═══════════════════════════════
+// INIT
+// ═══════════════════════════════
+document.addEventListener('DOMContentLoaded', async () => {
+  terminalAnimation();
+  await handleOAuthCallback();
+  loadPublicReviews();
+});
+
+// ═══════════════════════════════
+// OAUTH — Discord Implicit Flow
+// ═══════════════════════════════
+function loginWithDiscord() {
+  const scopes = 'identify guilds guilds.members.read';
+  const url = `https://discord.com/oauth2/authorize?client_id=${DISCORD_CLIENT_ID}&redirect_uri=${encodeURIComponent(DISCORD_REDIRECT)}&response_type=token&scope=${encodeURIComponent(scopes)}`;
+  window.location.href = url;
+}
+
+async function handleOAuthCallback() {
+  // Check if there's a token in the URL fragment
+  const hash   = window.location.hash.substring(1);
+  const params = new URLSearchParams(hash);
+  const token  = params.get('access_token');
+
+  if (token) {
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+    sessionStorage.setItem('discord_token', token);
+    await fetchDiscordUser(token);
+    return;
+  }
+
+  // Check session storage
+  const savedToken = sessionStorage.getItem('discord_token');
+  if (savedToken) {
+    await fetchDiscordUser(savedToken);
+  }
+}
+
+async function fetchDiscordUser(token) {
+  try {
+    const res = await fetch('https://discord.com/api/users/@me', {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) { sessionStorage.removeItem('discord_token'); return; }
+
+    const user = await res.json();
+    currentUser = { ...user, token };
+    currentUser.avatarUrl = user.avatar
+      ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png?size=128`
+      : `https://cdn.discordapp.com/embed/avatars/${(BigInt(user.id) >> 22n) % 6n}.png`;
+
+    // Register/update user in user_credits table (insert if new, keep credits if existing)
+    if (sb) {
+      const { data: existing } = await sb.from('user_credits').select('credits').eq('user_id', user.id).single();
+      if (!existing) {
+        await sb.from('user_credits').insert({ user_id: user.id, user_name: user.username, credits: 0, updated_at: new Date().toISOString() });
+      } else {
+        await sb.from('user_credits').update({ user_name: user.username, updated_at: new Date().toISOString() }).eq('user_id', user.id);
+      }
+    }
+
+    // Check staff role
+    await checkStaffRole(token, user.id);
+
+    // Update nav + go to dashboard
+    updateNav();
+    showPage('dashboard');
+    loadUserDashboard();
+  } catch(e) {
+    console.error('Discord fetch error:', e);
+  }
+}
+
+async function checkStaffRole(token, userId) {
+  try {
+    const res = await fetch(`https://discord.com/api/users/@me/guilds/${DISCORD_GUILD_ID}/member`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) return;
+    const member = await res.json();
+    isStaff = member.roles && member.roles.includes(STAFF_ROLE_ID);
+  } catch(e) {
+    // guilds.members.read might not be available — fallback to Supabase check
+    if (sb) {
+      try {
+        const { data } = await sb.from('staff_members').select('user_id').eq('user_id', userId).single();
+        isStaff = !!data;
+      } catch(e2) {}
+    }
+  }
+}
+
+function updateNav() {
+  const navRight = document.getElementById('nav-right');
+  if (!currentUser) return;
+  navRight.innerHTML = `
+    <div style="display:flex;align-items:center;gap:10px">
+      <img src="${currentUser.avatarUrl}" style="width:34px;height:34px;border-radius:50%;border:2px solid var(--purple)" alt="avatar"/>
+      <span style="font-weight:600;font-size:.9rem">${currentUser.username}</span>
+      <button class="btn btn-ghost" onclick="showPage('dashboard')">Dashboard</button>
+      ${isStaff ? `<button class="btn btn-primary" onclick="showPage('staff')">Staff Panel</button>` : ''}
+    </div>
+  `;
+}
+
+function logout() {
+  sessionStorage.removeItem('discord_token');
+  currentUser = null;
+  isStaff     = false;
+  if (realtimeSub) { realtimeSub.unsubscribe(); realtimeSub = null; }
+  showPage('home');
+  document.getElementById('nav-right').innerHTML = `
+    <button class="btn btn-discord" onclick="loginWithDiscord()">
+      <svg width="18" height="18" viewBox="0 0 71 55" fill="white"><path d="M60.1 4.9A58.5 58.5 0 0 0 45.6.7a.2.2 0 0 0-.2.1 40.7 40.7 0 0 0-1.8 3.7 54 54 0 0 0-16.2 0A37.3 37.3 0 0 0 25.6.8a.2.2 0 0 0-.2-.1A58.4 58.4 0 0 0 10.9 4.9a.2.2 0 0 0-.1.1C1.6 18.1-.9 31-.5 43.7a.2.2 0 0 0 .1.2 58.8 58.8 0 0 0 17.7 8.9.2.2 0 0 0 .2-.1 42 42 0 0 0 3.6-5.9.2.2 0 0 0-.1-.3 38.7 38.7 0 0 1-5.5-2.6.2.2 0 0 1 0-.4c.4-.3.7-.6 1.1-.9a.2.2 0 0 1 .2 0c11.5 5.2 24 5.2 35.3 0a.2.2 0 0 1 .2 0l1.1.9a.2.2 0 0 1 0 .4 36 36 0 0 1-5.5 2.6.2.2 0 0 0-.1.3 47 47 0 0 0 3.6 5.9.2.2 0 0 0 .2.1A58.6 58.6 0 0 0 71 43.9a.2.2 0 0 0 .1-.2C72 29.4 68.2 16.6 60.2 5a.2.2 0 0 0-.1-.1zM23.7 36c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.9 7.1-6.4 7.1zm23.6 0c-3.5 0-6.4-3.2-6.4-7.1s2.8-7.1 6.4-7.1c3.6 0 6.5 3.2 6.4 7.1 0 3.9-2.8 7.1-6.4 7.1z"/></svg>
+      Connexion Discord
+    </button>
+  `;
+}
+
+// ═══════════════════════════════
+// PAGE ROUTING
+// ═══════════════════════════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const page = document.getElementById(`page-${name}`);
+  if (page) page.classList.add('active');
+  window.scrollTo(0, 0);
+  if (name === 'staff') loadStaffDashboard();
+}
+
+// ═══════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════
+function loadUserDashboard() {
+  if (!currentUser) return;
+
+  // Avatar
+  document.getElementById('user-avatar-wrap').innerHTML = `
+    <img class="user-avatar" src="${currentUser.avatarUrl}" alt="avatar"/>
+  `;
+  document.getElementById('dash-username').textContent = currentUser.username;
+  document.getElementById('dash-usertag').textContent  = `#${currentUser.discriminator || '0'}`;
+
+  if (isStaff) {
+    document.getElementById('staff-badge-wrap').style.display = 'block';
+    document.getElementById('nav-staff-link').style.display   = 'list-item';
+  }
+
+  loadTickets();
+  loadReviews();
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  const tabBtn = document.getElementById(`tab-${name}`);
+  const panel  = document.getElementById(`panel-${name}`);
+  if (tabBtn) tabBtn.classList.add('active');
+  if (panel)  panel.classList.add('active');
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById(`nav-${name}`);
+  if (navEl) navEl.classList.add('active');
+  if (name === 'profile') loadProfileTab();
+  if (name === 'reviews') loadReviews();
+}
+
+// ═══════════════════════════════
+// TICKETS
+// ═══════════════════════════════
+async function loadTickets() {
+  const list = document.getElementById('ticket-list');
+  list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  if (!sb || !currentUser) { list.innerHTML = renderEmpty('Connectez-vous pour voir vos tickets.'); return; }
+  try {
+    const { data, error } = await sb.from('tickets')
+      .select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false });
+    if (error) throw error;
+    if (!data.length) { list.innerHTML = renderEmpty('Aucun ticket ouvert. Cliquez sur "Nouveau ticket" pour commencer.'); return; }
+    list.innerHTML = data.map(t => renderTicketItem(t)).join('');
+  } catch(e) {
+    list.innerHTML = renderEmpty('Erreur de chargement. Vérifiez la configuration Supabase.');
+    console.error(e);
+  }
+}
+
+function renderTicketItem(t) {
+  const statusClass = t.status === 'open' ? 't-open' : t.status === 'closed' ? 't-closed' : 't-pending';
+  const statusLabel = t.status === 'open' ? 'Ouvert' : t.status === 'closed' ? 'Fermé' : 'En attente';
+  const date = new Date(t.created_at).toLocaleDateString('fr-FR');
+  return `
+    <div class="ticket-item" onclick="openTicket('${t.id}')">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple2)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <div class="ticket-info">
+        <div class="ticket-title">${escHtml(t.title)}</div>
+        <div class="ticket-meta">Créé le ${date}</div>
+      </div>
+      <span class="ticket-status ${statusClass}">${statusLabel}</span>
+    </div>
+  `;
+}
+
+function renderEmpty(msg) {
+  return `
+    <div class="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <p>${msg}</p>
+    </div>
+  `;
+}
+
+function openNewTicketModal() {
+  if (!currentUser) { loginWithDiscord(); return; }
+  openModal('modal-ticket');
+}
+
+async function createTicket() {
+  const title = document.getElementById('ticket-title-input').value.trim();
+  const desc  = document.getElementById('ticket-desc-input').value.trim();
+  if (!title) { showToast('Le titre est requis', 'error'); return; }
+  if (!sb)    { showToast('Supabase non configuré', 'error'); return; }
+
+  try {
+    const { error } = await sb.from('tickets').insert({
+      user_id:     currentUser.id,
+      user_name:   currentUser.username,
+      user_avatar: currentUser.avatarUrl,
+      title,
+      description: desc,
+      status:      'open'
+    });
+    if (error) throw error;
+    closeModal('modal-ticket');
+    document.getElementById('ticket-title-input').value = '';
+    document.getElementById('ticket-desc-input').value  = '';
+    showToast('Ticket créé avec succès !', 'success');
+    loadTickets();
+  } catch(e) {
+    showToast('Erreur lors de la création', 'error');
+    console.error(e);
+  }
+}
+
+async function openTicket(ticketId) {
+  currentTicketId = ticketId;
+  showPage('ticket');
+  if (!sb) return;
+
+  // Load ticket info
+  const { data: ticket } = await sb.from('tickets').select('*').eq('id', ticketId).single();
+  if (ticket) {
+    document.getElementById('ticket-chat-title').textContent = `Ticket — ${ticket.title}`;
+    const el = document.getElementById('ticket-chat-status');
+    el.textContent  = ticket.status === 'open' ? 'Ouvert' : 'Fermé';
+    el.className    = `ticket-status ${ticket.status === 'open' ? 't-open' : 't-closed'}`;
+    document.getElementById('ticket-chat-date').textContent = new Date(ticket.created_at).toLocaleDateString('fr-FR');
+    // Hide close btn if already closed or if not owner/staff
+    if (ticket.status === 'closed') document.getElementById('close-ticket-btn').style.display = 'none';
+    if (!isStaff && ticket.user_id !== currentUser?.id) document.getElementById('close-ticket-btn').style.display = 'none';
+  }
+
+  await loadMessages();
+
+  // Realtime
+  if (realtimeSub) realtimeSub.unsubscribe();
+  realtimeSub = sb.channel(`ticket-${ticketId}`)
+    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'ticket_messages', filter: `ticket_id=eq.${ticketId}` },
+      payload => appendMessage(payload.new))
+    .subscribe();
+}
+
+async function loadMessages() {
+  const body = document.getElementById('chat-messages');
+  body.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  if (!sb) return;
+
+  const { data, error } = await sb.from('ticket_messages')
+    .select('*').eq('ticket_id', currentTicketId).order('created_at', { ascending: true });
+  if (error) { body.innerHTML = '<p style="color:var(--text3);text-align:center">Erreur de chargement</p>'; return; }
+  
+  body.innerHTML = '';
+  if (!data.length) {
+    body.innerHTML = `<p style="color:var(--text3);text-align:center;margin:auto">Aucun message. Écrivez pour commencer !</p>`;
+    return;
+  }
+  data.forEach(m => appendMessage(m));
+}
+
+function appendMessage(m) {
+  const body = document.getElementById('chat-messages');
+  // Remove "no message" placeholder
+  const placeholder = body.querySelector('p');
+  if (placeholder) placeholder.remove();
+
+  const isMe = m.sender_id === currentUser?.id;
+  const avatarHtml = m.sender_avatar
+    ? `<img src="${m.sender_avatar}" class="msg-avatar" alt=""/>`
+    : `<div class="msg-avatar-ph">${(m.sender_name||'?')[0].toUpperCase()}</div>`;
+  const time = new Date(m.created_at).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+
+  const div = document.createElement('div');
+  div.className = `msg${isMe ? ' mine' : ''}${m.is_staff && !isMe ? ' staff' : ''}`;
+  div.innerHTML = `
+    ${avatarHtml}
+    <div class="msg-content">
+      <div class="msg-name">${escHtml(m.sender_name)}${m.is_staff ? ' 🛡️' : ''}</div>
+      <div class="msg-bubble">${escHtml(m.content)}</div>
+      <div class="msg-time">${time}</div>
+    </div>
+  `;
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const content = input.value.trim();
+  if (!content || !sb || !currentUser) return;
+  input.value = '';
+
+  const { error } = await sb.from('ticket_messages').insert({
+    ticket_id:    currentTicketId,
+    sender_id:    currentUser.id,
+    sender_name:  currentUser.username,
+    sender_avatar:currentUser.avatarUrl,
+    content,
+    is_staff:     isStaff
+  });
+  if (error) { showToast('Erreur envoi message', 'error'); input.value = content; }
+}
+
+async function closeTicket() {
+  if (!sb || !currentTicketId) return;
+  const { error } = await sb.from('tickets').update({ status: 'closed' }).eq('id', currentTicketId);
+  if (error) { showToast('Erreur', 'error'); return; }
+  showToast('Ticket fermé', 'success');
+  document.getElementById('close-ticket-btn').style.display = 'none';
+  const el = document.getElementById('ticket-chat-status');
+  el.textContent = 'Fermé'; el.className = 'ticket-status t-closed';
+}
+
+// ═══════════════════════════════
+// STAFF DASHBOARD
+// ═══════════════════════════════
+let allStaffTickets   = [];
+let staffTicketFilter = 'all';
+let creditsSearchUser = null; // { user_id, user_name, credits }
+
+function switchStaffTab(name) {
+  ['tickets','credits'].forEach(t => {
+    const panel = document.getElementById(`staff-panel-${t}`);
+    const nav   = document.getElementById(`staff-nav-${t}`);
+    if (panel) panel.style.display = t === name ? 'block' : 'none';
+    if (nav)   { nav.classList.toggle('active', t === name); }
+  });
+  if (name === 'credits') loadAllUsersCredits();
+}
+
+async function loadStaffDashboard() {
+  if (!isStaff) { showToast('Accès refusé', 'error'); showPage('dashboard'); return; }
+  if (!sb) { showToast('Supabase non configuré', 'error'); return; }
+
+  const list = document.getElementById('staff-ticket-list');
+  list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+  const { data, error } = await sb.from('tickets').select('*').order('created_at', { ascending: false });
+  if (error) { list.innerHTML = renderEmpty('Erreur : ' + error.message); console.error(error); return; }
+
+  allStaffTickets = data || [];
+
+  const open   = allStaffTickets.filter(t => t.status === 'open').length;
+  const closed = allStaffTickets.filter(t => t.status === 'closed').length;
+  const userSet = new Set(allStaffTickets.map(t => t.user_id));
+  document.getElementById('stat-open').textContent   = open;
+  document.getElementById('stat-closed').textContent = closed;
+  document.getElementById('stat-total').textContent  = allStaffTickets.length;
+  document.getElementById('stat-users').textContent  = userSet.size;
+
+  renderStaffTickets();
+}
+
+function filterStaffTickets(filter) {
+  staffTicketFilter = filter;
+  ['all','open','closed'].forEach(f => {
+    const btn = document.getElementById(`sf-${f}`);
+    if (btn) { btn.className = f === filter ? 'btn btn-primary' : 'btn btn-ghost'; btn.style.cssText = 'padding:6px 14px;font-size:.8rem'; }
+  });
+  renderStaffTickets();
+}
+
+function renderStaffTickets() {
+  const list = document.getElementById('staff-ticket-list');
+  const filtered = staffTicketFilter === 'all'
+    ? allStaffTickets
+    : allStaffTickets.filter(t => t.status === staffTicketFilter);
+
+  if (!filtered.length) { list.innerHTML = renderEmpty('Aucun ticket dans cette catégorie.'); return; }
+
+  list.innerHTML = filtered.map(t => `
+    <div class="ticket-item" onclick="openTicket('${t.id}')">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0">
+        ${(t.user_name||'?')[0].toUpperCase()}
+      </div>
+      <div class="ticket-info">
+        <div class="ticket-title">${escHtml(t.title)}</div>
+        <div class="ticket-meta">Par <strong>${escHtml(t.user_name)}</strong> · ${new Date(t.created_at).toLocaleDateString('fr-FR', {day:'2-digit',month:'short',year:'numeric'})}</div>
+      </div>
+      <span class="ticket-status ${t.status === 'open' ? 't-open' : 't-closed'}">${t.status === 'open' ? 'Ouvert' : 'Fermé'}</span>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════
+// CREDITS MANAGEMENT
+// ═══════════════════════════════
+async function loadAllUsersCredits() {
+  const list = document.getElementById('all-users-credits');
+  if (!list || !sb) return;
+  list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+
+  const { data, error } = await sb.from('user_credits').select('*').order('credits', { ascending: false });
+  if (error) { list.innerHTML = `<p style="color:var(--text3);text-align:center;font-size:.85rem">Erreur: ${error.message}</p>`; return; }
+  if (!data || !data.length) { list.innerHTML = `<p style="color:var(--text3);text-align:center;font-size:.85rem">Aucun utilisateur enregistré.</p>`; return; }
+
+  list.innerHTML = data.map(u => `
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg3);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .2s"
+      onclick="quickSelectUser('${escHtml(u.user_id)}','${escHtml(u.user_name)}',${u.credits})"
+      onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='var(--border)'">
+      <div style="width:34px;height:34px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0">
+        ${(u.user_name||'?')[0].toUpperCase()}
+      </div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:600;font-size:.88rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${escHtml(u.user_name)}</div>
+        <div style="font-size:.72rem;color:var(--text3);font-family:var(--font-mono)">${escHtml(u.user_id)}</div>
+      </div>
+      <div style="font-family:var(--font-display);font-weight:800;font-size:1.1rem;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;flex-shrink:0">
+        ${u.credits} cr
+      </div>
+    </div>
+  `).join('');
+}
+
+function quickSelectUser(userId, userName, credits) {
+  creditsSearchUser = { user_id: userId, user_name: userName, credits };
+  document.getElementById('credits-search-input').value = userId;
+  showCreditsUser();
+  switchStaffTab('credits');
+}
+
+async function searchUserCredits() {
+  const query = document.getElementById('credits-search-input').value.trim();
+  if (!query || !sb) return;
+
+  document.getElementById('credits-user-result').style.display   = 'none';
+  document.getElementById('credits-user-notfound').style.display = 'none';
+
+  // Try by user_id first, then by user_name
+  let { data } = await sb.from('user_credits').select('*').eq('user_id', query).single();
+  if (!data) {
+    const res2 = await sb.from('user_credits').select('*').ilike('user_name', `%${query}%`).limit(1).single();
+    data = res2.data;
+  }
+
+  if (!data) {
+    // User might exist in tickets but not have credits yet — check tickets
+    const res3 = await sb.from('tickets').select('user_id,user_name').ilike('user_name', `%${query}%`).limit(1).single();
+    const byId  = await sb.from('tickets').select('user_id,user_name').eq('user_id', query).limit(1).single();
+    const found = res3.data || byId.data;
+    if (found) {
+      creditsSearchUser = { user_id: found.user_id, user_name: found.user_name, credits: 0 };
+    } else {
+      document.getElementById('credits-user-notfound').style.display = 'block';
+      creditsSearchUser = null;
+      return;
+    }
+  } else {
+    creditsSearchUser = data;
+  }
+  showCreditsUser();
+}
+
+function showCreditsUser() {
+  if (!creditsSearchUser) return;
+  const u = creditsSearchUser;
+  document.getElementById('cred-user-av').textContent  = (u.user_name||'?')[0].toUpperCase();
+  document.getElementById('cred-user-name').textContent = u.user_name;
+  document.getElementById('cred-user-id').textContent   = 'ID : ' + u.user_id;
+  document.getElementById('cred-current').textContent   = u.credits || 0;
+  document.getElementById('credits-user-result').style.display   = 'block';
+  document.getElementById('credits-user-notfound').style.display = 'none';
+}
+
+async function adjustCredits(action) {
+  if (!creditsSearchUser || !sb) return;
+  const amount = parseInt(document.getElementById('credits-amount-input').value) || 0;
+  if (amount <= 0) { showToast('Entrez un montant valide', 'error'); return; }
+
+  const current = creditsSearchUser.credits || 0;
+  const newVal  = action === 'add' ? current + amount : Math.max(0, current - amount);
+  await saveCredits(newVal);
+}
+
+async function setCredits() {
+  if (!creditsSearchUser || !sb) return;
+  const newVal = parseInt(document.getElementById('credits-amount-input').value);
+  if (isNaN(newVal) || newVal < 0) { showToast('Montant invalide', 'error'); return; }
+  await saveCredits(newVal);
+}
+
+async function saveCredits(newVal) {
+  const u = creditsSearchUser;
+  const { error } = await sb.from('user_credits').upsert({
+    user_id:    u.user_id,
+    user_name:  u.user_name,
+    credits:    newVal,
+    updated_at: new Date().toISOString()
+  }, { onConflict: 'user_id' });
+
+  if (error) { showToast('Erreur : ' + error.message, 'error'); return; }
+
+  creditsSearchUser.credits = newVal;
+  document.getElementById('cred-current').textContent = newVal;
+  document.getElementById('credits-amount-input').value = '';
+  showToast(`Crédits mis à jour : ${newVal} cr`, 'success');
+  loadAllUsersCredits();
+}
+
+// ═══════════════════════════════
+// PROFILE TAB
+// ═══════════════════════════════
+async function loadProfileTab() {
+  if (!currentUser) return;
+  const u = currentUser;
+
+  // Avatar
+  const av = document.getElementById('profile-avatar');
+  const ph = document.getElementById('profile-avatar-ph');
+  if (u.avatarUrl) {
+    av.src = u.avatarUrl; av.style.display = 'block';
+    ph.style.display = 'none';
+  } else {
+    ph.textContent = (u.username||'?')[0].toUpperCase();
+  }
+  document.getElementById('profile-name').textContent       = u.username;
+  document.getElementById('profile-id').textContent         = 'ID : ' + u.id;
+  document.getElementById('profile-username').textContent   = u.username;
+  document.getElementById('profile-discord-id').textContent = u.id;
+  document.getElementById('profile-role').textContent       = isStaff ? 'Staff' : 'Utilisateur';
+  if (isStaff) document.getElementById('profile-staff-badge').style.display = 'block';
+
+  // Credits
+  document.getElementById('profile-credits').textContent = '…';
+  if (sb) {
+    const { data } = await sb.from('user_credits').select('credits').eq('user_id', u.id).single();
+    document.getElementById('profile-credits').textContent = data ? data.credits : 0;
+  }
+}
+
+// ═══════════════════════════════
+// showPage — clean override
+// ═══════════════════════════════
+// showPage is defined above — no override needed
+
+// ═══════════════════════════════
+// REVIEWS
+// ═══════════════════════════════
+async function loadReviews() {
+  const list = document.getElementById('reviews-list');
+  if (!list || !sb) return;
+  list.innerHTML = '<div class="loading"><div class="spinner"></div></div>';
+  const { data } = await sb.from('reviews').select('*').order('created_at', { ascending: false }).limit(20);
+  if (!data || !data.length) { list.innerHTML = `<p style="color:var(--text3)">Soyez le premier à laisser un avis !</p>`; return; }
+  list.innerHTML = data.map(r => renderReviewCard(r)).join('');
+}
+
+async function loadPublicReviews() {
+  const list  = document.getElementById('public-reviews-list');
+  const empty = document.getElementById('public-reviews-empty');
+  if (!list) return;
+
+  if (!sb) {
+    list.innerHTML = '';
+    if (empty) { empty.style.display='block'; empty.textContent='Configurez Supabase pour voir les avis.'; }
+    return;
+  }
+
+  const { data } = await sb.from('reviews').select('*').order('created_at', { ascending: false }).limit(9);
+  list.innerHTML = '';
+  if (!data || !data.length) {
+    if (empty) empty.style.display = 'block';
+    return;
+  }
+  if (empty) empty.style.display = 'none';
+  list.innerHTML = data.map(r => renderReviewCard(r)).join('');
+}
+
+function renderReviewCard(r) {
+  const initial = (r.user_name||'?')[0].toUpperCase();
+  const colors  = ['linear-gradient(135deg,#7c3aed,#3b82f6)','linear-gradient(135deg,#06b6d4,#3b82f6)','linear-gradient(135deg,#ec4899,#a855f7)'];
+  const bg = colors[r.user_name.length % colors.length];
+  return `
+    <div class="review-card">
+      <div class="review-header">
+        <div class="review-avatar" style="background:${bg}">${initial}</div>
+        <div>
+          <div class="review-name">${escHtml(r.user_name)}</div>
+          <div class="review-date">${new Date(r.created_at).toLocaleDateString('fr-FR')}</div>
+        </div>
+      </div>
+      <div class="review-stars">${renderStars(r.rating)}</div>
+      <div class="review-text">${escHtml(r.content)}</div>
+    </div>
+  `;
+}
+
+function renderStars(rating) {
+  return Array.from({length:5}, (_,i) => i < rating
+    ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
+    : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
+  ).join('');
+}
+
+function setRating(val) {
+  selectedRating = val;
+  document.querySelectorAll('.star-btn').forEach((btn, i) => {
+    btn.innerHTML = i < val
+      ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`
+      : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+  });
+}
+
+async function submitReview() {
+  const content = document.getElementById('review-text').value.trim();
+  if (!selectedRating) { showToast('Sélectionnez une note', 'error'); return; }
+  if (!content)        { showToast('Écrivez un commentaire', 'error'); return; }
+  if (!currentUser)    { loginWithDiscord(); return; }
+  if (!sb)             { showToast('Supabase non configuré', 'error'); return; }
+
+  const { error } = await sb.from('reviews').insert({
+    user_id:    currentUser.id,
+    user_name:  currentUser.username,
+    user_avatar:currentUser.avatarUrl,
+    rating:     selectedRating,
+    content
+  });
+  if (error) { showToast('Erreur lors de l\'envoi', 'error'); return; }
+  showToast('Avis publié ! Merci ✨', 'success');
+  document.getElementById('review-text').value = '';
+  selectedRating = 0;
+  setRating(0);
+  loadReviews();
+  loadPublicReviews();
+}
+
+// ═══════════════════════════════
+// MODALS
+// ═══════════════════════════════
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+// ═══════════════════════════════
+// TOASTS
+// ═══════════════════════════════
+function showToast(msg, type = 'info') {
+  const container = document.getElementById('toast-container');
+  const icons = {
+    success: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`,
+    error:   `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`,
+    info:    `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
+  };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `${icons[type] || icons.info} ${msg}`;
+  container.appendChild(toast);
+  setTimeout(() => { toast.style.opacity='0'; toast.style.transition='opacity .3s'; setTimeout(() => toast.remove(), 300); }, 3000);
+}
+
+// ═══════════════════════════════
+// TERMINAL ANIMATION
+// ═══════════════════════════════
+function terminalAnimation() {
+  const steps = [
+    { el: 'cmd1', text: 'npm install devcenter-bot', delay: 300 },
+    { el: 'out1', text: 'Téléchargement...', delay: 1200, cls: 't-out' },
+    { el: 'out2', text: 'Installation...', delay: 1700 },
+    { el: 'line3', show: true, delay: 2200 },
+    { el: 'out3', text: 'Installation réussie', delay: 2300 },
+    { el: 'line4', show: true, delay: 2800 },
+    { el: 'cmd2', text: 'vyral deploy --env prod', delay: 2900 },
+    { el: 'line5', show: true, delay: 3800 },
+    { el: 'out4', text: 'Déploiement...', delay: 3900 },
+    { el: 'line6', show: true, delay: 4600 },
+    { el: 'out5', text: 'Déploiement réussi ✓', delay: 4700 },
+  ];
+  steps.forEach(s => {
+    if (s.show) {
+      setTimeout(() => { const el = document.getElementById(s.el); if(el) el.style.display='flex'; }, s.delay);
+    } else {
+      setTimeout(() => { typeText(s.el, s.text); }, s.delay);
+    }
+  });
+  // Loop
+  setTimeout(() => { resetTerminal(); setTimeout(terminalAnimation, 500); }, 7000);
+}
+
+function typeText(id, text) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = '';
+  let i = 0;
+  const iv = setInterval(() => {
+    if (i >= text.length) { clearInterval(iv); return; }
+    el.textContent += text[i++];
+  }, 35);
+}
+
+function resetTerminal() {
+  ['cmd1','out1','out2','out3','cmd2','out4','out5'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.textContent = '';
+  });
+  ['line3','line4','line5','line6'].forEach(id => {
+    const el = document.getElementById(id); if(el) el.style.display='none';
+  });
+}
+
+// ═══════════════════════════════
+// UTILS
+// ═══════════════════════════════
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+
+<!-- Inline SVG helpers (used server-side in real PHP; here we inject them directly) -->
+<script>
+// Replace PHP-like template calls with actual SVG inline
+document.querySelectorAll('.plan-features li').forEach(li => {
+  const txt = li.innerHTML;
+  if (txt.includes('<?= svgCheck()')) {
+    li.innerHTML = txt.replace(/&lt;\?= svgCheck\(\) \?&gt;/g,
+      `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`);
+  }
+  if (txt.includes('<?= svgX()')) {
+    li.innerHTML = txt.replace(/&lt;\?= svgX\(\) \?&gt;/g,
+      `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`);
+  }
+});
+</script>
+
+<!-- Fix: replace PHP-like placeholders since this is pure HTML -->
+<script>
+// Re-render plan features with correct SVGs
+const CHECK_SVG = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>`;
+const X_SVG    = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+const STAR_ON  = `<svg width="14" height="14" viewBox="0 0 24 24" fill="#f59e0b" stroke="none"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+const STAR_OFF = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+const STAR_BIG = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`;
+
+document.querySelectorAll('.plan-features li').forEach(li => {
+  const raw = li.innerHTML;
+  if (raw.includes('svgCheck')) li.innerHTML = CHECK_SVG + li.textContent.replace(/\s+/,' ').trim().replace('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>','').replace('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>','');
+  if (raw.includes('svgX'))     li.innerHTML = X_SVG    + li.textContent.replace(/\s+/,' ').trim().replace('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>','').replace('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4a5568" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>','');
+});
+
+// Fix star selects
+document.querySelectorAll('.star-btn').forEach((btn,i) => {
+  btn.innerHTML = STAR_BIG;
+  btn.onclick = () => setRating(i+1);
+});
+
+// Fix static review stars
+document.querySelectorAll('.review-stars').forEach(el => {
+  el.innerHTML = el.innerHTML
+    .replace(/&lt;\?= svgStar\(true\) \?&gt;/g, STAR_ON)
+    .replace(/&lt;\?= svgStar\(false\) \?&gt;/g, STAR_OFF)
+    .replace(/<\?= svgStar\(true\) \?>/g, STAR_ON)
+    .replace(/<\?= svgStar\(false\) \?>/g, STAR_OFF);
+});
+</script>
+
+<style>
+@keyframes grow{from{width:0}to{width:inherit}}
+</style>
 </body>
 </html>
