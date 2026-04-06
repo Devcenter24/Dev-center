@@ -348,9 +348,14 @@ footer{
 .sidebar-nav a{
   display:flex;align-items:center;gap:10px;padding:10px 12px;
   border-radius:8px;font-size:.9rem;color:var(--text2);transition:all .2s;
+  border:1px solid transparent;
 }
-.sidebar-nav a:hover,.sidebar-nav a.active{
-  background:rgba(124,58,237,.1);color:var(--text);border:1px solid rgba(124,58,237,.2);
+.sidebar-nav a:hover{
+  background:rgba(124,58,237,.07);color:var(--text);border-color:rgba(124,58,237,.15);
+}
+.sidebar-nav a.active{
+  background:rgba(124,58,237,.15);color:var(--text);border-color:rgba(124,58,237,.35);
+  font-weight:600;
 }
 .sidebar-nav a svg{flex-shrink:0;}
 .dash-content{flex:1;padding:32px;overflow-y:auto;}
@@ -1319,6 +1324,8 @@ footer{
     </main>
   </div>
 </div>
+<!-- ══════════════════════════════════════════
+     NEW TICKET MODAL
 ══════════════════════════════════════════ -->
 <div class="modal-overlay" id="modal-ticket">
   <div class="modal" style="position:relative">
