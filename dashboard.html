@@ -3,119 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Retour Bientôt | Maintenance</title>
+    <title>Maintenance - Durée indéterminée</title>
     <style>
         :root {
-            --bg-color: #1a1a2e; /* Bleu très sombre pour le fond */
-            --text-color: #eaeaea; /* Gris clair pour le texte principal */
-            --sub-text-color: #a0a0b0; /* Gris moyen pour le sous-texte */
-            --accent-color: #4158d0; /* Bleu vif pour l'accentuation */
-            --accent-color-light: #c850c0; /* Violet clair pour le gradient */
+            --bg-dark: #0f172a;
+            --accent-blue: #38bdf8;
+            --text-gray: #94a3b8;
+            --text-white: #f8fafc;
         }
 
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Montserrat', 'Open Sans', Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            background-color: var(--bg-dark);
+            color: var(--text-white);
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
             text-align: center;
-        }
-
-        .container {
-            max-width: 500px;
             padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
+            max-width: 450px;
         }
 
-        /* SVG de Chargement Minimaliste */
-        .loading-svg {
+        /* L'engrenage unique */
+        .gear-container {
+            margin-bottom: 2rem;
+        }
+
+        .gear-svg {
             width: 80px;
             height: 80px;
+            fill: var(--accent-blue);
+            animation: spin 8s linear infinite;
         }
 
-        .loading-circle {
-            animation: rotate 1.5s linear infinite;
-            transform-origin: center;
-        }
-
-        @keyframes rotate {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loading-path {
-            stroke-dasharray: 1, 200;
-            stroke-dashoffset: 0;
-            animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
-            stroke-linecap: round;
-        }
-
-        @keyframes dash {
-            0% {
-                stroke-dasharray: 1, 200;
-                stroke-dashoffset: 0;
-            }
-            50% {
-                stroke-dasharray: 89, 200;
-                stroke-dashoffset: -35px;
-            }
-            100% {
-                stroke-dasharray: 89, 200;
-                stroke-dashoffset: -124px;
-            }
-        }
-
-        @keyframes color {
-            100%, 0% {
-                stroke: var(--accent-color);
-            }
-            40% {
-                stroke: var(--accent-color-light);
-            }
-            66% {
-                stroke: var(--accent-color);
-            }
-            80% {
-                stroke: var(--accent-color-light);
-            }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            font-size: 1.8rem;
+            margin: 0 0 1rem 0;
+            letter-spacing: -0.025em;
         }
 
         p {
-            font-size: 1rem;
-            margin: 0;
-            color: var(--sub-text-color);
-            line-height: 1.5;
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 2rem;
         }
 
+        /* Barre de chargement indéterminée */
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: #1e293b;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-line {
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            background: var(--accent-blue);
+            border-radius: 10px;
+            animation: move 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        @keyframes move {
+            0% { left: -40%; }
+            100% { left: 110%; }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <svg class="loading-svg" viewBox="25 25 50 50">
-            <circle class="loading-circle loading-path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
-        </svg>
+    <div class="card">
+        <div class="gear-container">
+            <svg class="gear-svg" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.47,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.53,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.53,18.67 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.47,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+            </svg>
+        </div>
 
-        <h1>RETOUR BIENTÔT</h1>
+        <div class="status-badge">Maintenance Système</div>
         
-        <p>Nous apportons quelques améliorations pour vous offrir une meilleure expérience. Merci de patienter un instant.</p>
+        <h1>Travaux en cours</h1>
+        
+        <p>
+            Nous effectuons des opérations de maintenance critique. 
+            L'accès au site est momentanément suspendu pour une <strong>durée indéterminée</strong>.
+        </p>
+
+        <div class="progress-bar">
+            <div class="progress-line"></div>
+        </div>
     </div>
 
 </body>
