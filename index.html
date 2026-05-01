@@ -1656,8 +1656,8 @@ async function handleOAuth(token){
   }catch(e){setLoading('Erreur: '+e.message);setTimeout(()=>showPage('landing-page'),3000);}
 }
 function loadSession(){const exp=parseInt(sessionStorage.getItem('dc_expiry')||'0');if(Date.now()>exp){sessionStorage.clear();return false;}const s=sessionStorage.getItem('dc_user');if(!s)return false;me=JSON.parse(s);isStaff=sessionStorage.getItem('dc_staff')==='true';isAdmin=sessionStorage.getItem('dc_admin')==='true';return true;}
-function logout(){clearInterval(rtInterval);sessionStorage.clear();me=null;isStaff=false;isAdmin=false;showPage('landing-page');updateNavbar();}
-function goToLanding(){showPage('landing-page');updateNavbar();}
+function logout(){clearInterval(rtInterval);sessionStorage.clear();me=null;isStaff=false;isAdmin=false;history.pushState(null,'','/');showPage('landing-page');updateNavbar();}
+function goToLanding(){history.pushState(null,'','/');showPage('landing-page');updateNavbar();}
 function updateNavbar(){
   var loggedIn=!!(me&&me.id);
   var d=document.getElementById('nav-dash-btn');
@@ -1732,6 +1732,7 @@ async function launchApp(){
   updateNavbar();
   updateSidebarUserCard();
   showPage('app-page');
+  history.pushState(null,'','/dashboard');
   initStars();
   loadMyTickets();
   loadEmail();
