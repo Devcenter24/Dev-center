@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <title>Conditions d'utilisation — Dev Center</title>
+  <title>Notre équipe — Dev Center</title>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.discordapp.com https://images-ext-1.discordapp.net https://media.discordapp.net; connect-src 'self' https://llheudregeksbyjuscrw.supabase.co https://discord.com https://api.anthropic.com https://cdnjs.cloudflare.com; base-uri 'self'; form-action 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -1022,7 +1022,7 @@ document.addEventListener('contextmenu',function(e){e.preventDefault();return fa
 document.addEventListener('DOMContentLoaded',function(){
   loadSession();
   updateNavbar();
-  
+  if(document.getElementById('team-grid-landing'))loadTeamLanding();
   refreshModuleBadges();
 });
 
