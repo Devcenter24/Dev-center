@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <title>Conditions — Dev Center</title>
+  <title>Notre équipe — Dev Center</title>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.discordapp.com https://images-ext-1.discordapp.net https://media.discordapp.net; connect-src 'self' https://llheudregeksbyjuscrw.supabase.co https://discord.com https://api.anthropic.com https://cdnjs.cloudflare.com; base-uri 'self'; form-action 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -830,7 +830,19 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
 .cta-join-btn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.6);transform:translateY(-2px);}
 @media(max-width:480px){.cta-join-section{padding:52px 22px;}.cta-join-section h2{font-size:26px!important;}}
 
-  </style>
+  
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+.reveal.reveal-left{transform:translateX(-32px);}
+.reveal.reveal-right{transform:translateX(32px);}
+.reveal.reveal-scale{transform:scale(.94);}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+.reveal-delay-5{transition-delay:.5s;}
+</style>
 </head>
 <body>
 <canvas id="stars-canvas"></canvas>
@@ -878,11 +890,11 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
   </nav>
 <main style="position:relative;z-index:1;padding-top:24px;">
 <div class="section center" id="team">
-    <div class="s-tag" style="margin:0 auto 14px">TOS</div>
+    <div class="s-tag reveal" style="margin:0 auto 14px">Équipe</div>
     <div style="max-width:800px;margin:0 auto;">
-      <div class="s-tag" style="margin-bottom:14px;">Légal</div>
-      <h2 class="s-title" style="margin-bottom:8px;">Conditions d'utilisation</h2>
-      <p class="s-sub" style="margin-bottom:48px;">Dernière mise à jour : 1 mai 2025</p>
+      <div class="s-tag reveal" style="margin-bottom:14px;">Légal</div>
+      <h2 class="s-title reveal reveal-delay-1" style="margin-bottom:8px;">Conditions d'utilisation</h2>
+      <p class="s-sub reveal reveal-delay-2" style="margin-bottom:48px;">Dernière mise à jour : mai 2025</p>
       <div style="display:flex;flex-direction:column;gap:24px;">
         <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;"><h3 style="font-family:Syne,sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:10px;"><span style="width:28px;height:28px;border-radius:7px;background:rgba(79,110,247,.12);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;">1</span>Acceptation des conditions</h3><p style="font-size:14px;color:var(--text2);line-height:1.8;">En accédant à Dev Center et en utilisant nos services, vous acceptez pleinement et sans réserve les présentes conditions. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser notre plateforme.</p></div>
         <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:28px;"><h3 style="font-family:Syne,sans-serif;font-size:17px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:10px;"><span style="width:28px;height:28px;border-radius:7px;background:rgba(79,110,247,.12);color:var(--primary);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0;">2</span>Description du service</h3><p style="font-size:14px;color:var(--text2);line-height:1.8;">Dev Center est une plateforme de support et de gestion de commandes accessible via Discord. Nous proposons des services de développement de serveurs Discord, sites web et bots Discord. L'accès est gratuit et nécessite un compte Discord valide.</p></div>
@@ -991,7 +1003,7 @@ async function loadTeamLanding(){
   var el=document.getElementById('team-grid-landing');if(!el)return;
   var{data}=await db.from('equipe').select('*').order('created_at',{ascending:true});
   if(!data||!data.length){el.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">Aucun membre pour le moment.</div>';return;}
-  el.innerHTML=data.map(function(m,i){return '<div class="team-card"><div class="team-av">'+teamAvHTML(m,i,80)+'</div><div class="team-name">'+esc(m.name)+'</div><div class="team-role">'+esc(m.role||'')+'</div>'+(m.description?'<div class="team-desc">'+esc(m.description)+'</div>':'')+'</div>';}).join('');
+  el.innerHTML=data.map(function(m,i){return '<div class="team-card reveal reveal-scale"><div class="team-av">'+teamAvHTML(m,i,80)+'</div><div class="team-name">'+esc(m.name)+'</div><div class="team-role">'+esc(m.role||'')+'</div>'+(m.description?'<div class="team-desc">'+esc(m.description)+'</div>':'')+'</div>';}).join('');
 }
 
 async function refreshModuleBadges(){
@@ -1036,6 +1048,19 @@ document.addEventListener('DOMContentLoaded',function(){
   refreshModuleBadges();
 });
 
+</script>
+<script>
+/* ── SCROLL REVEAL ── */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!els.length)return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+    });
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){io.observe(el);});
+})();
 </script>
 </body>
 </html>
