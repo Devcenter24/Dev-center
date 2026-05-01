@@ -844,7 +844,19 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
 .nav-dd-sep{height:1px;background:var(--border);margin:4px 0;}
 .nav-dd-home .nav-dd-lbl{color:var(--text2);}
 
-  </style>
+  
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+.reveal.reveal-left{transform:translateX(-32px);}
+.reveal.reveal-right{transform:translateX(32px);}
+.reveal.reveal-scale{transform:scale(.94);}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+.reveal-delay-5{transition-delay:.5s;}
+</style>
 </head>
 <body>
 <canvas id="stars-canvas"></canvas>
@@ -893,9 +905,9 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
 <main style="position:relative;z-index:1;">
   <div class="section-full" style="padding:80px 0 60px;">
     <div class="section-inner" style="text-align:center;">
-      <div class="s-tag" style="margin:0 auto 14px;background:rgba(245,158,11,.12);color:#f59e0b;border-color:rgba(245,158,11,.2);">Communauté</div>
-      <h2 class="s-title" style="margin-bottom:16px;">Nous soutenir</h2>
-      <p class="s-sub" style="max-width:580px;margin:0 auto 44px;line-height:1.8;">Dev Center est gratuit et maintenu avec passion. La meilleure façon de nous soutenir, c'est de rejoindre notre communauté et de booster notre serveur Discord !</p>
+      <div class="s-tag reveal" style="margin:0 auto 14px;background:rgba(245,158,11,.12);color:#f59e0b;border-color:rgba(245,158,11,.2);">Communauté</div>
+      <h2 class="s-title reveal reveal-delay-1" style="margin-bottom:16px;">Nous soutenir</h2>
+      <p class="s-sub reveal reveal-delay-2" style="max-width:580px;margin:0 auto 44px;line-height:1.8;">Dev Center est gratuit et maintenu avec passion. La meilleure façon de nous soutenir, c'est de rejoindre notre communauté et de booster notre serveur Discord !</p>
       <div style="display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-bottom:52px;">
         <a href="https://discord.gg/9KqXrKyTfA" target="_blank" style="display:inline-flex;align-items:center;gap:12px;background:linear-gradient(135deg,#5865f2,#7c3aed);color:#fff;padding:16px 32px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;box-shadow:0 4px 24px rgba(88,101,242,.4);transition:transform .2s,box-shadow .2s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 32px rgba(88,101,242,.5)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 24px rgba(88,101,242,.4)'">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
@@ -985,6 +997,19 @@ document.addEventListener('keydown',function(e){if((e.ctrlKey&&(e.key==='u'||e.k
 document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
 document.addEventListener('DOMContentLoaded',function(){loadSession();updateNavbar();});
 
+</script>
+<script>
+/* ── SCROLL REVEAL ── */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!els.length)return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+    });
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){io.observe(el);});
+})();
 </script>
 </body>
 </html>
