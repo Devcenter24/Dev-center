@@ -1677,12 +1677,11 @@ async function init(){
   const token=hash.get('access_token');
   if(token){await handleOAuth(token);return;}
   if(hash.get('error')){history.replaceState(null,'',window.location.pathname);showPage('landing-page');return;}
-  // Only auto-launch dashboard if on /dashboard.html or session + explicit dashboard intent
   var wantDash=sessionStorage.getItem('dc_want_dash')==='1';
   sessionStorage.removeItem('dc_want_dash');
   if(!loadSession()){showPage('landing-page');updateNavbar();return;}
-  if(wantDash){launchApp();}
-  else{showPage('landing-page');updateNavbar();}
+  // Always redirect to /dashboard/ — never show dashboard inline on landing
+  window.location.replace('/dashboard');
 }
 async function verifyRolesLive(){
   var tok=sessionStorage.getItem('dc_tok');
