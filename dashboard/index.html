@@ -1,101 +1,38 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Site en Maintenance</title>
-    <style>
-        :root {
-            --primary-color: #4a90e2;
-            --text-color: #2c3e50;
-            --bg-color: #ffffff;
-        }
-
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            overflow: hidden;
-        }
-
-        .wrapper {
-            text-align: center;
-            max-width: 500px;
-            padding: 20px;
-        }
-
-        /* Style du SVG */
-        .svg-container {
-            width: 250px;
-            margin: 0 auto 30px auto;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin: 0;
-            letter-spacing: -1px;
-        }
-
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #7f8c8d;
-            margin-top: 15px;
-        }
-
-        /* Petite barre de progression décorative */
-        .loader {
-            width: 100px;
-            height: 4px;
-            background: #eee;
-            margin: 25px auto;
-            position: relative;
-            border-radius: 2px;
-            overflow: hidden;
-        }
-
-        .loader::after {
-            content: '';
-            position: absolute;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: var(--primary-color);
-            animation: loading 2s infinite;
-        }
-
-        @keyframes loading {
-            0% { left: -100%; }
-            100% { left: 100%; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Dashboard — Dev Center</title>
+  <link rel="icon" href="https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=64" type="image/png">
+  <meta name="theme-color" content="#4f6ef7">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{background:#08080f;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:Outfit,sans-serif;color:#fff;}
+    .wrap{text-align:center;}
+    .logo{width:56px;height:56px;border-radius:16px;margin:0 auto 18px;display:block;}
+    .spinner{width:36px;height:36px;border:3px solid rgba(79,110,247,.2);border-top-color:#4f6ef7;border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 16px;}
+    @keyframes spin{to{transform:rotate(360deg);}}
+    p{font-size:14px;color:rgba(255,255,255,.4);}
+  </style>
 </head>
 <body>
-
-    <div class="wrapper">
-        <div class="svg-container">
-            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <path fill="#4a90e2" d="M100,30 C105,30 110,35 110,40 L110,45 C120,48 130,52 138,58 L142,54 C146,50 152,50 156,54 L166,64 C170,68 170,74 166,78 L162,82 C168,90 172,100 175,110 L180,110 C186,110 190,115 190,120 L190,134 C190,140 186,144 180,144 L175,144 C172,154 168,164 162,172 L166,176 C170,180 170,186 166,190 L156,200 C152,204 146,204 142,200 L138,196 C130,202 120,206 110,209 L110,214 C110,219 105,224 100,224 L86,224 C80,224 76,219 76,214 L76,209 C66,206 56,202 48,196 L44,200 C40,204 34,204 30,200 L20,190 C16,186 16,180 20,176 L24,172 C18,164 14,154 11,144 L6,144 C1,144 -4,140 -4,134 L-4,120 C-4,115 1,110 6,110 L11,110 C14,100 18,90 24,82 L20,78 C16,74 16,68 20,64 L30,54 C34,50 40,50 44,54 L48,58 C56,52 66,48 76,45 L76,40 C76,35 80,30 86,30 L100,30 Z M93,94 C77,94 64,107 64,123 C64,139 77,152 93,152 C109,152 122,139 122,123 C122,107 109,94 93,94 Z" transform="translate(5 -20)"/>
-            </svg>
-        </div>
-
-        <h1>Maintenance</h1>
-        <p>Nous peaufinons les derniers détails pour vous offrir une meilleure expérience.</p>
-        
-        <div class="loader"></div>
-    </div>
-
+  <div class="wrap">
+    <img class="logo" src="https://cdn.discordapp.com/icons/1452963098284785765/4255d99dd972ab407c31044fe9a899b0.png?size=64" alt="Dev Center">
+    <div class="spinner"></div>
+    <p>Chargement du dashboard...</p>
+  </div>
+  <script>
+    var session=sessionStorage.getItem('dc_user');
+    var expiry=parseInt(sessionStorage.getItem('dc_expiry')||'0');
+    if(session&&Date.now()<expiry){
+      // Session valid → go to main page with dashboard flag
+      sessionStorage.setItem('dc_want_dash','1');
+      window.location.replace('/');
+    } else {
+      // No session → go home to login
+      window.location.replace('/');
+    }
+  </script>
 </body>
 </html>
