@@ -833,7 +833,19 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
 .cta-join-btn:hover{background:rgba(255,255,255,.25);border-color:rgba(255,255,255,.6);transform:translateY(-2px);}
 @media(max-width:480px){.cta-join-section{padding:52px 22px;}.cta-join-section h2{font-size:26px!important;}}
 
-  </style>
+  
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+.reveal.reveal-left{transform:translateX(-32px);}
+.reveal.reveal-right{transform:translateX(32px);}
+.reveal.reveal-scale{transform:scale(.94);}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+.reveal-delay-5{transition-delay:.5s;}
+</style>
 </head>
 <body>
 <canvas id="stars-canvas"></canvas>
@@ -881,8 +893,8 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
   </nav>
 <main style="position:relative;z-index:1;padding-top:24px;">
 <div class="section" id="features">
-    <div class="s-tag"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Fonctionnalités</div>
-    <h2 class="s-title">Choisissez votre offre</h2>
+    <div class="s-tag reveal"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Fonctionnalités</div>
+    <h2 class="s-title reveal reveal-delay-1">Choisissez votre offre</h2>
     <div class="s-sub">Des solutions adaptées à chaque besoin.</div>
     <div class="ptabs">
       <button class="ptab active" onclick="switchPricing('discord',this)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zm23.6 0c-2.9 0-5.3-2.7-5.3-5.9s2.3-5.9 5.3-5.9 5.4 2.7 5.3 5.9c0 3.3-2.3 5.9-5.3 5.9z"/></svg>Serveurs Discord</button>
@@ -1003,7 +1015,7 @@ async function loadTeamLanding(){
   var el=document.getElementById('team-grid-landing');if(!el)return;
   var{data}=await db.from('equipe').select('*').order('created_at',{ascending:true});
   if(!data||!data.length){el.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">Aucun membre pour le moment.</div>';return;}
-  el.innerHTML=data.map(function(m,i){return '<div class="team-card"><div class="team-av">'+teamAvHTML(m,i,80)+'</div><div class="team-name">'+esc(m.name)+'</div><div class="team-role">'+esc(m.role||'')+'</div>'+(m.description?'<div class="team-desc">'+esc(m.description)+'</div>':'')+'</div>';}).join('');
+  el.innerHTML=data.map(function(m,i){return '<div class="team-card reveal reveal-scale"><div class="team-av">'+teamAvHTML(m,i,80)+'</div><div class="team-name">'+esc(m.name)+'</div><div class="team-role">'+esc(m.role||'')+'</div>'+(m.description?'<div class="team-desc">'+esc(m.description)+'</div>':'')+'</div>';}).join('');
 }
 
 async function refreshModuleBadges(){
@@ -1058,6 +1070,19 @@ document.addEventListener('DOMContentLoaded',function(){
   refreshModuleBadges();
 });
 
+</script>
+<script>
+/* ── SCROLL REVEAL ── */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!els.length)return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+    });
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){io.observe(el);});
+})();
 </script>
 </body>
 </html>
