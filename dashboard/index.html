@@ -54,8 +54,11 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 .page{display:none;position:relative;z-index:1;width:100%;}
 .page.active{display:block;}
 #app-page.active{display:flex;flex-direction:column;min-height:100vh;background:var(--bg);}
-.navbar{display:none!important;}
-.mobile-menu{display:none!important;}
+body.app-active{padding-top:0!important;}
+body.app-active .navbar{display:none!important;}
+body.app-active .mobile-menu{display:none!important;}
+/* Show navbar when back on landing */
+body:not(.app-active) .navbar{display:flex!important;}
 
 /* ── NAVBAR ── */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;background:rgba(8,8,16,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;width:100%;}
@@ -1627,7 +1630,16 @@ function updateThemeIcons(){const l=document.documentElement.dataset.theme==='li
 
 /* ── PAGES ── */
 function showPage(id){
-  if(id==='landing-page')loadTeamLanding();document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});const el=document.getElementById(id);el.style.display=id==='app-page'?'flex':'block';if(id==='app-page')el.style.flexDirection='column';el.classList.add('active');}
+  if(id==='landing-page')loadTeamLanding();
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  const el=document.getElementById(id);
+  el.style.display=id==='app-page'?'flex':'block';
+  if(id==='app-page')el.style.flexDirection='column';
+  el.classList.add('active');
+  document.body.classList.toggle('app-active',id==='app-page');
+  if(id!=='app-page')document.body.style.paddingTop='62px';
+  else document.body.style.paddingTop='0';
+}
 function setLoading(m){showPage('loading-page');document.getElementById('loading-txt').textContent=m;}
 
 /* ── AUTH ── */
