@@ -1636,9 +1636,11 @@ function showPage(id){
   el.style.display=id==='app-page'?'flex':'block';
   if(id==='app-page')el.style.flexDirection='column';
   el.classList.add('active');
-  document.body.classList.toggle('app-active',id==='app-page');
-  if(id!=='app-page')document.body.style.paddingTop='62px';
-  else document.body.style.paddingTop='0';
+  var isApp=id==='app-page';
+  document.body.classList.toggle('app-active',isApp);
+  document.body.style.paddingTop=isApp?'0':'62px';
+  var nav=document.querySelector('.navbar');
+  if(nav)nav.style.display=isApp?'none':'flex';
 }
 function setLoading(m){showPage('loading-page');document.getElementById('loading-txt').textContent=m;}
 
@@ -1670,8 +1672,25 @@ async function handleOAuth(token){
   }catch(e){setLoading('Erreur: '+e.message);setTimeout(()=>showPage('landing-page'),3000);}
 }
 function loadSession(){const exp=parseInt(sessionStorage.getItem('dc_expiry')||'0');if(Date.now()>exp){sessionStorage.clear();return false;}const s=sessionStorage.getItem('dc_user');if(!s)return false;me=JSON.parse(s);isStaff=sessionStorage.getItem('dc_staff')==='true';isAdmin=sessionStorage.getItem('dc_admin')==='true';return true;}
-function logout(){clearInterval(rtInterval);sessionStorage.clear();me=null;isStaff=false;isAdmin=false;history.pushState(null,'','/');showPage('landing-page');updateNavbar();}
-function goToLanding(){history.pushState(null,'','/');showPage('landing-page');updateNavbar();}
+function logout(){
+  clearInterval(rtInterval);sessionStorage.clear();me=null;isStaff=false;isAdmin=false;
+  document.body.classList.remove('app-active');
+  document.body.style.paddingTop='62px';
+  var nav=document.querySelector('.navbar');
+  if(nav)nav.style.display='flex';
+  history.pushState(null,'','/');
+  showPage('landing-page');
+  updateNavbar();
+}
+function goToLanding(){
+  history.pushState(null,'','/');
+  document.body.classList.remove('app-active');
+  document.body.style.paddingTop='62px';
+  var nav=document.querySelector('.navbar');
+  if(nav){nav.style.display='flex';nav.style.cssText=nav.style.cssText;}
+  showPage('landing-page');
+  updateNavbar();
+}
 function updateNavbar(){
   var loggedIn=!!(me&&me.id);
   var d=document.getElementById('nav-dash-btn');
