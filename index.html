@@ -31,7 +31,7 @@
   --shadow:0 2px 20px rgba(79,110,247,.12);--shadow-lg:0 8px 36px rgba(79,110,247,.22);
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-html,body{width:100%;min-height:100vh;}
+html,body{padding-top:62px;width:100%;min-height:100vh;}
 html{scroll-behavior:smooth;}
 body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;transition:background .3s,color .3s;position:relative;}
 
@@ -56,7 +56,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);over
 #app-page.active{display:flex;flex-direction:column;min-height:100vh;background:var(--bg);}
 
 /* ── NAVBAR ── */
-.navbar{position:sticky;top:0;z-index:200;height:62px;background:rgba(8,8,16,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;width:100%;}
+.navbar{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;background:rgba(8,8,16,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;width:100%;}
 [data-theme="light"] .navbar{background:rgba(238,240,255,.85);box-shadow:0 1px 24px rgba(79,110,247,.1);}
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--text);text-decoration:none;}
 .nav-logo-img{width:34px;height:34px;border-radius:10px;object-fit:cover;}
