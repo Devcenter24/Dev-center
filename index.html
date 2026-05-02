@@ -55,6 +55,8 @@ body{padding-top:62px;font-family:'Outfit',sans-serif;background:var(--bg);color
 .page.active{display:block;}
 #app-page.active{display:flex;flex-direction:column;min-height:100vh;background:var(--bg);}
 body.app-active{padding-top:0!important;}
+body.app-active .navbar{display:none!important;}
+body.app-active .mobile-menu{display:none!important;}
 
 /* ── NAVBAR ── */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;background:rgba(8,8,16,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;width:100%;}
