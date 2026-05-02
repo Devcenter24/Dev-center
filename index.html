@@ -839,7 +839,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
 }
 
 /* ── CTA JOIN SECTION ── */
-.cta-join-section{width:100%;padding:80px 24px;background:linear-gradient(135deg,#4f6ef7 0%,#7c3aed 60%,#a855f7 100%);text-align:center;color:#fff;position:relative;overflow:hidden;}
+.cta-join-section{width:100%;padding:120px 24px;margin-top:60px;background:linear-gradient(135deg,#4f6ef7 0%,#7c3aed 60%,#a855f7 100%);text-align:center;color:#fff;position:relative;overflow:hidden;}
 .cta-join-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(255,255,255,.12),transparent);pointer-events:none;}
 .cta-join-inner{max-width:600px;margin:0 auto;position:relative;z-index:1;}
 .cta-join-btn{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.35);padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;transition:all .2s;backdrop-filter:blur(8px);}
@@ -874,6 +874,46 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
 .reveal-delay-3{transition-delay:.3s;}
 .reveal-delay-4{transition-delay:.4s;}
 .reveal-delay-5{transition-delay:.5s;}
+
+/* ── TYPING ANIMATION ── */
+.typed-cursor{display:inline-block;width:3px;height:.85em;background:var(--primary);margin-left:4px;vertical-align:middle;border-radius:2px;animation:blink .75s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* ── RESPONSIVE IMPROVED ── */
+@media(max-width:768px){
+  .dash-layout{flex-direction:column;}
+  .sidebar{display:none!important;}
+  .app-burger{display:flex!important;}
+  .dash-content{padding:16px;}
+  .ph{flex-direction:column;align-items:flex-start;gap:10px;}
+  .pgrid2{grid-template-columns:1fr!important;}
+  .pgrid3{grid-template-columns:1fr!important;}
+  .fct-card-top{flex-direction:column;align-items:flex-start;gap:8px;}
+  .fct-card-actions{flex-wrap:wrap;}
+  .det-card{padding:16px;}
+  .msg-bubble{max-width:90%!important;}
+  .modal-box{padding:20px 16px;margin:16px;}
+  .form-row{flex-direction:column;}
+  .team-manage-card{flex-direction:column;align-items:flex-start;}
+}
+@media(max-width:480px){
+  .navbar{padding:0 14px!important;height:52px!important;}
+  .nav-logo-img{width:22px;height:22px;}
+  .nav-logo{font-size:14px;}
+  .nav-links{gap:12px!important;}
+  .nav-links a{font-size:12px!important;}
+  .btn-connect{padding:7px 12px!important;font-size:12px!important;}
+  .btn-secondary{padding:7px 10px!important;font-size:11px!important;}
+  .section-inner{padding:0 16px!important;}
+  .s-title{font-size:22px!important;}
+  .s-sub{font-size:13px!important;}
+  .pcard{padding:18px!important;}
+  .pgrid2,.pgrid3{gap:12px!important;}
+  .tab-group{flex-wrap:wrap;gap:6px;}
+  .tab-btn{font-size:12px!important;padding:7px 12px!important;}
+  .team-card{max-width:100%!important;}
+  footer .footer-grid{grid-template-columns:1fr 1fr!important;}
+}
 </style>
 </head>
 <body>
@@ -927,6 +967,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
       <a class="mm-link" href="/qui-sommes-nous/" onclick="document.getElementById('mobile-menu').classList.remove('open')"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>Qui sommes-nous</a>
       <a class="mm-link" href="/pourquoi-nous/" onclick="document.getElementById('mobile-menu').classList.remove('open')"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>Pourquoi nous ?</a>
       <a class="mm-link" href="/equipe/" onclick="document.getElementById('mobile-menu').classList.remove('open')"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>Équipe</a>
+      <a class="mm-link" href="/nous-soutenir/" onclick="document.getElementById('mobile-menu').classList.remove('open')" style="color:#f59e0b;"><div class="mm-link-icon" style="background:rgba(245,158,11,.1);color:#f59e0b;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>Nous soutenir</a>
       <div style="margin-top:8px;padding-top:12px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;">
         <a class="btn-primary" href="https://discord.gg/9KqXrKyTfA" target="_blank" rel="noopener" style="justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zm23.6 0c-2.9 0-5.3-2.7-5.3-5.9s2.3-5.9 5.3-5.9 5.4 2.7 5.3 5.9c0 3.3-2.3 5.9-5.3 5.9z"/></svg>Rejoindre Discord</a>
         <button id="mm-dash-btn" class="btn-secondary" style="width:100%;justify-content:center;display:none;" onclick="window.location.href='/dashboard/'">Retourner au Dashboard</button>
@@ -938,7 +979,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
   <div class="hero">
     <div>
       <div class="hero-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>100% Gratuit · 24/7 · Sans limite</div>
-      <h1 class="hero-title reveal">Construisez &amp; déployez avec <span>Dev Center</span></h1>
+      <h1 class="hero-title" id="hero-typed"></h1>
       <p class="hero-desc reveal reveal-delay-1">Votre espace de développement tout-en-un.<br>Créez des serveurs Discord professionnels,<br>lancez vos sites web sans effort.<br>La communauté qui code avec vous.</p>
       <div class="hero-btns reveal reveal-delay-2">
         <a class="btn-primary" href="https://discord.gg/9KqXrKyTfA" target="_blank" rel="noopener">
@@ -1533,6 +1574,11 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
     <div class="mm-sep"></div>
     <button class="mm-link" onclick="goToLanding();closeMobileMenu()"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>Retourner à l'accueil</button>
     <button class="mm-link" style="color:#ef4444;" onclick="logout()"><div class="mm-link-icon" style="background:rgba(239,68,68,.08);color:#ef4444;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>Se déconnecter</button>
+    <div class="mm-section-lbl" style="margin-top:4px;">Pages</div>
+    <a class="mm-link" href="/"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>Accueil</a>
+    <a class="mm-link" href="/fonctionnalites/"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>Fonctionnalités</a>
+    <a class="mm-link" href="/equipe/"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>Équipe</a>
+    <a class="mm-link" href="/nous-soutenir/" style="color:#f59e0b;"><div class="mm-link-icon" style="background:rgba(245,158,11,.1);color:#f59e0b;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>Nous soutenir</a>
   </div>
 </div>
 
@@ -3559,6 +3605,31 @@ init();
     });
   },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
   els.forEach(function(el){io.observe(el);});
+})();
+</script>
+<script>
+/* ── TYPING EFFECT ── */
+(function(){
+  var el=document.getElementById('hero-typed');
+  if(!el)return;
+  var full='Construisez &amp; déployez avec <span style="color:var(--primary);">Dev Center</span>';
+  var plain='Construisez & déployez avec Dev Center';
+  var cursor='<span class="typed-cursor"></span>';
+  var i=0;
+  el.innerHTML=cursor;
+  function type(){
+    if(i<=plain.length){
+      var txt=plain.substring(0,i);
+      // Colorize "Dev Center"
+      var colored=txt.replace('Dev Center','<span style="color:var(--primary);">Dev Center</span>');
+      // Escape & sign
+      colored=colored.replace(' & ',' &amp; ');
+      el.innerHTML=colored+cursor;
+      i++;
+      setTimeout(type, i<20?40:i<plain.length-10?55:80);
+    }
+  }
+  setTimeout(type,400);
 })();
 </script>
 </body>
