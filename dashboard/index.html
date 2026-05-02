@@ -54,6 +54,7 @@ body{padding-top:62px;font-family:'Outfit',sans-serif;background:var(--bg);color
 .page{display:none;position:relative;z-index:1;width:100%;}
 .page.active{display:block;}
 #app-page.active{display:flex;flex-direction:column;min-height:100vh;background:var(--bg);}
+body.app-active{padding-top:0!important;}
 
 /* ── NAVBAR ── */
 .navbar{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;background:rgba(8,8,16,.8);backdrop-filter:blur(24px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 40px;width:100%;}
@@ -839,7 +840,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
 }
 
 /* ── CTA JOIN SECTION ── */
-.cta-join-section{width:100%;padding:80px 24px;background:linear-gradient(135deg,#4f6ef7 0%,#7c3aed 60%,#a855f7 100%);text-align:center;color:#fff;position:relative;overflow:hidden;}
+.cta-join-section{width:100%;padding:120px 24px;margin-top:60px;background:linear-gradient(135deg,#4f6ef7 0%,#7c3aed 60%,#a855f7 100%);text-align:center;color:#fff;position:relative;overflow:hidden;}
 .cta-join-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(255,255,255,.12),transparent);pointer-events:none;}
 .cta-join-inner{max-width:600px;margin:0 auto;position:relative;z-index:1;}
 .cta-join-btn{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.15);color:#fff;border:2px solid rgba(255,255,255,.35);padding:14px 28px;border-radius:14px;font-size:15px;font-weight:700;text-decoration:none;transition:all .2s;backdrop-filter:blur(8px);}
@@ -862,6 +863,61 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
 .nav-dd-sub{font-size:11px;color:var(--text3);margin-top:1px;}
 .nav-dd-sep{height:1px;background:var(--border);margin:4px 0;}
 .nav-dd-home .nav-dd-lbl{color:var(--text2);}
+
+/* ── SCROLL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .6s cubic-bezier(.4,0,.2,1),transform .6s cubic-bezier(.4,0,.2,1);}
+.reveal.reveal-left{transform:translateX(-32px);}
+.reveal.reveal-right{transform:translateX(32px);}
+.reveal.reveal-scale{transform:scale(.94);}
+.reveal.visible{opacity:1;transform:none;}
+.reveal-delay-1{transition-delay:.1s;}
+.reveal-delay-2{transition-delay:.2s;}
+.reveal-delay-3{transition-delay:.3s;}
+.reveal-delay-4{transition-delay:.4s;}
+.reveal-delay-5{transition-delay:.5s;}
+
+/* ── TYPING ANIMATION ── */
+.typed-cursor{display:inline-block;width:3px;height:.85em;background:var(--primary);margin-left:4px;vertical-align:middle;border-radius:2px;animation:blink .75s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* ── RESPONSIVE IMPROVED ── */
+@media(max-width:768px){
+  .dash-layout{flex-direction:column;}
+  .sidebar{display:none!important;}
+  .app-burger{display:flex!important;}
+  .dash-content{padding:16px;}
+  .ph{flex-direction:column;align-items:flex-start;gap:10px;}
+  .pgrid2{grid-template-columns:1fr!important;}
+  .pgrid3{grid-template-columns:1fr!important;}
+  .fct-card-top{flex-direction:column;align-items:flex-start;gap:8px;}
+  .fct-card-actions{flex-wrap:wrap;}
+  .det-card{padding:16px;}
+  .msg-bubble{max-width:90%!important;}
+  .modal-box{padding:20px 16px;margin:16px;}
+  .form-row{flex-direction:column;}
+  .team-manage-card{flex-direction:column;align-items:flex-start;}
+}
+@media(max-width:480px){
+  .navbar{padding:0 14px!important;height:52px!important;}
+  .nav-logo-img{width:22px;height:22px;}
+  .nav-logo{font-size:14px;}
+  .nav-links{gap:12px!important;}
+  .nav-links a{font-size:12px!important;}
+  .btn-connect{padding:7px 12px!important;font-size:12px!important;}
+  .btn-secondary{padding:7px 10px!important;font-size:11px!important;}
+  .section-inner{padding:0 16px!important;}
+  .s-title{font-size:22px!important;}
+  .s-sub{font-size:13px!important;}
+  .pcard{padding:18px!important;}
+  .pgrid2,.pgrid3{gap:12px!important;}
+  .tab-group{flex-wrap:wrap;gap:6px;}
+  .tab-btn{font-size:12px!important;padding:7px 12px!important;}
+  .team-card{max-width:100%!important;}
+  footer .footer-grid{grid-template-columns:1fr 1fr!important;}
+}
+
+/* ── SCROLLBAR STABLE ── */
+html{overflow-y:scroll;scrollbar-gutter:stable;}
 </style>
 </head>
 <body>
@@ -915,6 +971,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
       <a class="mm-link" href="/qui-sommes-nous/" onclick="document.getElementById('mobile-menu').classList.remove('open')"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>Qui sommes-nous</a>
       <a class="mm-link" href="/pourquoi-nous/" onclick="document.getElementById('mobile-menu').classList.remove('open')"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>Pourquoi nous ?</a>
       <a class="mm-link" href="/equipe/" onclick="document.getElementById('mobile-menu').classList.remove('open')"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>Équipe</a>
+      <a class="mm-link" href="/nous-soutenir/" onclick="document.getElementById('mobile-menu').classList.remove('open')" style="color:#f59e0b;"><div class="mm-link-icon" style="background:rgba(245,158,11,.1);color:#f59e0b;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>Nous soutenir</a>
       <div style="margin-top:8px;padding-top:12px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px;">
         <a class="btn-primary" href="https://discord.gg/9KqXrKyTfA" target="_blank" rel="noopener" style="justify-content:center;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zm23.6 0c-2.9 0-5.3-2.7-5.3-5.9s2.3-5.9 5.3-5.9 5.4 2.7 5.3 5.9c0 3.3-2.3 5.9-5.3 5.9z"/></svg>Rejoindre Discord</a>
         <button id="mm-dash-btn" class="btn-secondary" style="width:100%;justify-content:center;display:none;" onclick="window.location.href='/dashboard/'">Retourner au Dashboard</button>
@@ -926,9 +983,9 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
   <div class="hero">
     <div>
       <div class="hero-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>100% Gratuit · 24/7 · Sans limite</div>
-      <h1 class="hero-title">Construisez &amp; déployez avec <span>Dev Center</span></h1>
-      <p class="hero-desc">Votre espace de développement tout-en-un.<br>Créez des serveurs Discord professionnels,<br>lancez vos sites web sans effort.<br>La communauté qui code avec vous.</p>
-      <div class="hero-btns">
+      <h1 class="hero-title" id="hero-typed"></h1>
+      <p class="hero-desc reveal reveal-delay-1">Votre espace de développement tout-en-un.<br>Créez des serveurs Discord professionnels,<br>lancez vos sites web sans effort.<br>La communauté qui code avec vous.</p>
+      <div class="hero-btns reveal reveal-delay-2">
         <a class="btn-primary" href="https://discord.gg/9KqXrKyTfA" target="_blank" rel="noopener">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zm23.6 0c-2.9 0-5.3-2.7-5.3-5.9s2.3-5.9 5.3-5.9 5.4 2.7 5.3 5.9c0 3.3-2.3 5.9-5.3 5.9z"/></svg>
           Rejoindre — Discord
@@ -1003,12 +1060,12 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
           <button onclick="loginWithDiscord()">Se connecter</button>
           <a href="https://discord.gg/9KqXrKyTfA" target="_blank">Rejoindre Discord</a>
           <a href="https://devcenter24.github.io/status-dev-center/" target="_blank">Site web / Statut</a>
-          <a href="/#avis">Nos avis</a>
+          <a href="/dashboard">Nos avis</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2025 Dev Center · Tous droits réservés</span>
+      <span class="footer-copy">© 2025 Dev Center · Tous droits réservés · <a href="/conditions/" style="color:var(--text3);text-decoration:none;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text3)'">Conditions</a></span>
       <div class="footer-socials">
         <a class="footer-soc-btn" href="https://discord.gg/9KqXrKyTfA" target="_blank" title="Discord">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zm23.6 0c-2.9 0-5.3-2.7-5.3-5.9s2.3-5.9 5.3-5.9 5.4 2.7 5.3 5.9c0 3.3-2.3 5.9-5.3 5.9z"/></svg>
@@ -1197,7 +1254,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
       <div class="dash-panel" id="panel-credits-add">
         <div class="ph"><div class="ph-left"><h2>Ajouter des crédits</h2><p>Attribuez des crédits à un utilisateur.</p></div></div>
         <div style="max-width:520px;">
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(34,197,94,.12);color:#22c55e;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><div class="rgl-title">Attribution de crédits</div><div class="rgl-sub">Ajouter ou retirer des crédits</div></div></div>
             <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px;">
               <div><label class="f-lbl">ID Discord de l'utilisateur</label><input class="f-input" id="cr-uid" placeholder="ex: 538812769207307300"></div>
@@ -1214,7 +1271,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
       <div class="dash-panel" id="panel-credits-remove">
         <div class="ph"><div class="ph-left"><h2>Retirer des crédits</h2><p>Déduire des crédits d'un utilisateur.</p></div></div>
         <div style="max-width:480px;">
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(239,68,68,.1);color:#ef4444;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><div class="rgl-title">Retrait de crédits</div><div class="rgl-sub">Saisir le nombre à retirer (positif)</div></div></div>
             <div style="padding:14px 18px;display:flex;flex-direction:column;gap:12px;">
               <div><label class="f-lbl">ID Discord de l'utilisateur</label><input class="f-input" id="crr-uid" placeholder="ex: 538812769207307300"></div>
@@ -1230,7 +1287,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
       <div class="dash-panel" id="panel-view-credits">
         <div class="ph"><div class="ph-left"><h2>Voir les crédits</h2><p>Consulter le solde d'un utilisateur.</p></div></div>
         <div style="max-width:480px;display:flex;flex-direction:column;gap:14px;">
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(245,158,11,.1);color:#f59e0b;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><div class="rgl-title">Rechercher un solde</div><div class="rgl-sub">Entrez l'ID Discord</div></div></div>
             <div style="padding:14px 18px;display:flex;gap:10px;align-items:flex-end;">
               <div style="flex:1;"><label class="f-lbl">ID Discord</label><input class="f-input" id="vcr-uid" placeholder="ex: 538812769207307300" onkeydown="if(event.key==='Enter')lookupCredits()"></div>
@@ -1238,7 +1295,7 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
             </div>
             <div id="vcr-result" style="padding:0 18px 14px;"></div>
           </div>
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(79,110,247,.1);color:var(--primary);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><div class="rgl-title">Top soldes</div><div class="rgl-sub">Utilisateurs avec le plus de crédits</div></div></div>
             <div id="vcr-top" style="padding:0 18px 14px;"><div style="font-size:13px;color:var(--text3);padding:10px 0;">Chargement...</div></div>
           </div>
@@ -1265,19 +1322,19 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:860px;">
 
           <!-- Apparence -->
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:var(--primary-l);color:var(--primary);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div><div><div class="rgl-title">Apparence</div><div class="rgl-sub">Thème de l'interface</div></div></div>
             <div class="rgl-row"><div><div class="rgl-lbl" id="regl-theme-lbl">Mode sombre</div><div class="rgl-desc">Basculer entre clair et sombre</div></div><label class="theme-switch" onclick="toggleTheme();updateReglagesThemeLabel()"><div class="theme-track"><div class="theme-thumb"><svg class="theme-icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="theme-icon-sun" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></div></div></label></div>
           </div>
 
           <!-- Notifications -->
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(245,158,11,.12);color:#f59e0b;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div><div><div class="rgl-title">Notifications</div><div class="rgl-sub">Alertes du navigateur</div></div></div>
             <div class="rgl-row"><div><div class="rgl-lbl">Notifications navigateur</div><div class="rgl-desc" id="notif-status-lbl">Statut : non activé</div></div><button id="notif-btn" onclick="requestNotifPerm()" class="rgl-btn rgl-btn-blue">Activer</button></div>
           </div>
 
           <!-- Session -->
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(34,197,94,.1);color:#22c55e;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div><div class="rgl-title">Session</div><div class="rgl-sub">Informations de connexion</div></div></div>
             <div style="padding:0 18px 14px;display:flex;flex-direction:column;gap:8px;">
               <div class="rgl-info-row"><span class="rgl-info-lbl"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Connecté en tant que</span><span class="rgl-info-val" id="rgl-session-user">—</span></div>
@@ -1287,13 +1344,13 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
           </div>
 
           <!-- Compte -->
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:var(--primary-l);color:var(--primary);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div><div class="rgl-title">Compte</div><div class="rgl-sub">Gestion de session</div></div></div>
             <div class="rgl-row"><div><div class="rgl-lbl">Déconnexion</div><div class="rgl-desc">Terminer votre session en cours</div></div><button onclick="logout()" class="rgl-btn rgl-btn-red"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Déconnecter</button></div>
           </div>
 
           <!-- Confidentialité -->
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(168,85,247,.1);color:#a855f7;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><div class="rgl-title">Confidentialité</div><div class="rgl-sub">Données & sécurité</div></div></div>
             <div style="padding:0 18px 14px;display:flex;flex-direction:column;gap:10px;">
               <div class="rgl-row" style="padding:0;border:none;"><div><div class="rgl-lbl">Données stockées</div><div class="rgl-desc">Session, préférences locales</div></div><button onclick="if(confirm('Effacer les données locales ?')){sessionStorage.clear();localStorage.clear();toast('Données effacées','s');}" class="rgl-btn rgl-btn-gray"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Effacer</button></div>
@@ -1302,19 +1359,19 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
           </div>
 
           <!-- Discord -->
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(88,101,242,.12);color:#5865f2;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg></div><div><div class="rgl-title">Discord</div><div class="rgl-sub">Rejoindre notre serveur</div></div></div>
             <div class="rgl-row"><div><div class="rgl-lbl">Serveur Dev Center</div><div class="rgl-desc">discord.gg/9KqXrKyTfA</div></div><a href="https://discord.gg/9KqXrKyTfA" target="_blank" class="rgl-btn rgl-btn-indigo" style="text-decoration:none;">Rejoindre</a></div>
           </div>
 
           <!-- Site web -->
-          <div class="rgl-card">
+          <div class="rgl-card reveal">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(6,182,212,.1);color:#06b6d4;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div><div><div class="rgl-title">Site web</div><div class="rgl-sub">Statut des services</div></div></div>
             <div class="rgl-row"><div><div class="rgl-lbl">Status Dev Center</div><div class="rgl-desc">jojolm24.github.io/status-dev-center</div></div><a href="https://devcenter24.github.io/status-dev-center/" target="_blank" class="rgl-btn" style="text-decoration:none;background:rgba(6,182,212,.1);color:#06b6d4;border:1px solid rgba(6,182,212,.2);">Voir</a></div>
           </div>
 
           <!-- À propos -->
-          <div class="rgl-card" style="grid-column:1/-1;">
+          <div class="rgl-card reveal" style="grid-column:1/-1;">
             <div class="rgl-hdr"><div class="rgl-ico" style="background:rgba(6,182,212,.1);color:#06b6d4;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div><div class="rgl-title">À propos</div><div class="rgl-sub">Informations sur l'application</div></div></div>
             <div style="padding:0 18px 16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
               <div class="rgl-about-cell"><div class="rgl-about-lbl">Version</div><div class="rgl-about-val">1.0.0</div></div>
@@ -1521,6 +1578,11 @@ body.menu-open .burger-bar:nth-child(3){transform:translateY(-6px) rotate(-45deg
     <div class="mm-sep"></div>
     <button class="mm-link" onclick="goToLanding();closeMobileMenu()"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>Retourner à l'accueil</button>
     <button class="mm-link" style="color:#ef4444;" onclick="logout()"><div class="mm-link-icon" style="background:rgba(239,68,68,.08);color:#ef4444;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></div>Se déconnecter</button>
+    <div class="mm-section-lbl" style="margin-top:4px;">Pages</div>
+    <a class="mm-link" href="/"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>Accueil</a>
+    <a class="mm-link" href="/fonctionnalites/"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>Fonctionnalités</a>
+    <a class="mm-link" href="/equipe/"><div class="mm-link-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>Équipe</a>
+    <a class="mm-link" href="/nous-soutenir/" style="color:#f59e0b;"><div class="mm-link-icon" style="background:rgba(245,158,11,.1);color:#f59e0b;"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>Nous soutenir</a>
   </div>
 </div>
 
@@ -1676,15 +1738,12 @@ async function init(){
   const hash=new URLSearchParams(window.location.hash.replace('#',''));
   const token=hash.get('access_token');
   if(token){await handleOAuth(token);return;}
-  if(hash.get('error')){history.replaceState(null,'','https://devcenter.vyral-studio.com/dashboard');showPage('landing-page');return;}
+  if(hash.get('error')){history.replaceState(null,'',window.location.pathname);showPage('landing-page');return;}
+  var wantDash=sessionStorage.getItem('dc_want_dash')==='1';
   sessionStorage.removeItem('dc_want_dash');
-  if(!loadSession()){
-    // No session — go to landing for OAuth, come back here after
-    sessionStorage.setItem('dc_want_dash','1');
-    window.location.replace('/');
-    return;
-  }
-  launchApp();
+  if(!loadSession()){showPage('landing-page');updateNavbar();return;}
+  // Always redirect to /dashboard/ — never show dashboard inline on landing
+  window.location.replace('/dashboard');
 }
 async function verifyRolesLive(){
   var tok=sessionStorage.getItem('dc_tok');
@@ -1734,9 +1793,7 @@ async function launchApp(){
   updateNavbar();
   updateSidebarUserCard();
   showPage('app-page');
-  if(!window.location.pathname.startsWith('/dashboard')){
-    history.pushState(null,'','/dashboard');
-  }
+  history.pushState(null,'','/dashboard');
   initStars();
   loadMyTickets();
   loadEmail();
@@ -3540,6 +3597,44 @@ document.addEventListener('keydown',function(e){
 document.addEventListener('contextmenu',function(e){e.preventDefault();return false;});
 
 init();
+</script>
+<script>
+/* ── SCROLL REVEAL ── */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!els.length)return;
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+    });
+  },{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+  els.forEach(function(el){io.observe(el);});
+})();
+</script>
+<script>
+/* ── TYPING EFFECT ── */
+(function(){
+  var el=document.getElementById('hero-typed');
+  if(!el)return;
+  var full='Construisez &amp; déployez avec <span style="color:var(--primary);">Dev Center</span>';
+  var plain='Construisez & déployez avec Dev Center';
+  var cursor='<span class="typed-cursor"></span>';
+  var i=0;
+  el.innerHTML=cursor;
+  function type(){
+    if(i<=plain.length){
+      var txt=plain.substring(0,i);
+      // Colorize "Dev Center"
+      var colored=txt.replace('Dev Center','<span style="color:var(--primary);">Dev Center</span>');
+      // Escape & sign
+      colored=colored.replace(' & ',' &amp; ');
+      el.innerHTML=colored+cursor;
+      i++;
+      setTimeout(type, i<20?40:i<plain.length-10?55:80);
+    }
+  }
+  setTimeout(type,400);
+})();
 </script>
 </body>
 </html>
