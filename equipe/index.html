@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <title>Notre équipe — Dev Center</title>
+  <title>Équipe — Dev Center</title>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://cdn.discordapp.com https://images-ext-1.discordapp.net https://media.discordapp.net; connect-src 'self' https://llheudregeksbyjuscrw.supabase.co https://discord.com https://api.anthropic.com https://cdnjs.cloudflare.com; base-uri 'self'; form-action 'self';">
   <meta http-equiv="X-Content-Type-Options" content="nosniff">
   <meta name="referrer" content="strict-origin-when-cross-origin">
@@ -1035,6 +1035,11 @@ async function loadTeamLanding(){
   var{data}=await db.from('equipe').select('*').order('created_at',{ascending:true});
   if(!data||!data.length){el.innerHTML='<div style="padding:20px;text-align:center;color:var(--text3);font-size:13px;">Aucun membre pour le moment.</div>';return;}
   el.innerHTML=data.map(function(m,i){return '<div class="team-card reveal reveal-scale"><div class="team-av">'+teamAvHTML(m,i,80)+'</div><div class="team-name">'+esc(m.name)+'</div><div class="team-role">'+esc(m.role||'')+'</div>'+(m.description?'<div class="team-desc">'+esc(m.description)+'</div>':'')+'</div>';}).join('');
+  // Re-trigger scroll reveal on new cards
+  setTimeout(function(){
+    var newEls=el.querySelectorAll('.reveal');
+    newEls.forEach(function(el){el.classList.add('visible');});
+  },50);
 }
 
 async function refreshModuleBadges(){
@@ -1075,8 +1080,11 @@ document.addEventListener('contextmenu',function(e){e.preventDefault();return fa
 document.addEventListener('DOMContentLoaded',function(){
   loadSession();
   updateNavbar();
-  if(document.getElementById('team-grid-landing'))loadTeamLanding();
   refreshModuleBadges();
+  // Small delay to ensure Supabase is ready
+  setTimeout(function(){
+    if(document.getElementById('team-grid-landing'))loadTeamLanding();
+  }, 100);
 });
 
 </script>
